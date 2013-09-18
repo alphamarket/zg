@@ -1,6 +1,5 @@
 {
-    "help":
-    {
+        "alias":"h", 
         "title":"Show help", 
         "instance":
         {
@@ -10,7 +9,7 @@
         "help":
         {
             "command":"zg help",
+            "alias":"zg h",
             "detail":"Output help content"
         }
-    }
 }

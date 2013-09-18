@@ -80,14 +80,18 @@ abstract class baseZg extends \zinux\baseZinux
     {
         return file_put_contents("./.zg.cfg", serialize($s), LOCK_EX);
     }
-    public function CheckZG($throw_exception = 1)
+    public function CheckZG($throw_exception = 0)
     {
         if(!$this->GetStatus())
         {
             if($throw_exception)
-                throw new \zinux\kernel\exceptions\invalideOperationException("The project file not found ....");
+                throw new \zinux\kernel\exceptions\invalideOperationException("No project have found ...");
             else
+            {
+                $this ->cout("No project have found ...", 0, self::yellow)
+                        ->cout("[ Aborting ]", 0, self::red);
                 return false;
+            }
         }
         return true;
     }

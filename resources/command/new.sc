@@ -1,7 +1,9 @@
 {
+        "alias":"n",
         "project":
         {
-            "title":"Create new project", 
+            "title":"Create new project",
+            "alias":"p",
             "instance":
             {
                 "class":"\\zinux\\zg\\resources\\operator\\_new",
@@ -10,6 +12,7 @@
             "help":
             {
                 "command":"zf new project $project_name",
+                "alias": "zf n p $project_name",
                 "detail":"Creates a new zinux project"
             }
         },

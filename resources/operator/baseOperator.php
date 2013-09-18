@@ -2,7 +2,7 @@
 namespace zinux\zg\resources\operator;
 
 abstract class baseOperator extends \zinux\zg\baseZg
-{
+{    
     public function Run($opt)
     {
         $s = $this->GetStatus();

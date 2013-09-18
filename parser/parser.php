@@ -11,20 +11,6 @@ class parser extends baseParser
     {
         if(!count($this->args))
             $this->args[] = "help";
-        if($this->args[0]=="help")
-        {
-            array_shift($this->args);
-            $help  = new helpParser($this->args, $this->command_generator);
-            $help->Run();
-            return;
-        }
-        if(count($this->args)<2 || ($this->args[0] != "new" || $this->args[1] != "project"))
-            if(!$this->CheckZG(0))
-            {
-                $this ->cout("No project have found ...", 0, self::yellow)
-                        ->cout("[ Aborting ]", 0, self::red);
-                return;
-            }
         
         $parsed_string = "zg";
         $current_parsing = $this->command_generator->Generate();
@@ -36,8 +22,17 @@ class parser extends baseParser
             {
                 if(isset($current_parsing->instance))
                     goto __EXECUTE;
+                foreach($current_parsing as $key => $value)
+                {
+                    if(isset($value->alias) && strtolower($value->alias) == $this->args[0])
+                    {
+                        $this->args[0] = $key;
+                        goto __NEXT_ROUND;
+                    }
+                }
                 goto __ERROR;
             }
+__NEXT_ROUND:
             $current_parsing = $current_parsing->{$this->args[0]};
             $parsed_string.=(" ".array_shift($this->args));
         }
