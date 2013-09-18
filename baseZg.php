@@ -2,6 +2,8 @@
 namespace zinux\zg;
 require_once dirname(__FILE__)."/../baseZinux.php";
 defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
+defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
+defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux.cache");
 defined("RUNNING_ENV") ||  define("RUNNING_ENV", "DEVELOPMENT");
 
 /**

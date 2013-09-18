@@ -20,8 +20,10 @@ class parser extends baseParser
         }
         $parsed_string = "zg";
         $current_parsing = $this->command_generator->Generate();
-        while($current_parsing && count($this->args))
+        while($current_parsing)
         {
+            if(!count($this->args))
+                goto __EXECUTE;
             if(!isset($current_parsing->{$this->args[0]}))
             {
                 if(isset($current_parsing->instance))
@@ -39,6 +41,10 @@ __EXECUTE:
                 ("The $parsed_string metadata structure is mis-configured, target action's {class} or {method} has not been specified ...");
         $c = $current_parsing->instance->class;
         $c = new $c;
+        $rf = new \ReflectionClass($c);
+        if(!$rf ->isSubclassOf("\\zinux\\zg\\resources\\operator\\baseOperator"))
+            throw new \zinux\kernel\exceptions\invalideOperationException
+                ("Target class {$rf->getName()} is not subclass of '\\zinux\\zg\\resources\\operator\\baseOperator'");
         if(!method_exists($c, $current_parsing->instance->method))
             throw new \zinux\kernel\exceptions\invalideOperationException
                 ("Method '{$current_parsing->instance->method}' does not exists in '{$current_parsing->instance->class}'");
