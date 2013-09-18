@@ -18,6 +18,14 @@ class parser extends baseParser
             $help->Run();
             return;
         }
+        if(count($this->args)<2 || ($this->args[0] != "new" || $this->args[1] != "project"))
+            if(!$this->CheckZG(0))
+            {
+                $this ->cout("No project have found ...", 0, self::yellow)
+                        ->cout("[ Aborting ]", 0, self::red);
+                return;
+            }
+        
         $parsed_string = "zg";
         $current_parsing = $this->command_generator->Generate();
         while($current_parsing)

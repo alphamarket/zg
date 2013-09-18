@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='chrome=1'>
+    <title>Demo Zinux by dariushha</title>
+    <link rel='stylesheet' href='<?php echo DEMO_ROOT_SITE ?>stylesheets/styles.css'>
+    <link rel='stylesheet' href='<?php echo DEMO_ROOT_SITE ?>stylesheets/pygment_trac.css'>
+    <link rel='stylesheet' href='<?php echo DEMO_ROOT_SITE ?>bootstrap/css/bootstrap.min.css'>
+    <script src='<?php echo DEMO_ROOT_SITE ?>javascripts/jquery.min.js'></script>
+    <script src='<?php echo DEMO_ROOT_SITE ?>javascripts/respond.js'></script>
+    <script src='<?php echo DEMO_ROOT_SITE ?>bootstrap/js/bootstrap.min.js'></script>
+    <link rel='shortcut icon' href='<?php echo DEMO_ROOT_SITE ?>favicon.ico' type='image/x-icon'>
+    <meta name='description' content='Zinux a simple flexible MVC library for PHP developer'>
+    <meta name='keywords' content='PHP,MVC,Zinux,Convention Over Configuration,Design Pattern,Autoloading,Namespace Convention,PHP Bootstrap,Bootstrap,Project,Source Code,Action,Module,Controller,Layout,View,Helper,Database binding,Configuration, Demo'>
+    <meta name='author' content='Dariush Hasanpoor'>
+    <!--[if lt IE 9]>
+      <script src='<?php echo DEMO_ROOT_SITE ?>/html5shiv.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel='stylesheet' href='<?php echo DEMO_ROOT_SITE ?>stylesheets/ie.css'>
+    <![endif]-->
+    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no'>
+  </head>
+  
+  <body>
+      <div id='header'>
+        <nav style='max-width: 900px!important'>
+          <li class='fork'><a href='https://github.com/dariushha/zinux'>View On GitHub</a></li>
+          <li class='downloads'><a href='https://github.com/dariushha/zinux/zipball/master'>ZIP</a></li>
+          <li class='downloads'><a href='https://github.com/dariushha/zinux/tarball/master'>TAR</a></li>
+          <li class='title'>DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class='wrapper' style='max-width: 900px!important'>
+
+      <section style='max-width: 900px!important'>
+        <div id='title'>
+          <h1>Demo <a href="http://dariushha.github.io/zinux">Zinux</a></h1>
+          <p>A simple and lightweight but powerful library supporting MVC design pattern  </p>
+          <hr>
+          <span class='credits left'>Project maintained by <a href='https://github.com/dariushha'>dariushha</a></span>
+          <span class='credits right'>Hosted on GitHub Pages &mdash; Theme by <a href='https://twitter.com/michigangraham'>mattgraham</a></span>
+        </div>
+          <?php if(isset($this->view->__message)): ?>
+          <script>
+                $(document).ready(function()
+                {
+                    $('.alert').slideDown('slow');
+                    setTimeout("$('.alert').slideUp('slow');",3000);
+                });
+          </script>
+          <div class="alert " data-dismiss="alert" style="cursor: pointer;display: none">
+              <center class="inline"><?php echo $this->view->__message; ?></center>
+          </div>
+          <?php endif; ?>
+          <?php echo $this->content ?>
+      </section>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+  </body>
+</html>
