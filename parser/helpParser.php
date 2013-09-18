@@ -16,6 +16,7 @@ class helpParser extends baseParser
             $value = array_pop($stack);
             if(!isset($value->title))
             {
+                if(!($value instanceof \stdClass)) continue;
                 $tmps = array();
                 foreach($value as $sub_value)
                 {
@@ -25,12 +26,25 @@ class helpParser extends baseParser
                     array_push($stack, array_pop($tmps));
             }
             else
+            {
+                 $tmps = array();
+                foreach($value as $key => $sub_value)
+                {
+                    if(!($value instanceof \stdClass)) continue;
+                    if($key!="instance" && $key!="help")
+                        array_push($tmps, $sub_value);
+                }
+                while(count($tmps))
+                    array_push($stack, array_pop($tmps));
+                
                 $this->printHelp($value);
+            }
         }
     }
     
     protected function printHelp($content)
     {
+        if(!(isset($content->title) || isset($content->help))) return;
         $this ->cout()
                 ->cout($content->title, 1, self::cyan)
                 ->cout(self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->command), 2)

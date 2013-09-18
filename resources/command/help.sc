@@ -2,7 +2,6 @@
     "help":
     {
         "title":"Show help", 
-        "detail":"Output help content", 
         "instance":
         {
             "class":"\\zinux\\zg\\resources\\operator\\help",

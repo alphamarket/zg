@@ -25,4 +25,12 @@ class _new extends baseOperator
         $this->Run($opt);
         $this->CreateStatusFile($pName);
     }
+    public function test($args)
+    {
+        $this->cout(__METHOD__, 0, self::yellow);
+    }
+    public function hihi($args)
+    {
+        $this->cout(__METHOD__, 0, self::yellow);
+    }
 }
