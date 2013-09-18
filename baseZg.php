@@ -2,6 +2,7 @@
 namespace zinux\zg;
 require_once dirname(__FILE__)."/../baseZinux.php";
 defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
+defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
 defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
 defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux.cache");
 defined("RUNNING_ENV") ||  define("RUNNING_ENV", "DEVELOPMENT");
@@ -60,5 +61,34 @@ abstract class baseZg extends \zinux\baseZinux
             echo "<br />";
         
         return $this;
+    }
+    public function GetStatus()
+    {
+        if(file_exists("./.zg.cfg"))
+            return unserialize(file_get_contents("./.zg.cfg"));
+        return null;
+    }
+    
+    public function CreateStatusFile($project_name)
+    {
+        $s = new \zinux\zg\vendor\status;
+        $s->project_name = $project_name;
+        return file_put_contents("./$project_name/.zg.cfg", serialize($s), LOCK_EX);
+    }
+    
+    public function SaveStatus(\zinux\zg\vendor\status $s)
+    {
+        return file_put_contents("./.zg.cfg", serialize($s), LOCK_EX);
+    }
+    public function CheckZG($throw_exception = 1)
+    {
+        if(!$this->GetStatus())
+        {
+            if($throw_exception)
+                throw new \zinux\kernel\exceptions\invalideOperationException("The project file not found ....");
+            else
+                return false;
+        }
+        return true;
     }
 }

@@ -5,7 +5,6 @@ class status extends baseOperator
 {
     public function show($args)
     {
-        $this->CheckProject();
         $this->cout("Outputing project status file ...")->cout();
         foreach($this->GetStatus() as $key => $value)
         {
