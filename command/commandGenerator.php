@@ -10,32 +10,17 @@ class commandGenerator extends baseCommandGenerator
 {
     public function Generate()
     {
-        die(ZG_ROOT);
-        $p = \zinux\kernel\utilities\fileSystem::resolve_path(dirname(__FILE__).'/subcommands');
+        $p = \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT.'/resources/command');
         if(!$p)
             throw new \Exception("No command directory found");
         $commands = "{";
         foreach(array_filter(glob($p."/*.sc"), 'is_file') as $file)
         {
             $file_name = basename($file, ".sc");
-            $commands.="\"$file_name\":".file_get_contents($file);
+            $commands.="\"$file_name\":".file_get_contents($file).",";
         }
-        $commands.="}";
-        $commands = '{
-    "repositories": {
-        {
-            "type": "pear",
-            "url": "http://pear2.php.net"
-        }
-    },
-    "require": {
-        "pear-pear2/PEAR2_Text_Markdown": "*",
-        "pear-pear2/PEAR2_HTTP_Request": "*"
-    }
-}';
-        echo $commands;
-        echo "JSON";
-        \zinux\kernel\utilities\debug::_var(json_decode($commands));
+        $commands = preg_replace("#,$#i","}", $commands);
+        return json_decode($commands);
         
     }
 }
