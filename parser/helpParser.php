@@ -47,7 +47,10 @@ class helpParser extends baseParser
         if(!(isset($content->title) || isset($content->help))) return;
         $this ->cout()
                 ->cout($content->title, 1, self::cyan)
-                ->cout(self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->command), 2)
-                ->cout($content->help->detail, 3);
+                ->cout(self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->command), 2, self::defColor, 0);
+        if(isset($content->help->alias))
+            $this->cout(" [ ".self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->alias).self::defColor." ]", 0, self::defColor, 0);
+        $this->cout();
+        $this ->cout($content->help->detail, 3);
     }
 }
