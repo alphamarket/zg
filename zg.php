@@ -20,11 +20,13 @@ class zg extends zinux\zg\baseZg
     
     public function __construct($argv)
     {
-        # getting ride of $HOME/.zinux/zinux/zg/bin/../zg.php arg.
-        unset($argv[0]);
-        $this->args = $argv;
-        # normalize args array
-        \zinux\kernel\utilities\_array::array_normalize($this->args);
+        if($argv[0] == $_SERVER['SCRIPT_NAME'])
+            array_shift($argv);
+        # normalize the array
+        foreach($argv as $key=> $value)
+        {
+            $this->args[$key] = strtolower($value);
+        }
         # create a parser instance
         $parser = new \zinux\zg\parser\parser($this->args, new zinux\zg\command\commandGenerator());
         # run the parser instance

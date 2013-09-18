@@ -9,7 +9,15 @@ class parser extends baseParser
 {    
     public function Run()
     {
-        \zinux\kernel\utilities\debug::_var($this->command_generator->Generate());
-        \zinux\kernel\utilities\debug::_var($this);
+        if(!count($this->args))
+            $this->args[] = "help";
+        if($this->args[0]=="help")
+        {
+            array_shift($this->args);
+            $help  = new helpParser($this->args, $this->command_generator);
+            $help->Run();
+            return;
+        }
+        echo "PRSING";
     }
 }
