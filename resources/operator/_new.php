@@ -5,8 +5,7 @@ class _new extends baseOperator
 {
     public function project($args)
     {
-        if(!count($args))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Empty argument passed ...");
+        $this->restrictArgCount($args);
         
         $pName = implode("-", $args);
         
@@ -32,7 +31,25 @@ class _new extends baseOperator
                 "chmod -R 775 $pName", 
                 "chmod 777 $pName"
         );
+        /**
+         * instead of copying templates directly we can do following processes
+         * + Create appliaction/boostrap
+         * + Creat application/routes
+         * + Crate public_html
+         * + Create defaultModule
+         *      + COPYING defaultBootstrap.php correspondingly
+         * + COPYING ModuleController.php directly
+         * + Creating IndexController
+         * + Creating IndexAction in IndexController 
+         *      + Creating IndexView.phtml correspondingly
+         * + COPYING defaultLayout.phtml directly
+         */
         $this->Run($opt);
         $this->CreateStatusFile($pName);
+    }
+    
+    public function module($args)
+    {
+        $this->restrictArgCount($args, 1);
     }
 }
