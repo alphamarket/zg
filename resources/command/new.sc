@@ -5,13 +5,13 @@
         "detail":"Create a new zinux project", 
         "instance":
         {
-            "class":"",
-            "method":""
+            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "method":"project"
         },
         "help":
         {
-            "command":"",
-            "detail":""
+            "command":"zf new project $project_name",
+            "detail":"Creates a new zinux project"
         }
     }
 }

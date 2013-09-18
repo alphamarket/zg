@@ -19,8 +19,10 @@ class commandGenerator extends baseCommandGenerator
             $file_name = basename($file, ".sc");
             $commands.="\"$file_name\":".file_get_contents($file).",";
         }
-        $commands = preg_replace("#,$#i","}", $commands);
-        return json_decode($commands);
-        
+        $commands = preg_replace("#(},)?$#i","}", $commands);
+        $json = json_decode($commands);
+        if(!$json)
+            throw new \Exception("Json decoded value is empty");
+        return $json;
     }
 }
