@@ -41,5 +41,4 @@ else
     PHP_DIR="$(dirname "$SELF_LINK")"
 fi
 
-echo "$PHP_BIN" -d safe_mode=Off -f "$PHP_DIR/../zg.php" -- "$@"
-
+$PHP_BIN -d safe_mode=Off -f "$PHP_DIR/../zg.php" -- "$@"
