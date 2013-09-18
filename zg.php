@@ -26,7 +26,7 @@ class zg extends zinux\zg\baseZg
         # normalize args array
         \zinux\kernel\utilities\_array::array_normalize($this->args);
         # create a parser instance
-        $parser = new \zinux\zg\parser\parser($this->args, new zinux\zg\commands\commandGenerator());
+        $parser = new \zinux\zg\parser\parser($this->args, new zinux\zg\command\commandGenerator());
         # run the parser instance
         $parser->Run();
     }
@@ -38,7 +38,7 @@ try
     if(!count($argv))
         throw new Exception("No argument supplied ...");
     
-    \zinux\kernel\caching\fileCache::RegisterCachePath(getcwd()."/bin/cache");
+    \zinux\kernel\caching\fileCache::RegisterCachePath(ZG_ROOT."/bin/cache");
     /**
      * Execute the zinux generator
      */

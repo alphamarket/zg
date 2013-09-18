@@ -6,10 +6,11 @@ namespace zinux\zg\command;
  *
  * @author dariush
  */
-class commandGenerator extends \zinux\zg\baseZg
+class commandGenerator extends baseCommandGenerator
 {
     public function Generate()
     {
+        die(ZG_ROOT);
         $p = \zinux\kernel\utilities\fileSystem::resolve_path(dirname(__FILE__).'/subcommands');
         if(!$p)
             throw new \Exception("No command directory found");
