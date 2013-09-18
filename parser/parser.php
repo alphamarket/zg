@@ -11,6 +11,5 @@ class parser extends baseParser
     {
         \zinux\kernel\utilities\debug::_var($this->command_generator->Generate());
         \zinux\kernel\utilities\debug::_var($this);
-        
     }
 }

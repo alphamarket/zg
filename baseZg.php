@@ -11,5 +11,50 @@ defined("RUNNING_ENV") ||  define("RUNNING_ENV", "DEVELOPMENT");
  */
 abstract class baseZg extends \zinux\baseZinux
 {
+    const defColor = "\033[m";
+    // blacks
+    const black = "\033[30m";
+    const Black = "\033[1;30m";
+    const bgBlack = "\033[40m";
+    // reds
+    const red = "\033[31m";
+    const Red = "\033[1;31m";
+    const bgRed = "\033[41m";
+    // greens
+    const green = "\033[32m";
+    const Green = "\033[1;32m";
+    const bgGreen = "\033[42m";
+    // yellows
+    const yellow = "\033[33m";
+    const Yellow = "\033[1;33m";
+    const bgYellow = "\033[43m";
+    // blues
+    const blue = "\033[34m";
+    const Blue = "\033[1;34m";
+    const bgBlue = "\033[44m";
+    // magentas
+    const magenta = "\033[35m";
+    const Magenta = "\033[1;35m";
+    const bgMagenta = "\033[45m";
+    // cyans
+    const cyan = "\033[36m";
+    const Cyan = "\033[1;36m";
+    const bgCyan = "\033[46m";
+    // whites
+    const white = "\033[37m";
+    const White = "\033[1;37m";
+    const bgWhite = "\033[47m";
+            
     public function Initiate(){}
+    
+    public function cout($content = "<br />", $tag_index = 0, $color = self::defColor, $auto_break = 1)
+    {
+        while($tag_index--)
+            echo "    ";
+        
+        echo $color.$content.self::defColor;
+        
+        if($auto_break)
+            echo "<br />";
+    }
 }
