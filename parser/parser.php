@@ -12,7 +12,31 @@ class parser extends baseParser
         if(!count($this->args))
             $this->args[] = "help";
         
-        $parsed_string = "zg";
+        $current_parsing = $this->getOperator($this->args);
+        
+        if(!isset($current_parsing->instance->class) || !isset($current_parsing->instance->method))
+            throw new \zinux\kernel\exceptions\invalideOperationException
+                ("The {$this->parsed_string} metadata structure is mis-configured, target action's {class} or {method} has not been specified ...");
+        
+        $c = $current_parsing->instance->class;
+        $c = new $c;
+        $rf = new \ReflectionClass($c);
+        
+        if(!$rf ->isSubclassOf("\\zinux\\zg\\resources\\operator\\baseOperator"))
+            throw new \zinux\kernel\exceptions\invalideOperationException
+                ("Target class {$rf->getName()} is not subclass of '\\zinux\\zg\\resources\\operator\\baseOperator'");
+        
+        if(!method_exists($c, $current_parsing->instance->method) || !is_callable(array($c, $current_parsing->instance->method)))
+            throw new \zinux\kernel\exceptions\invalideOperationException
+                ("Method '{$current_parsing->instance->method}' does not exists or not accessible in '{$current_parsing->instance->class}'");
+
+        # execute the target operation's action
+        $c->{$current_parsing->instance->method}($this->args);
+    }
+    
+    public function getOperator()
+    {
+        $this->parsed_string = "zg";
         $current_parsing = $this->command_generator->Generate();
         while($current_parsing)
         {
@@ -35,24 +59,11 @@ class parser extends baseParser
 __NEXT_ROUND:
             $current_parsing = $current_parsing->{$this->args[0]};
 __NEXT_ARG:
-            $parsed_string.=(" ".array_shift($this->args));
+            $this->parsed_string.=(" ".array_shift($this->args));
         }
 __ERROR:
-        throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid command '".self::yellow."$parsed_string ".implode(" ", $this->args).self::defColor."'");
+        throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid command '".self::yellow."{$this->parsed_string} ".implode(" ", $this->args).self::defColor."'");
 __EXECUTE:
-        if(!isset($current_parsing->instance->class) || !isset($current_parsing->instance->method))
-            throw new \zinux\kernel\exceptions\invalideOperationException
-                ("The $parsed_string metadata structure is mis-configured, target action's {class} or {method} has not been specified ...");
-        $c = $current_parsing->instance->class;
-        $c = new $c;
-        $rf = new \ReflectionClass($c);
-        if(!$rf ->isSubclassOf("\\zinux\\zg\\resources\\operator\\baseOperator"))
-            throw new \zinux\kernel\exceptions\invalideOperationException
-                ("Target class {$rf->getName()} is not subclass of '\\zinux\\zg\\resources\\operator\\baseOperator'");
-        if(!method_exists($c, $current_parsing->instance->method) || !is_callable(array($c, $current_parsing->instance->method)))
-            throw new \zinux\kernel\exceptions\invalideOperationException
-                ("Method '{$current_parsing->instance->method}' does not exists or not accessible in '{$current_parsing->instance->class}'");
-        # execute the target operation's action
-        $c->{$current_parsing->instance->method}($this->args);
+        return $current_parsing;
     }
 }
