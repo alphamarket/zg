@@ -9,10 +9,13 @@ class helpParser extends baseParser
 {    
     public function Run()
     {
-        $this->restrictArgCount($this->args, 1, 0);
         $arg = null;
         if(count($this->args))
-                $arg = $this->args[0];
+        {
+            $n = new parser($this->args, $this->command_generator);
+            $this->printHelp($n->getOperator());
+            return;
+        }
         $stack = array(array("", $this->command_generator->Generate()));
         while(count($stack))
         {
@@ -25,11 +28,6 @@ class helpParser extends baseParser
                 $tmps = array();
                 foreach($value as $_key => $sub_value)
                 {
-                    if(strtolower($_key) == $arg || (isset($sub_value->alias) && $arg == strtolower($sub_value->alias)))
-                    {
-                        $this->printHelp($sub_value,1);
-                        return;
-                    }
                     array_push($tmps, array($_key, $sub_value));
                 }
                 while(count($tmps))
