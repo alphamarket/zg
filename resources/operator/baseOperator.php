@@ -9,7 +9,7 @@ abstract class baseOperator extends \zinux\zg\baseZg
         if(!$suppress_header_text)
             $this->PrintTItleString();
     }
-    public function Run($opt, $record_history = 1)
+    public function Run($opt, $record_history = 1, $new_line = 1)
     {
         $s = $this->GetStatus();
         $this->cout("", 1,self::defColor, 0);
@@ -27,6 +27,8 @@ abstract class baseOperator extends \zinux\zg\baseZg
         }
         if($s)
             $this->SaveStatus($s);
+        if($new_line)
+            $this->cout();
     }
     
     public function PrintTItleString()

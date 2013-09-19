@@ -51,7 +51,6 @@ class _new extends baseOperator
         $c = new \zinux\zg\vendor\creator;
         $module = $c->createModule("default", $pName);
         $controller = $c->createController("index", $module, $pName);
-        new \zinux\zg\vendor\createAction($controller, new \zinux\zg\vendor\item("test", "testAction"), $pName);
     }
     
     public function module($args)
@@ -83,5 +82,30 @@ class _new extends baseOperator
             throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
         $c = new \zinux\zg\vendor\creator;
         $c->createController($args[0], $s->modules->modules[$args[1]]);
+    }
+    
+    public function action($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args, 3,1);
+        if(count($args)==1)
+            $args[] = "index";
+        if(count($args)==2)
+            $args[] = "default";
+        
+        $args[0] = preg_replace("#(\w+)action#i", "$1", $args[0])."Action";
+        $args[1] = preg_replace("#(\w+)controller$#i", "$1", $args[1])."Controller";
+        $args[2] = preg_replace("#(\w+)module$#i", "$1", $args[2])."Module";
+        $s = $this->GetStatus();
+        \zinux\kernel\utilities\debug::_var($args,0);
+        if(!isset($s->modules->modules[$args[2]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[2]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+        if(!isset($s->modules->modules[$args[2]]->controller[$args[1]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[2]}/{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+            
+        new \zinux\zg\vendor\createAction(
+            $s->modules->modules[$args[2]]->controller[$args[1]], 
+            new \zinux\zg\vendor\item($args[0], $args[0])
+        );
     }
 }
