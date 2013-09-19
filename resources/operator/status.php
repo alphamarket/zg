@@ -7,12 +7,21 @@ class status extends baseOperator
     {
         if(!$this->CheckZG())
             return;
-        $this->cout("Outputing project status file ...")->cout();
-        foreach($this->GetStatus() as $key => $value)
+        $this->cout("Outputing project status file ...");
+        $this->RecursivePrint($this->GetStatus());
+    }
+    private function RecursivePrint($status, $indent = 0)
+    {
+        $this->cout()->cout("{", $indent);
+        foreach($status as $key => $value)
         {
-            $this ->cout($key, 1, self::yellow, 0)
-                    ->cout(" : ", 0, self::defColor, 0)
-                    ->cout($value, 0, self::cyan);
+            $this->cout($key, $indent+1, self::yellow, 0)
+                    ->cout(" : ", 0, self::defColor, 0);
+            if(!$this->is_iterable($value))
+                $this ->cout($value, 0, self::cyan);
+            else
+                $this->RecursivePrint($value, $indent+1);
         }
+        $this->cout("}", $indent);
     }
 }

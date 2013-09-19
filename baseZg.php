@@ -62,23 +62,23 @@ abstract class baseZg extends \zinux\baseZinux
         
         return $this;
     }
-    public function GetStatus()
+    public function GetStatus($path = ".")
     {
-        if(file_exists("./.zg.cfg"))
-            return unserialize(file_get_contents("./.zg.cfg"));
+        if(file_exists("$path/.zg.cfg"))
+            return unserialize(file_get_contents("$path/.zg.cfg"));
         return null;
     }
     
     public function CreateStatusFile($project_name)
     {
         $s = new \zinux\zg\vendor\status;
-        $s->project_name = $project_name;
+        $s->project = new vendor\Item("project", realpath("./$project_name/"));
         return file_put_contents("./$project_name/.zg.cfg", serialize($s), LOCK_EX);
     }
     
     public function SaveStatus(\zinux\zg\vendor\status $s)
     {
-        return file_put_contents("./.zg.cfg", serialize($s), LOCK_EX);
+        return file_put_contents("{$s->project->path}/.zg.cfg", serialize($s), LOCK_EX);
     }
     public function CheckZG($throw_exception = 0)
     {
@@ -102,4 +102,8 @@ abstract class baseZg extends \zinux\baseZinux
         if(($min<0 && !count($args)) || (!(count($args) >= $min)))
             throw new \zinux\kernel\exceptions\invalideArgumentException("Empty argument passed ...");  
     }
+    public function is_iterable($var) 
+    {
+        return (is_array($var) || $var instanceof \Traversable || $var instanceof \stdClass);
+    }  
 }
