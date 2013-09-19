@@ -8,6 +8,8 @@ class _new extends baseOperator
         $this->restrictArgCount($args);
         
         $pName = implode("-", $args);
+        if(file_exists($pName))
+            throw new \zinux\kernel\exceptions\invalideArgumentException("A folder named '$pName' already exists...");
         $this->CreateStatusFile($pName);
         $s = $this->GetStatus($pName);
         $s->modules->meta = new \zinux\zg\vendor\Item("modules", $s->project->path."/modules", $s->project);
