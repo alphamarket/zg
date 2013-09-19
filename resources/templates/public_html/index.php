@@ -19,7 +19,7 @@ try
             # setting cache directory
             ->SetCacheDirectory("../cache")
             # setting router's bootstrap which will route /note/:id:/edit => /note/edit/:id:
-            ->SetRouterBootstrap(new \application\someRoutes)
+            ->SetRouterBootstrap(new \application\appRoutes)
             # set application's bootstrap 
             ->SetBootstrap(new application\appBootstrap)
             # init the application's optz.
