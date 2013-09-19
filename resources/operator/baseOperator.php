@@ -28,8 +28,7 @@ abstract class baseOperator extends \zinux\zg\baseZg
         if($s)
             $this->SaveStatus($s);
         
-        $this ->cout()
-                ->cout("[ DONE ]", 0, self::yellow);
+        $this ->cout();
     }
     
     public function PrintTItleString()

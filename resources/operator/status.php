@@ -5,7 +5,7 @@ class status extends baseOperator
 {
     public function show($args)
     {
-        $this->restrictArgCount($args, 1);
+        $this->restrictArgCount($args, 1, 0);
         
         if(!$this->CheckZG())
             return;

@@ -1,12 +1,11 @@
 <?php
 namespace zinux\zg\vendor;
-
 /**
- * Description of Item
+ * Description of createModuleBoostrap
  *
  * @author dariush
  */
-class Item extends \zinux\zg\baseZg
+class item extends \zinux\zg\baseZg
 {
     public $name;
     public $path;
@@ -15,5 +14,6 @@ class Item extends \zinux\zg\baseZg
     {
         $this->name = $name;
         $this->path = $path;
+        $this->time = date("M-d-Y H:i:s");
     }
 }
