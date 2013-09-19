@@ -1,17 +1,30 @@
 <?php
 namespace zinux\zg\vendor;
 /**
- * Description of createModuleBoostrap
+ * Description of createmoduleBootstrap
  *
  * @author dariush
  */
-class moduleBoostrap extends \zinux\zg\baseZg
+class moduleBootstrap extends \zinux\zg\baseZg
 {
     public function __construct(Item $module, Item $moduleBootstrap, $project_path = ".")
     {
+        $moduleBootstrap->name = preg_replace("#bootstrap$#i","", $moduleBootstrap->name)."Bootstrap";
+        $this ->cout("Creating new module '", 1,  self::defColor, 0)
+                ->cout($moduleBootstrap->name, 0, self::yellow, 0)
+                ->cout("' at '",0,self::defColor, 0)
+                ->cout(dirname($moduleBootstrap->path), 0, self::yellow, 0)
+                ->cout("'.");
+        $ns = preg_replace(
+            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i"),
+            array("", "$1\\"), 
+            str_replace(dirname($module->parent->path), "", dirname($moduleBootstrap->path))
+        );
         $mbc = "<?php
-namespace modules\\{$module->name};
-
+namespace $ns;
+/**
+* The {$module->name}'s Bootstrapper
+*/
 class {$moduleBootstrap->name}
 {
     /**

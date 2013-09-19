@@ -13,7 +13,7 @@ class _new extends baseOperator
         $s->modules->meta = new \zinux\zg\vendor\Item("modules", $s->project->path."/modules", $s->project);
         $this->SaveStatus($s);
         
-        $this ->cout("Creating new project '", 0, self::defColor, 0)
+        $this ->cout("Creating new project '", 1, self::defColor, 0)
                 ->cout("$pName", 0, self::yellow, 0)
                 ->cout("' ...");
         $vpname = str_replace(" ", "-", $pName);
@@ -51,6 +51,8 @@ class _new extends baseOperator
         $c = new \zinux\zg\vendor\creator;
         $module = $c->createModule("default", $pName);
         $controller = $c->createController("index", $module, $pName);
+        $appBootstrap =  $c->createAppBootstrap("app", $pName);
+        $appRoutes =  $c->createAppRoutes("app", $pName);
     }
     
     public function module($args)

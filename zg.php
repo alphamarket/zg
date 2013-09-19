@@ -69,22 +69,6 @@ class zg extends \zinux\zg\baseZg
                 $zg->cout("[ Aborting ]", 0, self::red);
                 return false;
             }
-            $clean_cache = array(
-                    "zg", 
-                    "test", 
-                    "php-check",
-                    "CondidatePN.md",
-                    "zinux-install"
-            );
-            
-            foreach($clean_cache as $value)
-            {
-                $value = \zinux\kernel\utilities\fileSystem::resolve_path(Z_CACHE_ROOT.DIRECTORY_SEPARATOR.$value);
-                if($value)
-                {
-                    system("rm -fr $value");
-                }
-            }
         }
         return true;
     }

@@ -57,5 +57,41 @@
                 "alias": "zg n a $controller_name ($controller_name : index) ($module_name : default)",
                 "detail":"Creates a new controller for module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
             }
+        },
+        "application":
+        {
+            "alias":"app",
+            "bootstrap":
+            {
+                "title":"Creates a new bootstrap file for application", 
+                "alias":"b",
+                "instance":
+                {
+                    "class":"\\zinux\\zg\\resources\\operator\\new_app",
+                    "method":"bootstrap"
+                },
+                "help":
+                {
+                    "command":"zg new application boostrap $bootstrap_name",
+                    "alias": "zg n app b $bootstrap_name",
+                    "detail":"Creates a bootstrap file with given name"
+                }
+            },
+            "routes":
+            {
+                "title":"Creates a new routes file for application", 
+                "alias":"r",
+                "instance":
+                {
+                    "class":"\\zinux\\zg\\resources\\operator\\new_app",
+                    "method":"routes"
+                },
+                "help":
+                {
+                    "command":"zg new application routes $routes_name",
+                    "alias": "zg n app r $routes_name",
+                    "detail":"Creates a routes file with given name"
+                }
+            }
         }
 }
