@@ -9,7 +9,7 @@
         "help":
         {
             "command":"zg status",
-            "alias": "zf s",
+            "alias": "zg s",
             "detail":"Showes project status"
         },
         "options":

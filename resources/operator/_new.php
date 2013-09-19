@@ -10,7 +10,7 @@ class _new extends baseOperator
         $pName = implode("-", $args);
         $this->CreateStatusFile($pName);
         $s = $this->GetStatus($pName);
-        $s->modules->meta = new \zinux\zg\vendor\Item("module", $s->project->path."/modules", $s->project);
+        $s->modules->meta = new \zinux\zg\vendor\Item("modules", $s->project->path."/modules", $s->project);
         $this->SaveStatus($s);
         
         $this ->cout("Creating new project '", 0, self::defColor, 0)
@@ -34,8 +34,6 @@ class _new extends baseOperator
                 "chmod -R 775 $pName", 
                 "chmod 777 $pName"
         );
-        $c = new \zinux\zg\vendor\creator;
-        $c->createModule("default", $pName);
         /**
          * instead of copying templates directly we can do following processes
          * + Create appliaction/boostrap
@@ -50,6 +48,9 @@ class _new extends baseOperator
          * + COPYING defaultLayout.phtml directly
          */
         $this->Run($opt, 0);
+        $c = new \zinux\zg\vendor\creator;
+        $module = $c->createModule("default", $pName);
+        $c->createController("index", $module, $pName);
     }
     
     public function module($args)
@@ -65,5 +66,21 @@ class _new extends baseOperator
                 
         $c = new \zinux\zg\vendor\creator;
         $c->createModule($args[0]);
+    }
+    
+    public function controller($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args, 2,1);
+        if(count($args)==1)
+            $args[] = "default";
+        # fail safe
+        $this->restrictArgCount($args, 2,2);
+        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $s = $this->GetStatus();
+        if(!isset($s->modules->modules[$args[1]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+        $c = new \zinux\zg\vendor\creator;
+        $c->createController($args[0], $s->modules->modules[$args[1]]);
     }
 }

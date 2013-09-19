@@ -22,7 +22,7 @@ class creator extends \zinux\zg\resources\operator\baseOperator
             throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$name}' already exists ...");
             
         $module = new \zinux\zg\vendor\item("{$name}Module", "{$s->modules->meta->path}/{$name}Module", $s->modules->meta);
-        $s->modules->modules[] = $module;
+        $s->modules->modules[$module->name] = $module;
         $this->SaveStatus($s);
         
         $this->Run(array(
@@ -36,6 +36,14 @@ class creator extends \zinux\zg\resources\operator\baseOperator
                 "chmod 775 -R {$module->path}"    
         ));
         new \zinux\zg\vendor\moduleBoostrap($module, new \zinux\zg\vendor\Item("{$name}Bootstrap", $module->path."/{$name}Bootstrap.php"), $projectDir);
+        return $module;
+    } 
+    public function createController($name, Item $module ,$projectDir = ".")
+    {
+        $s = $this->GetStatus($projectDir);
+        $controller = new \zinux\zg\vendor\Item("{$name}Controller", $module->path."/controllers/{$name}Controller.php");
+        new \zinux\zg\vendor\createController($module, $controller, $projectDir);
+        return $controller;
     }
 }
 

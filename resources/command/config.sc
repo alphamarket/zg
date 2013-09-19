@@ -9,7 +9,7 @@
         "help":
         {
             "command":"zg config $options",
-            "alias": "zf c $options",
+            "alias": "zg c $options",
             "detail":"Config the project with given options"
         }, 
         "options":
@@ -29,7 +29,7 @@
                 "help":
                 {
                     "command":"zg config show",
-                    "alias": "zf c s",
+                    "alias": "zg c s",
                     "detail":"Output configurations for current project"
                 }
         }

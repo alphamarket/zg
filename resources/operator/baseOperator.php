@@ -27,8 +27,6 @@ abstract class baseOperator extends \zinux\zg\baseZg
         }
         if($s)
             $this->SaveStatus($s);
-        
-        $this ->cout();
     }
     
     public function PrintTItleString()

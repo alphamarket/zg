@@ -5,35 +5,36 @@ namespace zinux\zg\vendor;
  *
  * @author dariush
  */
-class createController extends \zinux\zg\baseZg
+
+class createController extends \zinux\zg\resources\operator\baseOperator
 {
-    public function __construct(Item $module, Item $moduleBootstrap)
+    public function __construct(Item $module, Item $controller, $project_path = ".")
     {
         $mbc = "<?php
-namespace modules\\{$module->name};
+namespace {$module->parent->name}\\{$module->name}\\controllers;
 
-class {$moduleBootstrap->name}
+
+/**
+ * IndexController
+ * @author Zinux Generator <b.g.dariush@gmail.com>
+ */
+class ".preg_replace("#controller$#i","", $controller->name)."Controller extends \\zinux\\kernel\\controller\\baseController
 {
-    /**
-     * A pre-dispatch function
-     * @param \\zinux\\kernel\\routing\\request\\\$request
-     */
-    public function pre_CHECK(\\zinux\\kernel\\routing\\request\\\$request)
-    {
-    }
-    /**
-     * A post-dispatch function
-     * @param \\zinux\\kernel\\routing\\request\\\$request
-     */
-    public function post_CHECK(\\zinux\\kernel\\routing\\request\\\$request)
-    {
-    }
-}";
-        file_put_contents($moduleBootstrap->path, $mbc);
-        $this->cout("+", 1, self::green);
-        $s = $this->GetStatus();
-        $s->boostraps->modules[] = $moduleBootstrap;
+}
+";
+        if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/views/view/"))
+            mkdir("{$module->path}/views/view/", 0775);
+            
+        $this->Run(array(
+                "mkdir {$module->path}/views/view/".preg_replace("#controller$#i","", $controller->name)
+        ));
+        file_put_contents($controller->path, $mbc);
+        $this->cout("+", 0, self::green);
+        $s = $this->GetStatus($project_path);
+        $controller->parent = $module;
+        $s->modules->modules[$module->name]->controller[$controller->name] = $controller;
         $this->SaveStatus($s);
+        new createAction($controller, new item("index", "IndexAction"), $project_path);
     }
 }
 

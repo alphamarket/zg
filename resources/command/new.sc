@@ -11,8 +11,8 @@
             },
             "help":
             {
-                "command":"zf new project $project_name",
-                "alias": "zf n p $project_name",
+                "command":"zg new project $project_name",
+                "alias": "zg n p $project_name",
                 "detail":"Creates a new zinux project"
             }
         },
@@ -26,8 +26,24 @@
             },
             "help":
             {
-                "command":"zf new module $module_name",
+                "command":"zg new module $module_name",
                 "detail":"Creates a new module for project"
+            }
+        },
+        "controller":
+        {
+            "title":"Add new module", 
+            "alias":"c",
+            "instance":
+            {
+                "class":"\\zinux\\zg\\resources\\operator\\_new",
+                "method":"controller"
+            },
+            "help":
+            {
+                "command":"zg new controller $controller_name ($module_name : default)",
+                "alias": "zg n c $controller_name ($module_name : default)",
+                "detail":"Creates a new controller for module, if no module name supplied 'defaultModule' will be targeted"
             }
         }
 }
