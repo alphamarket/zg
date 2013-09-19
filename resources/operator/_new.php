@@ -48,9 +48,6 @@ class _new extends baseOperator
         $this->CreateStatusFile($pName);
         $s = $this->GetStatus($pName);
         $s->modules = new \zinux\zg\vendor\Item("module", $s->project->path."/modules");
-        $s->controllers[] = new \zinux\zg\vendor\Item("ksnaksa0", "Sasa0");
-        $s->controllers[] = new \zinux\zg\vendor\Item("ksnaksa1", "Sasa1");
-        $s->controllers[] = new \zinux\zg\vendor\Item("ksnaksa2", "Sasa2");
         $this->SaveStatus($s);
     }
     
@@ -59,6 +56,5 @@ class _new extends baseOperator
         if(!$this->CheckZG())
             return;
         $this->restrictArgCount($args, 1);
-        
     }
 }

@@ -64,20 +64,32 @@ abstract class baseZg extends \zinux\baseZinux
     }
     public function GetStatus($path = ".")
     {
+        $s = NULL;
         if(file_exists("$path/.zg.cfg"))
-            return unserialize(file_get_contents("$path/.zg.cfg"));
-        return null;
+            $s =  unserialize(file_get_contents("$path/.zg.cfg"));
+        if(!$s)
+            return $s;
+        if(!isset($s->hs))
+            throw new \zinux\kernel\exceptions\invalideArgumentException("Hash-sum attrib is missing ....");
+        $hs = $s->hs;
+        unset($s->hs);
+        if($hs != \zinux\kernel\security\hash::Generate(serialize($s),1,1))
+            throw new \zinux\kernel\exceptions\invalideArgumentException("Hash-sum mis-matched ....");
+        return $s;
     }
     
     public function CreateStatusFile($project_name)
     {
         $s = new \zinux\zg\vendor\status;
         $s->project = new vendor\Item("project", realpath("./$project_name/"));
+        $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
         return file_put_contents("./$project_name/.zg.cfg", serialize($s), LOCK_EX);
     }
     
     public function SaveStatus(\zinux\zg\vendor\status $s)
     {
+        unset($s->hs);
+        $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
         return file_put_contents("{$s->project->path}/.zg.cfg", serialize($s), LOCK_EX);
     }
     public function CheckZG($throw_exception = 0)
