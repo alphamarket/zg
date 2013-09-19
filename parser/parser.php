@@ -20,8 +20,6 @@ class parser extends baseParser
                 goto __EXECUTE;
             if(!isset($current_parsing->{$this->args[0]}))
             {
-                if(isset($current_parsing->instance))
-                    goto __EXECUTE;
                 foreach($current_parsing as $key => $value)
                 {
                     if(isset($value->alias) && strtolower($value->alias) == $this->args[0])
@@ -30,10 +28,13 @@ class parser extends baseParser
                         goto __NEXT_ROUND;
                     }
                 }
+                if(isset($current_parsing->instance))
+                    goto __EXECUTE;
                 goto __ERROR;
             }
 __NEXT_ROUND:
             $current_parsing = $current_parsing->{$this->args[0]};
+__NEXT_ARG:
             $parsed_string.=(" ".array_shift($this->args));
         }
 __ERROR:
@@ -48,9 +49,9 @@ __EXECUTE:
         if(!$rf ->isSubclassOf("\\zinux\\zg\\resources\\operator\\baseOperator"))
             throw new \zinux\kernel\exceptions\invalideOperationException
                 ("Target class {$rf->getName()} is not subclass of '\\zinux\\zg\\resources\\operator\\baseOperator'");
-        if(!method_exists($c, $current_parsing->instance->method))
+        if(!method_exists($c, $current_parsing->instance->method) || !is_callable(array($c, $current_parsing->instance->method)))
             throw new \zinux\kernel\exceptions\invalideOperationException
-                ("Method '{$current_parsing->instance->method}' does not exists in '{$current_parsing->instance->class}'");
+                ("Method '{$current_parsing->instance->method}' does not exists or not accessible in '{$current_parsing->instance->class}'");
         # execute the target operation's action
         $c->{$current_parsing->instance->method}($this->args);
     }

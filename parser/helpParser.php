@@ -9,18 +9,28 @@ class helpParser extends baseParser
 {    
     public function Run()
     {
-        $this->cout("Zinux Generator by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013", 0, self::yellow);
-        $stack = array($this->command_generator->Generate());
+        $this->restrictArgCount($this->args, 1, 0);
+        $arg = null;
+        if(count($this->args))
+                $arg = $this->args[0];
+        $stack = array(array("", $this->command_generator->Generate()));
         while(count($stack))
         {
             $value = array_pop($stack);
+            $key = $value[0];
+            $value = $value[1];
             if(!isset($value->title))
             {
-                if(!($value instanceof \stdClass)) continue;
+                if(!$this->is_iterable($value)) continue;
                 $tmps = array();
-                foreach($value as $sub_value)
+                foreach($value as $_key => $sub_value)
                 {
-                    array_push($tmps, $sub_value);
+                    if(strtolower($_key) == $arg || (isset($sub_value->alias) && $arg == strtolower($sub_value->alias)))
+                    {
+                        $this->printHelp($sub_value,1);
+                        return;
+                    }
+                    array_push($tmps, array($_key, $sub_value));
                 }
                 while(count($tmps))
                     array_push($stack, array_pop($tmps));
@@ -28,23 +38,22 @@ class helpParser extends baseParser
             else
             {
                  $tmps = array();
-                foreach($value as $key => $sub_value)
+                foreach($value as $_key => $sub_value)
                 {
-                    if(!($value instanceof \stdClass)) continue;
+                    if(!$this->is_iterable($value)) continue;
                     if($key!="instance" && $key!="help")
-                        array_push($tmps, $sub_value);
+                        array_push($tmps, array($_key, $sub_value));
                 }
                 while(count($tmps))
                     array_push($stack, array_pop($tmps));
-                
                 $this->printHelp($value);
             }
         }
     }
     
-    protected function printHelp($content)
+    protected function printHelp($content, $render_options = 0)
     {
-        if(!(isset($content->title) || isset($content->help))) return;
+        if(!(isset($content->title) && isset($content->help))) return;
         $this ->cout()
                 ->cout($content->title, 1, self::cyan)
                 ->cout(self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->command), 2, self::defColor, 0);
@@ -52,5 +61,16 @@ class helpParser extends baseParser
             $this->cout(" [ ".self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->alias).self::defColor." ]", 0, self::defColor, 0);
         $this->cout();
         $this ->cout($content->help->detail, 3);
+        
+        if($render_options && isset($content->options))
+        {
+            $this->cout("Options: ", 2, self::hiYellow);
+            foreach($content->options as $option => $exp)
+            {
+                $this ->cout($option, 3, self::yellow, 0)
+                        ->cout(" : ", 0, self::defColor, 0)
+                        ->cout($exp, 0, self::yellow);
+            }
+        }
     }
 }

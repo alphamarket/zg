@@ -3,14 +3,20 @@ namespace zinux\zg\resources\operator;
 
 abstract class baseOperator extends \zinux\zg\baseZg
 {    
-    public function Run($opt)
+    
+    public function __construct($suppress_header_text = 0)
+    {
+        if(!$suppress_header_text)
+            $this->PrintTItleString();
+    }
+    public function Run($opt, $record_history = 1)
     {
         $s = $this->GetStatus();
         $this->cout("", 1,self::defColor, 0);
         foreach($opt as $value)
         {
             system($value);
-            if($s)
+            if($record_history && $s && !isset($s->configs->skip_history))
             {
                 $h = new \stdClass();
                 $h->opt = $value;
@@ -24,5 +30,10 @@ abstract class baseOperator extends \zinux\zg\baseZg
         
         $this ->cout()
                 ->cout("[ DONE ]", 0, self::yellow);
+    }
+    
+    public function PrintTItleString()
+    {
+        $this->cout("Zinux Generator by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013", 0, self::yellow);
     }
 }

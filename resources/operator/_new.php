@@ -44,12 +44,37 @@ class _new extends baseOperator
          *      + Creating IndexView.phtml correspondingly
          * + COPYING defaultLayout.phtml directly
          */
-        $this->Run($opt);
+        $this->Run($opt, 0);
         $this->CreateStatusFile($pName);
+        $s = $this->GetStatus($pName);
+        $s->modules->meta = new \zinux\zg\vendor\Item("module", $s->project->path."/modules");
+        $this->SaveStatus($s);
     }
     
     public function module($args)
     {
+        if(!$this->CheckZG())
+            return;
+        
         $this->restrictArgCount($args, 1);
+        
+        $s = $this->GetStatus();
+        
+        if(!file_exists($s->modules->meta->path))
+            mkdir($s->modules->meta->path, 0775);
+        
+        if(\zinux\kernel\utilities\fileSystem::resolve_path("{$s->modules->meta->path}/{$args[0]}Module"))
+            throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$args[0]}' already exists ...");
+            
+        $module = new \zinux\zg\vendor\item("{$args[0]}Module", "{$s->modules->meta->path}/{$args[0]}Module");
+        $s->modules->modules[] = $module;
+        
+        $this ->cout("Creating new module '", 0, self::defColor, 0)
+                ->cout("{$module->name}", 0, self::yellow, 0)
+                ->cout("' ...");
+        $this->Run(array(
+                "mkdir {$module->path}",
+                "chmod 775 -R {$module->path}"    
+        ));
     }
 }

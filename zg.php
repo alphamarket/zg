@@ -18,6 +18,7 @@ class zg extends \zinux\zg\baseZg
     {
         system('clear');
         ob_start();
+        $zg = null;
         try
         {
             if(!count($argv))
@@ -34,11 +35,13 @@ class zg extends \zinux\zg\baseZg
         }
         catch(\Exception $e)
         {
-            echo "<br />Error occured ...<br />";
-            echo $e->getMessage()."<br />";
+            $zg ->cout("[ Error occured ]",0,self::red)
+                  ->cout($e->getMessage(), 1, self::yellow);
             if(RUNNING_ENV=="DEVELOPMENT")
             {
-                echo$e->getTraceAsString();
+                
+                $zg   ->cout(str_repeat("=", 60))
+                        ->cout(preg_replace("/([#]\d+)/i", "$1", $e->getTraceAsString()));
             }
         }
             $console_cont = preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""),ob_get_contents());
