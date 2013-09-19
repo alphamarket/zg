@@ -1,7 +1,7 @@
 <?php
 namespace zinux\zg\vendor;
 /**
- * Description of createModuleBoostrap
+ * Description of createmoduleBootstrap
  *
  * @author dariush
  */
@@ -11,7 +11,7 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
     public function __construct(Item $controller, Item $action, $project_path = ".")
     {
         $action->path = preg_replace("#(\w+)action$#i","$1", $action->name)."Action";
-        $this ->cout("Creating new action '",-0,  self::defColor, 0)
+        $this ->cout("Creating new action '",1,  self::defColor, 0)
                 ->cout($action->path, 0, self::yellow, 0)
                 ->cout("' in '",0,self::defColor, 0)
                 ->cout("\\{$controller->parent->parent->name}\\{$controller->parent->name}\\controllers\\{$controller->name}", 0, self::yellow, 0)

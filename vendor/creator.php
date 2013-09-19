@@ -1,7 +1,7 @@
 <?php
 namespace zinux\zg\vendor;
 /**
- * Description of createModuleBoostrap
+ * Description of createmoduleBootstrap
  *
  * @author dariush
  */
@@ -35,7 +35,7 @@ class creator extends \zinux\zg\resources\operator\baseOperator
                 "cd {$module->path}/views && mkdir layout",
                 "chmod 775 -R {$module->path}"    
         ));
-        new \zinux\zg\vendor\moduleBoostrap($module, new \zinux\zg\vendor\Item("{$name}Bootstrap", $module->path."/{$name}Bootstrap.php"), $projectDir);
+        new \zinux\zg\vendor\moduleBootstrap($module, new \zinux\zg\vendor\Item("{$name}Bootstrap", $module->path."/{$name}Bootstrap.php"), $projectDir);
         return $module;
     } 
     public function createController($name, Item $module ,$projectDir = ".")
@@ -45,6 +45,15 @@ class creator extends \zinux\zg\resources\operator\baseOperator
         $controller = new \zinux\zg\vendor\Item($name, $module->path."/controllers/{$name}.php");
         new \zinux\zg\vendor\createController($module, $controller, $projectDir);
         return $controller;
+    }
+    
+    public function createAppBootstrap($name, $projectDir = ".")
+    {
+        $s = $this->GetStatus($projectDir);
+        $name = preg_replace("#(\w+)bootstrap$#i","$1", $name)."Bootstrap";
+        $appbs = new \zinux\zg\vendor\Item($name, $s->project->path."/application/{$name}.php");
+        new \zinux\zg\vendor\appBootstrap($s->project, $appbs, $projectDir);
+        return $appbs;
     }
 }
 

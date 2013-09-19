@@ -1,7 +1,7 @@
 <?php
 namespace zinux\zg\vendor;
 /**
- * Description of createModuleBoostrap
+ * Description of createmoduleBootstrap
  *
  * @author dariush
  */
@@ -10,8 +10,9 @@ class createController extends \zinux\zg\resources\operator\baseOperator
 {
     public function __construct(Item $module, Item $controller, $project_path = ".")
     {
-        $this ->cout("Creating new controller '",-0,  self::defColor, 0)
-                ->cout(preg_replace("#controller$#i","", $controller->name)."Controller", 0, self::yellow, 0)
+        $controller->name = preg_replace("#controller$#i","", $controller->name)."Controller";
+        $this ->cout("Creating new controller '",1,  self::defColor, 0)
+                ->cout($controller->name, 0, self::yellow, 0)
                 ->cout("' at '",0,self::defColor, 0)
                 ->cout("{$module->parent->name}\\{$module->name}\\controllers", 0, self::yellow, 0)
                 ->cout("'.");

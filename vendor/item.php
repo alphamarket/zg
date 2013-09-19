@@ -1,7 +1,7 @@
 <?php
 namespace zinux\zg\vendor;
 /**
- * Description of createModuleBoostrap
+ * Description of createmoduleBootstrap
  *
  * @author dariush
  */
