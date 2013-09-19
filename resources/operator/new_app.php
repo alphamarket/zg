@@ -19,10 +19,10 @@ class new_app extends baseOperator
         if(!$this->CheckZG()) return;
         $this->restrictArgCount($args,1,1);
         $s = $this->GetStatus();
-        $args[0] = preg_replace("#(\w+)bootstrap$#i","$1", $args[0])."Bootstrap";
+        $args[0] = preg_replace("#(\w+)routes$#i","$1", $args[0])."Routes";
         if(isset($s->project->bootstraps[$args[0]]))
-            throw new \zinux\kernel\exceptions\notFoundException("Application bootstrap '{$args[0]}' already exists in zg manifest!<br />    Try 'zg reload' command!");
+            throw new \zinux\kernel\exceptions\notFoundException("Application routes '{$args[0]}' already exists in zg manifest!<br />    Try 'zg reload' command!");
         $c = new \zinux\zg\vendor\creator();
-        $appBootstrap =  $c->createAppBootstrap($args[0]);
+        $appRoutes =  $c->createAppRoutes($args[0]);
     }
 }
