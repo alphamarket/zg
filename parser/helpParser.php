@@ -13,7 +13,7 @@ class helpParser extends baseParser
         if(count($this->args))
         {
             $n = new parser($this->args, $this->command_generator);
-            $this->printHelp($n->getOperator());
+            $this->printHelp($n->getOperator(), 1);
             return;
         }
         $stack = array(array("", $this->command_generator->Generate()));
