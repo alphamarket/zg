@@ -13,13 +13,18 @@ class createController extends \zinux\zg\resources\operator\baseOperator
         $mbc = "<?php
 namespace {$module->parent->name}\\{$module->name}\\controllers;
 
-
+class foo{}
 /**
  * IndexController
  * @author Zinux Generator <b.g.dariush@gmail.com>
  */
 class ".preg_replace("#controller$#i","", $controller->name)."Controller extends \\zinux\\kernel\\controller\\baseController
 {
+    public function IndexAction()
+    {
+    #knsaknsa
+    \$kdsakn  = 1;
+    }
 }
 ";
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/views/view/"))
