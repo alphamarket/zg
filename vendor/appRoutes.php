@@ -1,21 +1,16 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
+namespace zinux\zg\vendor;
 /**
  * Description of appRoutes
  *
  * @author dariush
  */
-class appRoutes extends zinux\zg\baseZg
+class appRoutes extends \zinux\zg\baseZg
 {
     public function __construct(Item $application, Item $appRoutes, $project_path = ".")
     {
-        $appRoutes->name = preg_replace("#(\w+)Routes$#i","$1", $appRoutes->name)."Routes";
-        $this ->cout("Creating new application routes'", 1,  self::defColor, 0)
+        $appRoutes->name = preg_replace("#(\w+)routes$#i","$1", $appRoutes->name)."Routes";
+        $this ->cout("Creating new application routes '", 1,  self::defColor, 0)
                 ->cout($appRoutes->name, 0, self::yellow, 0)
                 ->cout("' at '",0,self::defColor, 0)
                 ->cout(dirname($appRoutes->path), 0, self::yellow, 0)
@@ -48,12 +43,12 @@ class {$appRoutes->name} extends \\zinux\\kernel\\routing\\routerBootstrap
          */
         #\$this->addRoute(\"/foo/$1/delete$2\",\"/foo/delete/$1$2\");
     }
-";
-        file_put_contents($appBootstrap->path, $mbc);
+}";
+        file_put_contents($appRoutes->path, $mbc);
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
-        $appBootstrap->parent = $application;
-        $s->project->bootstraps[$appBootstrap->name]  = $appBootstrap;
+        $appRoutes->parent = $application;
+        $s->project->bootstraps[$appRoutes->name]  = $appRoutes;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

@@ -52,6 +52,7 @@ class _new extends baseOperator
         $module = $c->createModule("default", $pName);
         $controller = $c->createController("index", $module, $pName);
         $appBootstrap =  $c->createAppBootstrap("app", $pName);
+        $appRoutes =  $c->createAppRoutes("app", $pName);
     }
     
     public function module($args)
