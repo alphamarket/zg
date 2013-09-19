@@ -118,4 +118,17 @@ abstract class baseZg extends \zinux\baseZinux
     {
         return (is_array($var) || $var instanceof \Traversable || $var instanceof \stdClass);
     }  
+    public function has_arg($args, $value)
+    {
+        if(!$this->is_iterable($args))
+            return false;
+        
+        foreach($args as $_value)
+        {
+            if(strtolower($_value) == strtolower($value))
+                return true;
+        }
+        
+        return false;
+    }
 }

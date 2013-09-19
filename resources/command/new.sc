@@ -1,5 +1,10 @@
 {
         "alias":"n",
+        "instance":
+        {
+            "class":"\\zinux\\zg\\resources\\operator\\status",
+            "method":"l"
+        },
         "project":
         {
             "title":"Create new project",
@@ -29,5 +34,13 @@
                 "command":"zf new module $module_name",
                 "detail":"Creates a new module for project"
             }
+        },
+        "t":
+        {
+                "instance":
+                {
+                    "class":"\\zinux\\zg\\resources\\operator\\status",
+                    "method":"l"
+                }
         }
 }

@@ -34,6 +34,7 @@ class parser extends baseParser
             }
 __NEXT_ROUND:
             $current_parsing = $current_parsing->{$this->args[0]};
+__NEXT_ARG:
             $parsed_string.=(" ".array_shift($this->args));
         }
 __ERROR:

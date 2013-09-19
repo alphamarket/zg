@@ -5,10 +5,19 @@ class status extends baseOperator
 {
     public function show($args)
     {
+        $this->restrictArgCount($args, 1);
+        
         if(!$this->CheckZG())
             return;
+        
         $this->cout("Outputing project status file ...");
-        $this->RecursivePrint($this->GetStatus());
+        
+        $s = $this->GetStatus();
+        
+        if(!$this->has_arg($args, "+h"))
+            unset($s->history);
+        
+        $this->RecursivePrint($s);
     }
     private function RecursivePrint($status, $indent = 0, $depth = 0, $max_depth = 5)
     {
@@ -28,5 +37,10 @@ class status extends baseOperator
                 $this->RecursivePrint($value, $indent+1, $depth+1);
         }
         $this->cout("}", $indent);
+    }
+    public function s($args)
+    {
+        \zinux\kernel\utilities\debug::_var($args);
+        $this->cout(__METHOD__);
     }
 }
