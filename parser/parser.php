@@ -20,8 +20,6 @@ class parser extends baseParser
                 goto __EXECUTE;
             if(!isset($current_parsing->{$this->args[0]}))
             {
-                if(isset($current_parsing->instance))
-                    goto __EXECUTE;
                 foreach($current_parsing as $key => $value)
                 {
                     if(isset($value->alias) && strtolower($value->alias) == $this->args[0])
@@ -30,6 +28,8 @@ class parser extends baseParser
                         goto __NEXT_ROUND;
                     }
                 }
+                if(isset($current_parsing->instance))
+                    goto __EXECUTE;
                 goto __ERROR;
             }
 __NEXT_ROUND:

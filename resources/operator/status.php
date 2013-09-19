@@ -19,7 +19,7 @@ class status extends baseOperator
         
         $this->RecursivePrint($s);
     }
-    private function RecursivePrint($status, $indent = 0, $depth = 0, $max_depth = 5)
+    public function RecursivePrint($status, $indent = 0, $depth = 0, $max_depth = 5)
     {
         if($depth>$max_depth)
         {

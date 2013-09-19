@@ -13,8 +13,6 @@ class helpParser extends baseParser
         $arg = null;
         if(count($this->args))
                 $arg = $this->args[0];
-        
-        $this->cout("Zinux Generator by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013", 0, self::yellow);
         $stack = array(array("", $this->command_generator->Generate()));
         while(count($stack))
         {

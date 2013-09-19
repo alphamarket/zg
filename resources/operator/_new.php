@@ -44,7 +44,7 @@ class _new extends baseOperator
          *      + Creating IndexView.phtml correspondingly
          * + COPYING defaultLayout.phtml directly
          */
-        $this->Run($opt);
+        $this->Run($opt, 0);
         $this->CreateStatusFile($pName);
         $s = $this->GetStatus($pName);
         $s->modules->meta = new \zinux\zg\vendor\Item("module", $s->project->path."/modules");
