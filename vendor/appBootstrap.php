@@ -17,10 +17,17 @@ class appBootstrap extends \zinux\zg\baseZg
                 ->cout("'.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($appBootstrap->path)))
             mkdir(dirname($appBootstrap->path), 0775);
+        $ns = preg_replace(
+            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i"),
+            array("", "$1\\"), 
+            str_replace($application->path, "", dirname($appBootstrap->path))
+        );
         $this->cout("+", 1, self::green,0);
         $mbc = "<?php
-namespace application;
-
+namespace $ns;
+/**
+* The {$application->name}'s bootstrapper
+*/
 class {$appBootstrap->name} extends \\zinux\\kernel\\application\\applicationBootstrap
 {
     public function PRE_CHECK(\\zinux\\kernel\\routing\\request  \$request)

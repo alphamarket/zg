@@ -17,17 +17,22 @@ class createController extends \zinux\zg\resources\operator\baseOperator
                 ->cout("{$module->parent->name}\\{$module->name}\\controllers", 0, self::yellow, 0)
                 ->cout("'.");
         $this->cout("+", 1, self::green,0);
+        $ns = preg_replace(
+            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i"),
+            array("", "$1\\"), 
+            str_replace(dirname($module->parent->path), "", dirname($controller->path))
+        );
         $mbc = "<?php
-namespace {$module->parent->name}\\{$module->name}\\controllers;
+namespace $ns;
     
 /**
- * The \\{$module->parent->name}\\{$module->name}\\controllers\\{$controller->name}
+ * The $ns\\{$controller->name}
  * @by Zinux Generator <b.g.dariush@gmail.com>
  */
 class ".preg_replace("#controller$#i","", $controller->name)."Controller extends \\zinux\\kernel\\controller\\baseController
 {
     /**
-    * The \\{$module->parent->name}\\{$module->name}\\controllers\\{$controller->name}::IndexAction()
+    * The $ns\\{$controller->name}::IndexAction()
     * @by Zinux Generator <b.g.dariush@gmail.com>
     */
     public function IndexAction()

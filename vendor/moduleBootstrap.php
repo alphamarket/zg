@@ -15,9 +15,16 @@ class moduleBootstrap extends \zinux\zg\baseZg
                 ->cout("' at '",0,self::defColor, 0)
                 ->cout(dirname($moduleBootstrap->path), 0, self::yellow, 0)
                 ->cout("'.");
+        $ns = preg_replace(
+            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i"),
+            array("", "$1\\"), 
+            str_replace(dirname($module->parent->path), "", dirname($moduleBootstrap->path))
+        );
         $mbc = "<?php
-namespace modules\\{$module->name};
-
+namespace $ns;
+/**
+* The {$module->name}'s Bootstrapper
+*/
 class {$moduleBootstrap->name}
 {
     /**

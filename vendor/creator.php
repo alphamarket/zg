@@ -55,6 +55,14 @@ class creator extends \zinux\zg\resources\operator\baseOperator
         new \zinux\zg\vendor\appBootstrap($s->project, $appbs, $projectDir);
         return $appbs;
     }
+    public function createAppRoutes($name, $projectDir = ".")
+    {
+        $s = $this->GetStatus($projectDir);
+        $name = preg_replace("#(\w+)routes$#i","$1", $name)."Routes";
+        $appbs = new \zinux\zg\vendor\Item($name, $s->project->path."/application/{$name}.php");
+        new \zinux\zg\vendor\appBootstrap($s->project, $appbs, $projectDir);
+        return $appbs;
+    }
 }
 
 ?>
