@@ -80,8 +80,12 @@ abstract class baseZg extends \zinux\baseZinux
     
     public function CreateStatusFile($project_name)
     {
+        if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name"))
+            mkdir($project_name, 0775);
+        
         $s = new \zinux\zg\vendor\status;
-        $s->project = new vendor\Item("project", realpath("./$project_name/"));
+        $parent = new vendor\item(basename(realpath(".")), realpath("."));
+        $s->project = new vendor\Item("project", realpath("./$project_name/"),$parent);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
         return file_put_contents("./$project_name/.zg.cfg", serialize($s), LOCK_EX);
     }

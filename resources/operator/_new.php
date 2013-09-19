@@ -8,13 +8,16 @@ class _new extends baseOperator
         $this->restrictArgCount($args);
         
         $pName = implode("-", $args);
+        $this->CreateStatusFile($pName);
+        $s = $this->GetStatus($pName);
+        $s->modules->meta = new \zinux\zg\vendor\Item("modules", $s->project->path."/modules", $s->project);
+        $this->SaveStatus($s);
         
         $this ->cout("Creating new project '", 0, self::defColor, 0)
                 ->cout("$pName", 0, self::yellow, 0)
                 ->cout("' ...");
         $vpname = str_replace(" ", "-", $pName);
         $opt = array(
-                "mkdir $pName",
                 "cp ".ZG_TEMPLE_ROOT."/* $pName/ -R",
                 "cp -rf ".Z_CACHE_ROOT." $pName",
                 "mv ./$pName/".basename(Z_CACHE_ROOT)." ./$pName/zinux",
@@ -45,10 +48,9 @@ class _new extends baseOperator
          * + COPYING defaultLayout.phtml directly
          */
         $this->Run($opt, 0);
-        $this->CreateStatusFile($pName);
-        $s = $this->GetStatus($pName);
-        $s->modules->meta = new \zinux\zg\vendor\Item("module", $s->project->path."/modules");
-        $this->SaveStatus($s);
+        $c = new \zinux\zg\vendor\creator;
+        $module = $c->createModule("default", $pName);
+        $controller = $c->createController("index", $module, $pName);
     }
     
     public function module($args)
@@ -58,23 +60,52 @@ class _new extends baseOperator
         
         $this->restrictArgCount($args, 1);
         
-        $s = $this->GetStatus();
-        
-        if(!file_exists($s->modules->meta->path))
-            mkdir($s->modules->meta->path, 0775);
-        
-        if(\zinux\kernel\utilities\fileSystem::resolve_path("{$s->modules->meta->path}/{$args[0]}Module"))
-            throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$args[0]}' already exists ...");
-            
-        $module = new \zinux\zg\vendor\item("{$args[0]}Module", "{$s->modules->meta->path}/{$args[0]}Module");
-        $s->modules->modules[] = $module;
-        
         $this ->cout("Creating new module '", 0, self::defColor, 0)
-                ->cout("{$module->name}", 0, self::yellow, 0)
+                ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
-        $this->Run(array(
-                "mkdir {$module->path}",
-                "chmod 775 -R {$module->path}"    
-        ));
+                
+        $c = new \zinux\zg\vendor\creator;
+        $c->createModule($args[0]);
+    }
+    
+    public function controller($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args, 2,1);
+        if(count($args)==1)
+            $args[] = "default";
+        # fail safe
+        $this->restrictArgCount($args, 2,2);
+        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $s = $this->GetStatus();
+        if(!isset($s->modules->modules[$args[1]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+        $c = new \zinux\zg\vendor\creator;
+        $c->createController($args[0], $s->modules->modules[$args[1]]);
+    }
+    
+    public function action($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args, 3,1);
+        if(count($args)==1)
+            $args[] = "index";
+        if(count($args)==2)
+            $args[] = "default";
+        
+        $args[0] = preg_replace("#(\w+)action#i", "$1", $args[0])."Action";
+        $args[1] = preg_replace("#(\w+)controller$#i", "$1", $args[1])."Controller";
+        $args[2] = preg_replace("#(\w+)module$#i", "$1", $args[2])."Module";
+        $s = $this->GetStatus();
+        \zinux\kernel\utilities\debug::_var($args,0);
+        if(!isset($s->modules->modules[$args[2]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[2]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+        if(!isset($s->modules->modules[$args[2]]->controller[$args[1]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[2]}/{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+            
+        new \zinux\zg\vendor\createAction(
+            $s->modules->modules[$args[2]]->controller[$args[1]], 
+            new \zinux\zg\vendor\item($args[0], $args[0])
+        );
     }
 }

@@ -44,7 +44,8 @@ class zg extends \zinux\zg\baseZg
                         ->cout(preg_replace("/([#]\d+)/i", "$1", $e->getTraceAsString()));
             }
         }
-            $console_cont = preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""),ob_get_contents());
+            $zg->cout()->cout("[ DONE ]", 0, self::yellow);
+            $console_cont = preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""),ob_get_contents()."<br />");
         ob_end_clean();
         echo $console_cont;
     }
