@@ -11,9 +11,14 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
     public function __construct(Item $controller, Item $action, $project_path = ".")
     {
         $action->path = preg_replace("#(\w+)action$#i","$1", $action->name)."Action";
+        $this ->cout("Creating new action '",-0,  self::defColor, 0)
+                ->cout($action->path, 0, self::yellow, 0)
+                ->cout("' in '",0,self::defColor, 0)
+                ->cout("\\{$controller->parent->parent->name}\\{$controller->parent->name}\\controllers\\{$controller->name}", 0, self::yellow, 0)
+                ->cout("'.");
         $mbc = "
     /**
-    * The \\{$controller->parent->parent->name}\\{$controller->parent->name}\\{$controller->name}::{$action->path}()
+    * The \\{$controller->parent->parent->name}\\{$controller->parent->name}\\controllers\\{$controller->name}::{$action->path}()
     * @by Zinux Generator <b.g.dariush@gmail.com>
     */
     public function {$action->path}()
@@ -62,12 +67,12 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
            
         $this->cout("+", 0, self::green,0);
         $preg_match = "#([\s|\n]*class[\s|\n]*{$controller->name}[\s|\n]*extends[\s|\n]*((.*)[\s|\n]*)*[\\]zinux[\\]kernel[\\]controller[\\]baseController[\s|\n]*[\\\{]([^\\\}]*)[\\\}])#is";
-        $file_cont = file_get_contents($controller->path);
+        $file_cont = preg_quote(file_get_contents($controller->path),"#");
         $this->cout("+", 0, self::green,0);
         
         if(!preg_match(
                 $preg_match, 
-                preg_quote($file_cont, "#"),
+                $file_cont,
                 $matches
         ))
             throw new \zinux\kernel\exceptions\notFoundException("Didn't find any match with '{$controller->name}' controller class");
@@ -91,7 +96,8 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
             }
         }
         $this->cout("+", 0, self::green,0);
-        file_put_contents($controller->path, preg_replace($preg_match, $top_str.$mbc.$down_str, $file_cont));
+        $file_cont = $this->inverse_preg_quote(preg_replace($preg_match, $top_str.$mbc.$down_str, ($file_cont)),"#");
+        file_put_contents($controller->path, $file_cont);
         $this->cout("+", 0, self::green,0);
         $action->parent = $controller;
         $s->modules->modules[$controller->parent->name]->controller[$controller->name]->action[$action->name] = $action;

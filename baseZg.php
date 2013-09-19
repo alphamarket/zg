@@ -135,4 +135,32 @@ abstract class baseZg extends \zinux\baseZinux
         
         return false;
     }
+    public function inverse_preg_quote($str, $delimiter = NULL)
+    {
+        $ar = array(
+            '\\.'  => '.',
+            '\\\\' => '\\',
+            '\\+'  => '+',
+            '\\*'  => '*',
+            '\\?'  => '?',
+            '\\['  => '[',
+            '\\^'  => '^',
+            '\\]'  => ']',
+            '\\$'  => '$',
+            '\\('  => '(',
+            '\\)'  => ')',
+            '\\{'  => '{',
+            '\\}'  => '}',
+            '\\='  => '=',
+            '\\!'  => '!',
+            '\\<'  => '<',
+            '\\>'  => '>',
+            '\\|'  => '|',
+            '\\:'  => ':',
+            '\\-'  => '-'
+        );
+        if($delimiter)
+            $ar["\\$delimiter"] = $delimiter;
+        return strtr($str, $ar);
+    }
 }

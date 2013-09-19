@@ -41,7 +41,8 @@ class creator extends \zinux\zg\resources\operator\baseOperator
     public function createController($name, Item $module ,$projectDir = ".")
     {
         $s = $this->GetStatus($projectDir);
-        $controller = new \zinux\zg\vendor\Item("{$name}Controller", $module->path."/controllers/{$name}Controller.php");
+        $name = preg_replace("#(\w+)controller$#i","$1", $name)."Controller";
+        $controller = new \zinux\zg\vendor\Item($name, $module->path."/controllers/{$name}.php");
         new \zinux\zg\vendor\createController($module, $controller, $projectDir);
         return $controller;
     }
