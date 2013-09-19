@@ -27,15 +27,16 @@ class status extends baseOperator
             return;
         }
         $this->cout()->cout("{", $indent);
-        foreach($status as $key => $value)
-        {
-            $this->cout($key, $indent+1, self::yellow, 0)
-                    ->cout(" : ", 0, self::defColor, 0);
-            if(!$this->is_iterable($value))
-                $this ->cout($value, 0, self::cyan);
-            else
-                $this->RecursivePrint($value, $indent+1, $depth+1);
-        }
+        if($this->is_iterable($status))
+            foreach($status as $key => $value)
+            {
+                $this->cout($key, $indent+1, self::yellow, 0)
+                        ->cout(" : ", 0, self::defColor, 0);
+                if(!$this->is_iterable($value))
+                    $this ->cout($value, 0, self::cyan);
+                else
+                    $this->RecursivePrint($value, $indent+1, $depth+1);
+            }
         $this->cout("}", $indent);
     }
     public function s($args)

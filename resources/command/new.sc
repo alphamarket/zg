@@ -1,20 +1,16 @@
 {
         "alias":"n",
-        "project":
+        "title":"Create new project",
+        "instance":
         {
-            "title":"Create new project",
-            "alias":"p",
-            "instance":
-            {
-                "class":"\\zinux\\zg\\resources\\operator\\_new",
-                "method":"project"
-            },
-            "help":
-            {
-                "command":"zg new project $project_name",
-                "alias": "zg n p $project_name",
-                "detail":"Creates a new zinux project"
-            }
+            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "method":"project"
+        },
+        "help":
+        {
+            "command":"zg new $project_name",
+            "alias": "zg n $project_name",
+            "detail":"Creates a new zinux project"
         },
         "module":
         {

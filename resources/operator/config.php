@@ -3,13 +3,19 @@ namespace zinux\zg\resources\operator;
 
 class config extends baseOperator
 {
+    public function __construct($suppress_header_text = 0)
+    {
+        parent::__construct($suppress_header_text);
+        $s = $this->GetStatus();
+        if(!isset($s->configs))
+            $s->configs = new \stdClass();
+        $this->SaveStatus($s);
+    }
     public function config($args)
     {
         if(!$this->CheckZG()) return;
         $this->restrictArgCount($args);
         $s = $this->GetStatus();
-        if(!isset($s->configs))
-            $s->configs = new \stdClass();
         $m = array();
         while(count($args))
         {
