@@ -11,7 +11,7 @@ class item extends \zinux\zg\baseZg
     public $path;
     public $parent;
     
-    public function __construct($name, $path, item $parent = NULL)
+    public function __construct($name, $path, item &$parent = NULL)
     {
         $this->name = $name;
         $this->path = $path;
