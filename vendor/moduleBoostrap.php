@@ -32,6 +32,7 @@ class {$moduleBootstrap->name}
         file_put_contents($moduleBootstrap->path, $mbc);
         $this->cout("+", 1, self::green);
         $s = $this->GetStatus($project_path);
+        $moduleBootstrap->parent = $module;
         $s->boostraps->modules[] = $moduleBootstrap;
         $this->SaveStatus($s);
     }

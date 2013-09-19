@@ -10,7 +10,7 @@ class _new extends baseOperator
         $pName = implode("-", $args);
         $this->CreateStatusFile($pName);
         $s = $this->GetStatus($pName);
-        $s->modules->meta = new \zinux\zg\vendor\Item("module", $s->project->path."/modules");
+        $s->modules->meta = new \zinux\zg\vendor\Item("module", $s->project->path."/modules", $s->project);
         $this->SaveStatus($s);
         
         $this ->cout("Creating new project '", 0, self::defColor, 0)
@@ -34,7 +34,8 @@ class _new extends baseOperator
                 "chmod -R 775 $pName", 
                 "chmod 777 $pName"
         );
-        $this->createModule("default", $pName);
+        $c = new \zinux\zg\vendor\creator;
+        $c->createModule("default", $pName);
         /**
          * instead of copying templates directly we can do following processes
          * + Create appliaction/boostrap
@@ -58,35 +59,11 @@ class _new extends baseOperator
         
         $this->restrictArgCount($args, 1);
         
-        $this->createModule($args[0]);
-    }
-    protected function createModule($name ,$projectDir = ".")
-    {
-        $s = $this->GetStatus($projectDir);
-        
-        if(!file_exists($s->modules->meta->path))
-            mkdir($s->modules->meta->path, 0775);
-        
-        if(\zinux\kernel\utilities\fileSystem::resolve_path("{$s->modules->meta->path}/{$name}Module"))
-            throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$name}' already exists ...");
-            
-        $module = new \zinux\zg\vendor\item("{$name}Module", "{$s->modules->meta->path}/{$name}Module");
-        $s->modules->modules[] = $module;
-        $this->SaveStatus($s);
-        
         $this ->cout("Creating new module '", 0, self::defColor, 0)
-                ->cout("{$module->name}", 0, self::yellow, 0)
+                ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
-        $this->Run(array(
-                "mkdir {$module->path}",
-                "cd {$module->path} && mkdir controllers",
-                "cd {$module->path} && mkdir models",
-                "cd {$module->path} && mkdir views",
-                "cd {$module->path}/views && mkdir view",
-                "cd {$module->path}/views && mkdir helper",
-                "cd {$module->path}/views && mkdir layout",
-                "chmod 775 -R {$module->path}"    
-        ));
-        new \zinux\zg\vendor\moduleBoostrap($module, new \zinux\zg\vendor\Item("{$name}Bootstrap", $module->path."/{$name}Bootstrap.php"), $projectDir);
+                
+        $c = new \zinux\zg\vendor\creator;
+        $c->createModule($args[0]);
     }
 }
