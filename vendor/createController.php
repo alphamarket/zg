@@ -10,18 +10,23 @@ class createController extends \zinux\zg\resources\operator\baseOperator
 {
     public function __construct(Item $module, Item $controller, $project_path = ".")
     {
+        $this ->cout("Creating new controller '",-0,  self::defColor, 0)
+                ->cout(preg_replace("#controller$#i","", $controller->name)."Controller", 0, self::yellow, 0)
+                ->cout("' at '",0,self::defColor, 0)
+                ->cout("{$module->parent->name}\\{$module->name}\\controllers", 0, self::yellow, 0)
+                ->cout("'.");
         $this->cout("+", 1, self::green,0);
         $mbc = "<?php
 namespace {$module->parent->name}\\{$module->name}\\controllers;
     
 /**
- * The \\{$module->parent->name}\\{$module->name}\\{$controller->name}
+ * The \\{$module->parent->name}\\{$module->name}\\controllers\\{$controller->name}
  * @by Zinux Generator <b.g.dariush@gmail.com>
  */
 class ".preg_replace("#controller$#i","", $controller->name)."Controller extends \\zinux\\kernel\\controller\\baseController
 {
     /**
-    * The \\{$module->parent->name}\\{$module->name}\\{$controller->name}::IndexAction()
+    * The \\{$module->parent->name}\\{$module->name}\\controllers\\{$controller->name}::IndexAction()
     * @by Zinux Generator <b.g.dariush@gmail.com>
     */
     public function IndexAction()
