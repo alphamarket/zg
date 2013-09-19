@@ -10,11 +10,16 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
 {
     public function __construct(Item $controller, Item $action, $project_path = ".")
     {
+        $action->path = preg_replace("#action$#i","", $action->name)."Action";
         $mbc = "
-    public function ".preg_replace("#action$#i","", $action->name)."Action()
+    /**
+    * The \\{$controller->parent->parent->name}\\{$controller->parent->name}\\{$controller->name}::{$action->path}()
+    */
+    public function {$action->path}()
     {
+        
     }
-    ";
+";
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$controller->path}"))
             throw new \zinux\kernel\exceptions\notFoundException("{$controller->name} not found ...");
         ob_start();
@@ -46,28 +51,35 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
         
         if(!$rf->isSubclassOf('\zinux\kernel\controller\baseController'))
             throw new \zinux\kernel\exceptions\invalideOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
-            
-        if(!preg_match_all(
-                "#((.*)class[\s|\n]*{$controller->name}[\s|\n]*extends[\s|\n]*((.*)[\s|\n]*)*[\\]zinux[\\]kernel[\\]controller[\\]baseController[\s|\n]*(.*))#is", 
-                preg_quote(file_get_contents($controller->path), "#"),
+        
+        $preg_match = "#([\s|\n]*class[\s|\n]*{$controller->name}[\s|\n]*extends[\s|\n]*((.*)[\s|\n]*)*[\\]zinux[\\]kernel[\\]controller[\\]baseController[\s|\n]*[\\\{]([^\\\}]*)[\\\}])#is";
+        $file_cont = file_get_contents($controller->path);
+        if(!preg_match(
+                $preg_match, 
+                preg_quote($file_cont, "#"),
                 $matches
         ))
             throw new \zinux\kernel\exceptions\notFoundException("Didn't find any match with '{$controller->name}' controller class");
-        \zinux\kernel\utilities\debug::_var($matches,1);
-        $matches = $matches[0];
+        $matched = stripslashes($matches[0]);
+        
         $brace = 0;
-        for($index = 0; $index<strlen($matches); $index++)
+        
+        $top_str = "";
+        $down_str = "";
+        
+        for($index = 0; $index<strlen($matched); $index++)
         {
-            if($matches[$index]=="{" && ++$brace)
-                echo "{".PHP_EOL;
-            elseif($matches[$index] == "}")
+            if($matched[$index]=="{" && ++$brace);
+            elseif($matched[$index] == "}" && !--$brace)
             {
-                $brace--;
-                if(!$brace)
-                    echo "HERE IS THE PLACE ...";
-                echo "}".PHP_EOL;
+                $top_str = substr($matched, 0, $index-1);
+                $down_str = substr($matched, $index);
+                break;
             }
         }
+        file_put_contents($controller->path, preg_replace($preg_match, $top_str.$mbc.$down_str, $file_cont));
+
+        die;
         \zinux\kernel\utilities\debug::_var($matches,1);
             
         preg_match("", $subject);

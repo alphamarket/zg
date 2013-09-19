@@ -50,7 +50,8 @@ class _new extends baseOperator
         $this->Run($opt, 0);
         $c = new \zinux\zg\vendor\creator;
         $module = $c->createModule("default", $pName);
-        $c->createController("index", $module, $pName);
+        $controller = $c->createController("index", $module, $pName);
+        new \zinux\zg\vendor\createAction($controller, new \zinux\zg\vendor\item("test", "testAction"), $pName);
     }
     
     public function module($args)

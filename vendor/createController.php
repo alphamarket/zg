@@ -25,6 +25,16 @@ class ".preg_replace("#controller$#i","", $controller->name)."Controller extends
     #knsaknsa
     \$kdsakn  = 1;
     }
+    function doo(){
+    //sakn
+    # skanska
+    }
+}
+# }
+# {
+# {saknksa}
+function j(){}
+class dksnk{
 }
 ";
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/views/view/"))
@@ -39,7 +49,6 @@ class ".preg_replace("#controller$#i","", $controller->name)."Controller extends
         $controller->parent = $module;
         $s->modules->modules[$module->name]->controller[$controller->name] = $controller;
         $this->SaveStatus($s);
-        new createAction($controller, new item("index", "IndexAction"), $project_path);
     }
 }
 
