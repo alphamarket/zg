@@ -52,10 +52,9 @@ abstract class baseZg extends \zinux\baseZinux
             
     public function Initiate(){}
     
-    public function cout($content = "<br />", $tag_index = 0, $color = self::defColor, $auto_break = 1)
+    public function cout($content = "<br />", $tap_index = 0, $color = self::defColor, $auto_break = 1)
     {
-        while($tag_index--)
-            echo "    ";
+       echo str_repeat(" ", $tap_index*4);
         
         echo $color.$content.self::defColor;
         

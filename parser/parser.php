@@ -42,6 +42,7 @@ class parser extends baseParser
                 '#\balias\b#i' => "@alias",
                 '#\binstance\b#i' => "@instance", 
                 '#\bhelp\b#i' => "@help",
+                '#\bdefaults\b#i' => "@defaults",
                 '#\boptions\b#i' => "@options"
         );
         $post_key_words = array(

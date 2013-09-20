@@ -47,6 +47,7 @@ class helpParser extends baseParser
                 $this->printHelp($value);
             }
         }
+        $this->cout()->cout(">    Type 'zg -h \$command' to print more help about that command", 0,self::hiBlue);
     }
     
     protected function printHelp($content, $render_options = 0)
@@ -62,9 +63,32 @@ class helpParser extends baseParser
         $this->cout();
         $rep_pat = "$1".str_repeat(" ", 3*5);
         $this ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat),  $content->help->detail), 3);
-        if(isset($content->notes))
+        if($render_options && isset($content->options))
         {
-            $this ->cout("Notes:", 2, self::hiYellow);
+            $this->cout()->cout("Options: ", 2, self::hiYellow);
+            $rep_pat = "$1".str_repeat(" ", 3*6);
+            foreach($content->options as $option => $exp)
+            {
+                $this ->cout()
+                        ->cout($option, 3, self::yellow, 0)
+                        ->cout(" : ", 0, self::defColor, 0)
+                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $exp), 0, self::yellow);
+            }
+        }
+        if(isset($content->defaults))
+        {
+            $this ->cout()->cout("Default Values:", 2, self::hiYellow)->cout();
+            $rep_pat = "$1".str_repeat(" ", 3*6);
+            foreach($content->defaults as $arg => $value)
+            {
+                $this ->cout($arg, 3, self::yellow, 0)
+                        ->cout(" : ", 0, self::defColor, 0)
+                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $value), 0, self::yellow);
+            }
+        }
+        if($render_options && isset($content->notes))
+        {
+            $this ->cout()->cout("Notes:", 2, self::hiYellow);
             $rep_pat = "$1".str_repeat(" ", 3*6);
             foreach($content->notes as $index => $note)
             {
@@ -73,18 +97,6 @@ class helpParser extends baseParser
                         ->cout("$index ) ", 3, self::yellow, 0)
                         ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $note))
                         ->cout();
-            }
-        }
-        if($render_options && isset($content->options))
-        {
-            $this->cout("Options: ", 2, self::hiYellow);
-            $rep_pat = "$1".str_repeat(" ", 3*6);
-            foreach($content->options as $option => $exp)
-            {
-                $this ->cout()
-                        ->cout($option, 3, self::yellow, 0)
-                        ->cout(" : ", 0, self::defColor, 0)
-                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $exp), 0, self::yellow);
             }
         }
     }
