@@ -183,4 +183,24 @@ class _new extends baseOperator
         $c = new \zinux\zg\vendor\creator;
         $c->createHelper($args[0], $s->modules->modules[$args[1]]);
     }
+    public function model($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args, 2,1);
+        if(count($args)==1)
+            $args[] = "default";
+        # fail safe
+        $this->restrictArgCount($args, 2,2);
+        # we don't modify model's name in order to have free uses
+        #$args[0] = preg_replace("#(\w+)model$#i", "$1", $args[0])."Model";
+        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $s = $this->GetStatus();
+        if(!isset($s->modules->modules[$args[1]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+        if(isset($s->modules->modules[$args[1]]->model[$args[0]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Model '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />    Try 'zg reload' command!");
+            
+        $c = new \zinux\zg\vendor\creator;
+        $c->createModel($args[0], $s->modules->modules[$args[1]]);
+    }
 }
