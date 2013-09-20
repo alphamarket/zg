@@ -69,4 +69,4 @@ class Command
     }
 }
 
-class GitRuntimeException extends RuntimeException {}
+class GitRuntimeException extends \RuntimeException {}

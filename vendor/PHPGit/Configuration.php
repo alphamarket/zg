@@ -24,11 +24,11 @@ class Configuration
 
     /**
      * Holds the Git repository instance.
-     * @var PHPGit_Repository
+     * @var Repository
      */
     protected $repository;
 
-    public function __construct(PHPGit_Repository $gitRepo)
+    public function __construct(Repository $gitRepo)
     {
         $this->repository = $gitRepo;
     }
