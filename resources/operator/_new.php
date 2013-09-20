@@ -109,9 +109,7 @@ class _new extends baseOperator
         if(!isset($s->modules->modules[$args[2]]->controller[$args[1]]))
             throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[2]}/{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
             
-        new \zinux\zg\vendor\createAction(
-            $s->modules->modules[$args[2]]->controller[$args[1]], 
-            new \zinux\zg\vendor\item($args[0], $args[0])
-        );
+        $c = new \zinux\zg\vendor\creator;
+        $c->createAction($args[0], $s->modules->modules[$args[2]]->controller[$args[1]]);
     }
 }
