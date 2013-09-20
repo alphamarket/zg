@@ -58,7 +58,8 @@ class helpParser extends baseParser
         if(isset($content->help->alias))
             $this->cout("Alias: [ ".self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->alias).self::defColor." ]", 3, self::defColor, 0);
         $this->cout();
-        $this ->cout($content->help->detail, 3);
+        $rep_pat = "$1".str_repeat(" ", 3*5);
+        $this ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat $rep_pat),  $content->help->detail), 3);
         
         if($render_options && isset($content->options))
         {
