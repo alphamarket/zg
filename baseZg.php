@@ -8,6 +8,7 @@ defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/z
 defined("RUNNING_ENV") ||  define("RUNNING_ENV", "DEVELOPMENT");
 defined("CONF_PATH") || define("CONF_PATH","/.zg/");
 defined("CONF_NAME") || define("CONF_NAME",".cfg");
+defined("ZG_VERSION") || define("ZG_VERSION","1.4.2");
 
 /**
  * Description of baseZg
