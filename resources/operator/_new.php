@@ -69,9 +69,12 @@ class _new extends baseOperator
         $this ->cout("Creating new module '", 0, self::defColor, 0)
                 ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
-                
+        $args[0] = preg_replace("#(\w+)module$#i", "$1", $args[0])."Module";
         $c = new \zinux\zg\vendor\creator;
-        $c->createModule($args[0]);
+        $module = $c->createModule($args[0]);
+        $controller = $c->createController("index", $module);
+        $layout = $c->createLayout("default", $module);
+        $view = $c->createView("index", $controller);
     }
     
     public function controller($args)
