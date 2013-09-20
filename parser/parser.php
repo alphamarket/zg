@@ -37,14 +37,21 @@ class parser extends baseParser
     public function getOperator()
     {
         # a fail safe for head keys used command files
-        $key_words = array(
-                '#!(-)\btitle\b#i' => "@title",
-                '#!(-)\balias\b#i' => "@alias",
-                '#!(-)\binstance\b#i' => "@instance", 
-                '#!(-)\bhelp\b#i' => "@help",
-                '#!(-)\boptions\b#i' => "@options"
+        $pre_key_words = array(
+                '#\btitle\b#i' => "@title",
+                '#\balias\b#i' => "@alias",
+                '#\binstance\b#i' => "@instance", 
+                '#\bhelp\b#i' => "@help",
+                '#\boptions\b#i' => "@options"
         );
-        $this->args = preg_replace(array_keys($key_words), array_values($key_words), $this->args);
+        $post_key_words = array(
+                '@title' => "title",
+                '@alias' => "alias",
+                '@instance' => "instance", 
+                '@help' => "help",
+                '@options' => "options"
+        );
+        $this->args = preg_replace(array_keys($pre_key_words), array_values($pre_key_words), $this->args);
         $this->parsed_string = "zg";
         $current_parsing = $this->command_generator->Generate();
         while($current_parsing)
@@ -71,11 +78,11 @@ __NEXT_ARG:
             $this->parsed_string.=(" ".array_shift($this->args));
         }
 __ERROR:
-        $this->args = str_replace(array_values($key_words), array_keys($key_words), $this->args);
+        $this->args = str_replace(array_keys($post_key_words), array_values($post_key_words), $this->args);
         throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid command '".self::yellow."{$this->parsed_string} ".
             implode(" ", $this->args)."'".self::defColor."<br />    Try zg --help.");
 __EXECUTE:
-        $this->args = str_replace(array_values($key_words), array_keys($key_words), $this->args);
+        $this->args = str_replace(array_keys($post_key_words), array_values($post_key_words), $this->args);
         return $current_parsing;
     }
 }

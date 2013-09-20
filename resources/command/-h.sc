@@ -1,5 +1,4 @@
 {
-        "alias":"-h", 
         "title":"Show help", 
         "instance":
         {
@@ -8,8 +7,7 @@
         },
         "help":
         {
-            "command":"zg --help ($command)",
-            "alias":"zg -h ($command)",
+            "command":"zg -h ($command)",
             "detail":"Output help content, you may can pass a command to<br />output the help content (optional)"
         }
 }
