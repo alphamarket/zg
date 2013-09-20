@@ -14,9 +14,9 @@ class commandGenerator extends baseCommandGenerator
         if(!$p)
             throw new \Exception("No command directory found");
         $commands = "{";
-        foreach(array_filter(glob($p."/*.sc"), 'is_file') as $file)
+        foreach(array_filter(glob($p."/*.json"), 'is_file') as $file)
         {
-            $file_name = basename($file, ".sc");
+            $file_name = basename($file, ".json");
             $commands.="\"$file_name\":".file_get_contents($file).",";
         }
         $commands = preg_replace("#(},)?$#i","}", $commands);
