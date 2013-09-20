@@ -36,6 +36,15 @@ class parser extends baseParser
     
     public function getOperator()
     {
+        # a fail safe for head keys used command files
+        $key_words = array(
+                "title" => "@title",
+                "alias" => "@alias",
+                "instance" => "@instance", 
+                "help" => "@help",
+                "options" => "@options"
+        );
+        $this->args = str_replace(array_keys($key_words), array_values($key_words), $this->args);
         $this->parsed_string = "zg";
         $current_parsing = $this->command_generator->Generate();
         while($current_parsing)
@@ -64,6 +73,7 @@ __NEXT_ARG:
 __ERROR:
         throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid command '".self::yellow."{$this->parsed_string} ".implode(" ", $this->args).self::defColor."'");
 __EXECUTE:
+        $this->args = str_replace(array_values($key_words), array_keys($key_words), $this->args);
         return $current_parsing;
     }
 }

@@ -50,15 +50,6 @@ class creator extends \zinux\zg\resources\operator\baseOperator
         new \zinux\zg\vendor\createController($module, $controller, $projectDir);
         return $controller;
     }
-    public function createLayout($name, Item $module ,$projectDir = ".")
-    {
-        $this->CheckZG($projectDir,1);
-        $s = $this->GetStatus($projectDir);
-        $name = preg_replace("#(\w+)layout$#i","$1", $name)."Layout";
-        $controller = new \zinux\zg\vendor\Item($name, $module->path."/views/layout/{$name}.phtml");
-        new \zinux\zg\vendor\creators\createLayout($module, $controller, $projectDir);
-        return $controller;
-    }
     public function createAction($name, item $controller,$projectDir = ".")
     {
         $this->CheckZG($projectDir,1);
@@ -96,6 +87,24 @@ class creator extends \zinux\zg\resources\operator\baseOperator
             $controller->parent->path."/views/view/".preg_replace("#(\w+)controller$#i","$1", basename($controller->path, ".php"))."/{$name}.phtml");
         new \zinux\zg\vendor\creators\createView($controller, $view, $projectDir);
         return $view;
+    }
+    public function createLayout($name, Item $module ,$projectDir = ".")
+    {
+        $this->CheckZG($projectDir,1);
+        $s = $this->GetStatus($projectDir);
+        $name = preg_replace("#(\w+)layout$#i","$1", $name)."Layout";
+        $controller = new \zinux\zg\vendor\Item($name, $module->path."/views/layout/{$name}.phtml");
+        new \zinux\zg\vendor\creators\createLayout($module, $controller, $projectDir);
+        return $controller;
+    }
+    public function createHelper($name, Item $module ,$projectDir = ".")
+    {
+        $this->CheckZG($projectDir,1);
+        $s = $this->GetStatus($projectDir);
+        $name = preg_replace("#(\w+)helper$#i","$1", $name)."Helper";
+        $controller = new \zinux\zg\vendor\Item($name, $module->path."/views/helper/{$name}.php");
+        new \zinux\zg\vendor\creators\createHelper($module, $controller, $projectDir);
+        return $controller;
     }
     
 }

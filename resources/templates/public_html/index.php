@@ -32,10 +32,11 @@ try
 # catch any thing from application
 catch(Exception $e)
 {
-    # serialize it!
-    $_SESSION['exception'] = serialize($e);
-    # relocate to error controller!
-    header("location: ".DEMO_ROOT_SITE."error");
-    # exit
-    exit;
+    /**
+     * You can redirect this exception to a controller e.g /error
+     */
+    echo "<legend>Oops!</legend>";
+    echo "<p>Error happened ...</p>";
+    echo "<p><b>Message: </b></p><p>{$e->getMessage()}</p>";
+    echo "<p><b>Stack Trace: </b></p><pre>".preg_replace(PHP_EOL, "<br />", $e->getTraceAsString())."</pre>";
 }
