@@ -118,6 +118,7 @@ abstract class baseZg extends \zinux\baseZinux
     {
         if(count($args) > $max)
             throw new \zinux\kernel\exceptions\invalideArgumentException("Too much argument ...");
+        if(!$max) return;
         if(($min<0 && !count($args)) || (!(count($args) >= $min)))
             throw new \zinux\kernel\exceptions\invalideArgumentException("Empty argument passed ...");  
     }
