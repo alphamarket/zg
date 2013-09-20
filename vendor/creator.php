@@ -46,6 +46,14 @@ class creator extends \zinux\zg\resources\operator\baseOperator
         new \zinux\zg\vendor\createController($module, $controller, $projectDir);
         return $controller;
     }
+    public function createAction($name, item $controller,$projectDir = ".")
+    {
+        $s = $this->GetStatus($projectDir);
+        $name = preg_replace("#(\w+)action$#i","$1", $name)."Action";
+        return new \zinux\zg\vendor\createAction(
+                $controller, 
+                new \zinux\zg\vendor\item($name, $name));
+    }
     
     public function createAppBootstrap($name, $projectDir = ".")
     {
@@ -63,6 +71,7 @@ class creator extends \zinux\zg\resources\operator\baseOperator
         new \zinux\zg\vendor\appRoutes($s->project, $appr, $projectDir);
         return $appr;
     }
+    
 }
 
 ?>
