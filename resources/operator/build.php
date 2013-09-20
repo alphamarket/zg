@@ -30,6 +30,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         $this->fetchModules();
         $this->fetchController();
         $this->fetchAction();
+        $this->fetchModels();
         #\zinux\kernel\utilities\debug::_var($this->log);
     }
     protected function fetchModules()
@@ -50,7 +51,12 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
     {
         foreach($this->s->modules->modules as $name => $module)
         {
-            foreach(glob("{$module->path}/controllers/*") as $file)
+            if(!($cp = \zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/controllers")))
+            {
+                $this->log[] = new \zinux\zg\vendor\item("Controllers folder not found at '{$module->path}'");
+                continue;
+            }
+            foreach(glob("$cp/*") as $file)
             {
                 $name = basename($file, ".php");
                 if(is_file($file) && preg_match("#\w+controller$#i", $name))
@@ -102,6 +108,44 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                             action[strtolower($action->name)] = $action;
                     }
                 }
+            }
+        }
+    }
+    public function fetchModels()
+    {
+        foreach($this->s->modules->modules as $name => $module)
+        {
+            if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/models")))
+            {
+                $this->log[] = new \zinux\zg\vendor\item("Models folder not found at '{$module->path}'");
+                continue;
+            }
+            foreach(glob("$mp/*") as $file)
+            {
+                $name = basename($file, ".php");
+                if(is_file($file) && preg_match("#\w+\b(.php)\b$#i", $file))
+                {
+                    $this->check_php_syntax($file);
+                    $class = $this->convert_to_relative_path($file, $this->root, $this->s)."\\$name";
+                    if(class_exists($class))
+                    {
+                        $this->log[] = new \zinux\zg\vendor\item("Skipped requiring '$file'", "The class '$class' already defined!");
+                    }
+                    elseif(!is_readable($file) || !(require_once $file))
+                    {
+                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                        continue;
+                    }
+                    if(!class_exists($class))
+                    {
+                        $this->log[] = new \zinux\zg\vendor\item("Model '$file' found, but relative class '$class' not found","");  
+                        continue;
+                    }
+                    $model = new \zinux\zg\vendor\Item($name, $file, $module);
+                    $this->s->modules->modules[strtolower($module->name)]->model[strtolower($model->name)] = $model;
+                }
+                elseif(is_file($file))
+                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
             }
         }
     }
