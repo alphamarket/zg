@@ -46,7 +46,7 @@ class {$appBootstrap->name} extends \\zinux\\kernel\\application\\applicationBoo
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $appBootstrap->parent = $application;
-        $s->project->bootstraps[$appBootstrap->name]  = $appBootstrap;
+        $s->project->bootstraps[strtolower($appBootstrap->name)]  = $appBootstrap;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

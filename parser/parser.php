@@ -10,7 +10,7 @@ class parser extends baseParser
     public function Run()
     {
         if(!count($this->args))
-            $this->args[] = "--help";
+            $this->args[] = "-h";
         
         $current_parsing = $this->getOperator($this->args);
         
@@ -56,15 +56,16 @@ class parser extends baseParser
         $current_parsing = $this->command_generator->Generate();
         while($current_parsing)
         {
+            $arg = strtolower($this->args[0]);
             if(!count($this->args))
                 goto __EXECUTE;
-            if(!isset($current_parsing->{$this->args[0]}))
+            if(!isset($current_parsing->{$arg}))
             {
                 foreach($current_parsing as $key => $value)
                 {
-                    if(isset($value->alias) && strtolower($value->alias) == $this->args[0])
+                    if(isset($value->alias) && strtolower($value->alias) == $arg)
                     {
-                        $this->args[0] = $key;
+                        $arg = $key;
                         goto __NEXT_ROUND;
                     }
                 }
@@ -73,7 +74,7 @@ class parser extends baseParser
                 goto __ERROR;
             }
 __NEXT_ROUND:
-            $current_parsing = $current_parsing->{$this->args[0]};
+            $current_parsing = $current_parsing->{$arg};
 __NEXT_ARG:
             $this->parsed_string.=(" ".array_shift($this->args));
         }

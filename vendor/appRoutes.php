@@ -44,7 +44,7 @@ class {$appRoutes->name} extends \\zinux\\kernel\\routing\\routerBootstrap
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $appRoutes->parent = $application;
-        $s->project->routes[$appRoutes->name]  = $appRoutes;
+        $s->project->routes[strtolower($appRoutes->name)]  = $appRoutes;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

@@ -77,9 +77,11 @@ class zg extends \zinux\zg\baseZg
     {
         if($argv[0] == $_SERVER['SCRIPT_NAME'])
             array_shift($argv);
+        
+        $this->args = $argv;
         # normalize the array
         foreach($argv as $key=> $value)
-        {
+        {   break;
             $this->args[$key] = strtolower($value);
         }
     }

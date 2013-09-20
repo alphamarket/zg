@@ -23,14 +23,14 @@ class createHelper extends \zinux\zg\baseZg
 namespace $ns;
     
 /**
- * The $ns\\{$helper->name}
- * @by Zinux Generator <b.g.dariush@gmail.com>
- */";
+* The $ns\\{$helper->name}
+* @by Zinux Generator <b.g.dariush@gmail.com>
+*/";
         file_put_contents($helper->path, $mbc);
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $helper->parent = $module;
-        $s->modules->modules[$module->name]->helper[$helper->name] = $module;
+        $s->modules->modules[strtolower($module->name)]->helper[strtolower($helper->name)] = $module;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

@@ -9,7 +9,8 @@ class createModel extends \zinux\zg\baseZg
 {
     public function __construct(\zinux\zg\vendor\item $module, \zinux\zg\vendor\item $model, $project_path = ".")
     {
-        $model->name = preg_replace("#(\w+)model$#i","$1", $model->name)."Model";
+        # no naming convention in models
+        # $model->name = preg_replace("#(\w+)model$#i","$1", $model->name)."Model";
         $ns = $this->convert_to_relative_path($model->path, $project_path);;
         $this ->cout("Creating new model '", 1,  self::defColor, 0)
                 ->cout($model->name, 0, self::yellow, 0)
@@ -23,17 +24,17 @@ class createModel extends \zinux\zg\baseZg
 namespace $ns;
     
 /**
- * The $ns\\{$model->name}
- * @by Zinux Generator <b.g.dariush@gmail.com>
- */
- class {$model->name}
- {
- }";
+* The $ns\\{$model->name}
+* @by Zinux Generator <b.g.dariush@gmail.com>
+*/
+class {$model->name}
+{
+}";
         file_put_contents($model->path, $mbc);
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $model->parent = $module;
-        $s->modules->modules[$module->name]->model[$model->name] = $module;
+        $s->modules->modules[strtolower($module->name)]->model[strtolower($model->name)] = $module;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

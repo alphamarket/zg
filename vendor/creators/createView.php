@@ -31,7 +31,7 @@ class createView extends \zinux\zg\baseZg
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $view->parent = $controller;
-        $s->modules->modules[$controller->parent->name]->controller[$controller->name]->view[$view->name] = $view;
+        $s->modules->modules[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->view[strtolower($view->name)] = $view;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }
