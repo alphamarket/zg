@@ -52,11 +52,14 @@ class helpParser extends baseParser
     protected function printHelp($content, $render_options = 0)
     {
         if(!(isset($content->title) && isset($content->help))) return;
+        $command = preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->command);
+        $rep_pat = "$1".str_repeat(" ", 3*5);
         $this ->cout()
                 ->cout($content->title, 1, self::cyan)
-                ->cout(self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->command), 2, self::defColor);
+                ->cout(self::hiYellow.preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat),  $command), 2, self::defColor);
         if(isset($content->help->alias))
             $this->cout("Alias: [ ".self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->alias).self::defColor." ]", 3, self::defColor);
+        $this->cout();
         $rep_pat = "$1".str_repeat(" ", 3*5);
         $this ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat),  $content->help->detail), 3);
         if(isset($content->notes))

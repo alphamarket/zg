@@ -8,9 +8,13 @@
     },
     "help":
     {
-        "command":"zg build ($module_dir : modules)",
+        "command":"zg build ($module_dir : modules) ( --root  ( $root_dir : .))",
         "alias": "zg b ($module_dir : modules)",
         "detail":"Builds a new zinux project configuration, based on currently exists zinux project.<br /> if no module directory supplied 'modules' would be targeted"
+    },
+    "options":
+    {
+        "--root":"Project's root directory (zg will analyzing this folder's sub-structures)."
     },
     "notes":
     [
