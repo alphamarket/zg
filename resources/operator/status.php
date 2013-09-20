@@ -48,9 +48,8 @@ class status extends baseOperator
             }
         $this->cout("}", $indent);
     }
-    public function s($args)
+    public function version()
     {
-        \zinux\kernel\utilities\debug::_var($args);
-        $this->cout(__METHOD__);
+        $this->cout(ZG_VERSION);
     }
 }

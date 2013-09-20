@@ -6,5 +6,6 @@ class update extends baseOperator
     public function update($args)
     {
         $this->restrictArgCount($args, 0);
+        
     }
 }
