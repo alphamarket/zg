@@ -6,6 +6,8 @@ defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\f
 defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
 defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux.cache");
 defined("RUNNING_ENV") ||  define("RUNNING_ENV", "DEVELOPMENT");
+defined("CONF_PATH") || define("CONF_PATH","/.zg/");
+defined("CONF_NAME") || define("CONF_NAME",".cfg");
 
 /**
  * Description of baseZg
@@ -65,8 +67,8 @@ abstract class baseZg extends \zinux\baseZinux
     public function GetStatus($path = ".")
     {
         $s = NULL;
-        if(file_exists("$path/.zg.cfg"))
-            $s =  unserialize(file_get_contents("$path/.zg.cfg"));
+        if(file_exists("$path".CONF_PATH.CONF_NAME))
+            $s =  unserialize(file_get_contents("$path".CONF_PATH.CONF_NAME));
         if(!$s)
             return $s;
         if(!isset($s->hs))
@@ -82,19 +84,21 @@ abstract class baseZg extends \zinux\baseZinux
     {
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name"))
             mkdir($project_name, 0775);
+        if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name".CONF_PATH))
+            mkdir("./$project_name".CONF_PATH);
         
         $s = new \zinux\zg\vendor\status;
         $parent = new vendor\item(basename(realpath(".")), realpath("."));
         $s->project = new vendor\Item("project", realpath("./$project_name/"),$parent);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
-        return file_put_contents("./$project_name/.zg.cfg", serialize($s), LOCK_EX);
+        return file_put_contents("./$project_name".CONF_PATH.CONF_NAME, serialize($s), LOCK_EX);
     }
     
     public function SaveStatus(\zinux\zg\vendor\status $s)
     {
         unset($s->hs);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
-        return file_put_contents("{$s->project->path}/.zg.cfg", serialize($s), LOCK_EX);
+        return file_put_contents("{$s->project->path}/".CONF_PATH.CONF_NAME, serialize($s), LOCK_EX);
     }
     public function CheckZG($path = ".", $throw_exception = 0)
     {

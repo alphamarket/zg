@@ -23,8 +23,8 @@ class zg extends \zinux\zg\baseZg
         {
             if(!count($argv))
                 throw new Exception("No argument supplied ...");
-
-            \zinux\kernel\caching\fileCache::RegisterCachePath(ZG_ROOT."/bin/cache");
+            
+            \zinux\kernel\caching\fileCache::RegisterCachePath(WORK_ROOT."/.zg/cache");
             
             $zg = new zg($argv);
             
