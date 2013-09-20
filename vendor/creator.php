@@ -18,11 +18,13 @@ class creator extends \zinux\zg\resources\operator\baseOperator
         
         if(!file_exists($s->modules->meta->path))
             mkdir($s->modules->meta->path, 0775);
+        $name = preg_replace("#(\w+)module$#i","$1", $name)."Module";
+        $bs_name = preg_replace("#(\w+)module$#i","$1", $name)."Bootstrap";
         
-        if(\zinux\kernel\utilities\fileSystem::resolve_path("{$s->modules->meta->path}/{$name}Module"))
+        if(\zinux\kernel\utilities\fileSystem::resolve_path("{$s->modules->meta->path}/{$name}"))
             throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$name}' already exists ...");
             
-        $module = new \zinux\zg\vendor\item("{$name}Module", "{$s->modules->meta->path}/{$name}Module", $s->modules->meta);
+        $module = new \zinux\zg\vendor\item("{$name}", "{$s->modules->meta->path}/{$name}", $s->modules->meta);
         $s->modules->modules[$module->name] = $module;
         $this->SaveStatus($s);
         
@@ -36,7 +38,7 @@ class creator extends \zinux\zg\resources\operator\baseOperator
                 "cd {$module->path}/views && mkdir layout",
                 "chmod 775 -R {$module->path}"    
         ));
-        new \zinux\zg\vendor\moduleBootstrap($module, new \zinux\zg\vendor\Item("{$name}Bootstrap", $module->path."/{$name}Bootstrap.php"), $projectDir);
+        new \zinux\zg\vendor\moduleBootstrap($module, new \zinux\zg\vendor\Item("{$bs_name}", $module->path."/{$bs_name}.php"), $projectDir);
         return $module;
     } 
     public function createController($name, Item $module ,$projectDir = ".")
