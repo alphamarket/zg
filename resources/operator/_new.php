@@ -55,6 +55,8 @@ class _new extends baseOperator
         $controller = $c->createController("index", $module, $pName);
         $appBootstrap =  $c->createAppBootstrap("app", $pName);
         $appRoutes =  $c->createAppRoutes("app", $pName);
+        $layout = $c->createLayout("default", $module, $pName);
+        $view = $c->createView("index", $controller, $pName);
     }
     
     public function module($args)
@@ -108,8 +110,52 @@ class _new extends baseOperator
             throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[2]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
         if(!isset($s->modules->modules[$args[2]]->controller[$args[1]]))
             throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[2]}/{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
-            
+        if(isset($s->modules->modules[$args[2]]->controller[$args[1]]->action[$args[0]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Action '{$args[2]}/{$args[1]}/{$args[0]}' already exists in zg manifest!<br />    Try 'zg reload' command!");
         $c = new \zinux\zg\vendor\creator;
         $c->createAction($args[0], $s->modules->modules[$args[2]]->controller[$args[1]]);
+    }
+    public function view($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args, 3,1);
+        if(count($args)==1)
+            $args[] = "index";
+        if(count($args)==2)
+            $args[] = "default";
+        
+        $args[0] = preg_replace("#(\w+)view#i", "$1", $args[0])."View";
+        $args[1] = preg_replace("#(\w+)controller$#i", "$1", $args[1])."Controller";
+        $args[2] = preg_replace("#(\w+)module$#i", "$1", $args[2])."Module";
+        $s = $this->GetStatus();
+        if(!isset($s->modules->modules[$args[2]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[2]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+        if(!isset($s->modules->modules[$args[2]]->controller[$args[1]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[2]}/{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+        if(isset($s->modules->modules[$args[2]]->controller[$args[1]]->view[$args[0]]))
+            throw new \zinux\kernel\exceptions\notFoundException("View '{$args[2]}/{$args[1]}/{$args[0]}' already exists in zg manifest!<br />    Try 'zg reload' command!");
+            
+        $c = new \zinux\zg\vendor\creator;
+        $c->createView($args[0], $s->modules->modules[$args[2]]->controller[$args[1]]);
+    }
+    
+    public function layout($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args, 2,1);
+        if(count($args)==1)
+            $args[] = "default";
+        # fail safe
+        $this->restrictArgCount($args, 2,2);
+        $args[0] = preg_replace("#(\w+)layout$#i", "$1", $args[0])."Layout";
+        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $s = $this->GetStatus();
+        if(!isset($s->modules->modules[$args[1]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exists in zg manifest!<br />    Try 'zg reload' command!");
+        if(isset($s->modules->modules[$args[1]]->layout[$args[0]]))
+            throw new \zinux\kernel\exceptions\notFoundException("Layout  '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />    Try 'zg reload' command!");
+            
+        $c = new \zinux\zg\vendor\creator;
+        $c->createLayout($args[0], $s->modules->modules[$args[1]]);
     }
 }

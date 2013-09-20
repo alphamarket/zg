@@ -13,6 +13,7 @@ class creator extends \zinux\zg\resources\operator\baseOperator
     }
     public function createModule($name ,$projectDir = ".")
     {
+        $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);
         
         if(!file_exists($s->modules->meta->path))
@@ -40,14 +41,25 @@ class creator extends \zinux\zg\resources\operator\baseOperator
     } 
     public function createController($name, Item $module ,$projectDir = ".")
     {
+        $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);
         $name = preg_replace("#(\w+)controller$#i","$1", $name)."Controller";
         $controller = new \zinux\zg\vendor\Item($name, $module->path."/controllers/{$name}.php");
         new \zinux\zg\vendor\createController($module, $controller, $projectDir);
         return $controller;
     }
+    public function createLayout($name, Item $module ,$projectDir = ".")
+    {
+        $this->CheckZG($projectDir,1);
+        $s = $this->GetStatus($projectDir);
+        $name = preg_replace("#(\w+)layout$#i","$1", $name)."Layout";
+        $controller = new \zinux\zg\vendor\Item($name, $module->path."/views/layout/{$name}.phtml");
+        new \zinux\zg\vendor\creators\createLayout($module, $controller, $projectDir);
+        return $controller;
+    }
     public function createAction($name, item $controller,$projectDir = ".")
     {
+        $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);
         $name = preg_replace("#(\w+)action$#i","$1", $name)."Action";
         return new \zinux\zg\vendor\createAction(
@@ -57,6 +69,7 @@ class creator extends \zinux\zg\resources\operator\baseOperator
     
     public function createAppBootstrap($name, $projectDir = ".")
     {
+        $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);
         $name = preg_replace("#(\w+)bootstrap$#i","$1", $name)."Bootstrap";
         $appbs = new \zinux\zg\vendor\Item($name, $s->project->path."/application/{$name}.php");
@@ -65,11 +78,22 @@ class creator extends \zinux\zg\resources\operator\baseOperator
     }
     public function createAppRoutes($name, $projectDir = ".")
     {
+        $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);
         $name = preg_replace("#(\w+)routes$#i","$1", $name)."Routes";
         $appr = new \zinux\zg\vendor\Item($name, $s->project->path."/application/{$name}.php");
         new \zinux\zg\vendor\appRoutes($s->project, $appr, $projectDir);
         return $appr;
+    }
+    public function createView($name, item $controller, $projectDir = ".")
+    {
+        $this->CheckZG($projectDir,1);
+        $s = $this->GetStatus($projectDir);
+        $name = preg_replace("#(\w+)view$#i","$1", $name)."View";
+        $view = new \zinux\zg\vendor\Item($name, 
+            $controller->parent->path."/views/view/".preg_replace("#(\w+)controller$#i","$1", basename($controller->path, ".php"))."/{$name}.phtml");
+        new \zinux\zg\vendor\creators\createView($controller, $view, $projectDir);
+        return $view;
     }
     
 }

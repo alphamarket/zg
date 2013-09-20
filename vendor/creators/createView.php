@@ -16,5 +16,19 @@ class createView extends \zinux\zg\baseZg
                 ->cout("' for '",0,self::defColor, 0)
                 ->cout($ns, 0, self::yellow, 0)
                 ->cout("' controller.");
+        if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($view->path)))
+            mkdir(dirname($view->path), 0775);
+        $this->cout("+", 1, self::green,0);
+        $mbc = "<p>
+    A view for <b>{$controller->name}</b>.<br />
+    Location '<b>{$view->path}</b>'.
+</p>";
+        file_put_contents($view->path, $mbc);
+        $this->cout("+", 0, self::green,0);
+        $s = $this->GetStatus($project_path);
+        $view->parent = $controller;
+        $s->modules->modules[$controller->parent->name]->controller[$controller->name]->view[$view->name] = $view;
+        $this->SaveStatus($s);
+        $this->cout("+", 0, self::green);
     }
 }
