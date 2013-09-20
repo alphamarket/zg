@@ -56,9 +56,9 @@ class parser extends baseParser
         $current_parsing = $this->command_generator->Generate();
         while($current_parsing)
         {
-            $arg = strtolower($this->args[0]);
             if(!count($this->args))
                 goto __EXECUTE;
+            $arg = strtolower($this->args[0]);
             if(!isset($current_parsing->{$arg}))
             {
                 foreach($current_parsing as $key => $value)
