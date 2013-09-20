@@ -5,7 +5,6 @@ defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
 defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
 defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
 defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux.cache");
-defined("RUNNING_ENV") ||  define("RUNNING_ENV", "DEVELOPMENT");
 defined("CONF_PATH") || define("CONF_PATH","/.zg/");
 defined("CONF_NAME") || define("CONF_NAME",".cfg");
 defined("ZG_VERSION") || define("ZG_VERSION","1.4.2");

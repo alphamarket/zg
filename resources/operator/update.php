@@ -3,17 +3,30 @@ namespace zinux\zg\resources\operator;
 
 class update extends baseOperator
 {    
+    public function __construct($suppress_header_text = 0)
+    {
+        parent::__construct($suppress_header_text);
+        $this->output_buffering = ini_get("output_buffering");
+        ini_set('output_buffering','on');
+        
+    }
+    public function __destruct()
+    {
+        ini_set('output_buffering',$this->output_buffering);
+    }
     public function update($args)
     {
         $this->restrictArgCount($args, 0);
         $this->cout("Updating your project's zinux framework from its online repo.");
-        $this->cout("Testing your network, please wait....");
+        $this->cout("Testing your network, please wait.... ", 0, self::defColor, 0);
         # check network 
         if(!$this->is_connected())
         {
+            $this->cout('[ FAILED ]',0, self::red);
             throw new \zinux\kernel\exceptions\invalideOperationException
                 (self::defColor."You need to have ".self::yellow."network connection".self::defColor." to do this operation!<br />".self::red."[ Aborting ]");
         }
+        $this->cout("[ OK ]",0, self::green);
         $zinux_dir = WORK_ROOT."/zinux";
         # check if git exists 
         if(!exec('git 2>/dev/null | wc -l'))
@@ -27,7 +40,6 @@ class update extends baseOperator
     {
         if(!($path = \zinux\kernel\utilities\fileSystem::resolve_path($repo_path)))
             throw new \zinux\kernel\exceptions\notFoundException("'$repo_path' not found!");
-        $this->cout("Updating '".self::yellow.$repo_path.self::defColor."' repo.", $indent);
         $indent+= 0.5;
         $debug_git = 0; 
         $repo_man = "$repo_path/manifest.json";
@@ -58,7 +70,9 @@ class update extends baseOperator
                 $man_failed = 0;
         }
         $repo->git("checkout master");
-        #echo $repo->git("pull origin master");
+        $this->cout("Updating '".self::yellow.$repo_path.self::defColor."' repo. ", $indent, self::defColor, 0);
+        $repo->git("pull origin master");
+        $this->cout("[ OK ]", 0, self::green);
         if($man_failed) return;
         
         $manifest = json_decode(file_get_contents(\zinux\kernel\utilities\fileSystem::resolve_path($repo_man)));
@@ -94,5 +108,11 @@ class update extends baseOperator
         }
         return false;
     }
-    
+    public function cout($content = "<br />", $tap_index = 0, $color = self::defColor, $auto_break = 1)
+    {
+        ob_start();
+            parent::cout($content, $tap_index, $color, $auto_break);
+        echo preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""), ob_get_clean());
+        ob_flush();
+    }
 }
