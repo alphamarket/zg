@@ -139,6 +139,22 @@ abstract class baseZg extends \zinux\baseZinux
         
         return false;
     }
+    public function get_pair_arg_value($args, $target_arg)
+    {
+        if(!$this->is_iterable($args))
+            return NULL;
+        
+        while(count($args))
+        {
+            $_value = array_shift($args);
+            if(strtolower($_value) == strtolower($target_arg))
+            {
+                if(!count($args)) return NULL;
+                return array_shift($args);
+            }
+        }
+        return NULL;
+    }
     public function inverse_preg_quote($str, $delimiter = NULL)
     {
         $ar = array(

@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendor\creators;
 /**
  * Description of createmoduleBootstrap
  *
@@ -8,7 +8,7 @@ namespace zinux\zg\vendor;
 
 class createController extends \zinux\zg\resources\operator\baseOperator
 {
-    public function __construct(Item $module, Item $controller, $project_path = ".")
+    public function __construct(\zinux\zg\vendor\item $module, \zinux\zg\vendor\item $controller, $project_path = ".")
     {
         $controller->name = preg_replace("#controller$#i","", $controller->name)."Controller";
         $ns = $this->convert_to_relative_path($controller->path, $project_path);

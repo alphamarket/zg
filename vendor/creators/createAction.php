@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendor\creators;
 /**
  * Description of createmoduleBootstrap
  *
@@ -8,7 +8,7 @@ namespace zinux\zg\vendor;
 
 class createAction extends \zinux\zg\resources\operator\baseOperator
 {
-    public function __construct(Item $controller, Item $action, $project_path = ".")
+    public function __construct(\zinux\zg\vendor\item $controller, \zinux\zg\vendor\item $action, $project_path = ".")
     {
         $action->path = preg_replace("#(\w+)action$#i","$1", $action->name)."Action";
         $this ->cout("Creating new action '",1,  self::defColor, 0)

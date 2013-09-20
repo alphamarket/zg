@@ -8,13 +8,15 @@
     },
     "help":
     {
-        "command":"zg build ($module_dir : modules) ( --root  ( $root_dir : .))",
-        "alias": "zg b ($module_dir : modules)",
-        "detail":"Builds a new zinux project configuration, based on currently exists zinux project.<br /> if no module directory supplied 'modules' would be targeted"
+        "command":"zg build ( -m ($module_dir : modules) ) ( -a  ( $app_dir : application) ) ( -p  ( $project_dir : .) )",
+        "alias": "zg b ( -m ($module_dir : modules) ) ( -a  ( $app_dir : application) ) ( -p  ( $project_dir : .) )",
+        "detail":"Builds a new zinux project configuration, based on currently existed zinux project.<br /> if no module directory supplied 'modules' would be targeted"
     },
     "options":
     {
-        "--root":"Project's root directory (zg will analyzing this folder's sub-structures)."
+        "-p":"Project's root directory.<br />(zg will analyzing this folder's sub-structures.)",
+        "-a":"Project's application directory, a relative path from '-p' argument.",
+        "-m":"Modules' root directory, a relative path from '-p' argument.<br />(zg will consider this folder's sub-structures as project's modules.)"
     },
     "notes":
     [
