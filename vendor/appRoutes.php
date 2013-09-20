@@ -40,12 +40,11 @@ class {$appRoutes->name} extends \\zinux\\kernel\\routing\\routerBootstrap
         #\$this->addRoute(\"/foo/$1/delete$2\",\"/foo/delete/$1$2\");
     }
 }";
-//        \zinux\kernel\utilities\debug::_var(array($ns, $appRoutes, $project_path),1);
         file_put_contents($appRoutes->path, $mbc);
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $appRoutes->parent = $application;
-        $s->project->bootstraps[$appRoutes->name]  = $appRoutes;
+        $s->project->routes[$appRoutes->name]  = $appRoutes;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

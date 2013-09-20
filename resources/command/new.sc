@@ -28,7 +28,7 @@
         },
         "controller":
         {
-            "title":"Add new controller to a module", 
+            "title":"Add new controller", 
             "alias":"c",
             "instance":
             {
@@ -39,12 +39,12 @@
             {
                 "command":"zg new controller $controller_name ($module_name : default)",
                 "alias": "zg n c $controller_name ($module_name : default)",
-                "detail":"Creates a new controller for module, if no module name supplied 'defaultModule' will be targeted"
+                "detail":"Creates a new controller for a module, if no module name supplied 'defaultModule' will be targeted"
             }
         },
         "action":
         {
-            "title":"Add new action to a controller", 
+            "title":"Add new action", 
             "alias":"a",
             "instance":
             {
@@ -55,12 +55,12 @@
             {
                 "command":"zg new action $action_name ($controller_name : index) ($module_name : default)",
                 "alias": "zg n a $action_name ($controller_name : index) ($module_name : default)",
-                "detail":"Creates a new controller for a module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
+                "detail":"Creates a new action for a controller in a module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
             }
         },
         "view":
         {
-            "title":"Add new view to a controller", 
+            "title":"Add new view", 
             "alias":"v",
             "instance":
             {
@@ -74,12 +74,28 @@
                 "detail":"Creates a new view for a controller in a module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
             }
         },
+        "layout":
+        {
+            "title":"Add new layout", 
+            "alias":"l",
+            "instance":
+            {
+                "class":"\\zinux\\zg\\resources\\operator\\_new",
+                "method":"layout"
+            },
+            "help":
+            {
+                "command":"zg new layout $layout_name ($module_name : default)",
+                "alias": "zg n l $layout_name ($module_name : default)",
+                "detail":"Creates a new layout for a module, if no module name supplied 'defaultModule' will be targeted"
+            }
+        },
         "application":
         {
             "alias":"app",
             "bootstrap":
             {
-                "title":"Creates a new bootstrap file for application", 
+                "title":"Creates a new bootstrap file", 
                 "alias":"b",
                 "instance":
                 {
@@ -90,12 +106,12 @@
                 {
                     "command":"zg new application boostrap $bootstrap_name",
                     "alias": "zg n app b $bootstrap_name",
-                    "detail":"Creates a bootstrap file with given name"
+                    "detail":"Creates a bootstrap file for project with given name"
                 }
             },
             "routes":
             {
-                "title":"Creates a new routes file for application", 
+                "title":"Creates a new routes file", 
                 "alias":"r",
                 "instance":
                 {
@@ -106,7 +122,7 @@
                 {
                     "command":"zg new application routes $routes_name",
                     "alias": "zg n app r $routes_name",
-                    "detail":"Creates a routes file with given name"
+                    "detail":"Creates a routes file for project with given name"
                 }
             }
         }

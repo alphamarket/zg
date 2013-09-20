@@ -96,9 +96,9 @@ abstract class baseZg extends \zinux\baseZinux
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
         return file_put_contents("{$s->project->path}/.zg.cfg", serialize($s), LOCK_EX);
     }
-    public function CheckZG($throw_exception = 0)
+    public function CheckZG($path = ".", $throw_exception = 0)
     {
-        if(!$this->GetStatus())
+        if(!$this->GetStatus($path))
         {
             if($throw_exception)
                 throw new \zinux\kernel\exceptions\invalideOperationException("No project have found ...");
