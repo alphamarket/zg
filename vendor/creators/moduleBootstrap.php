@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendor\creators;
 /**
  * Description of createmoduleBootstrap
  *
@@ -7,7 +7,7 @@ namespace zinux\zg\vendor;
  */
 class moduleBootstrap extends \zinux\zg\baseZg
 {
-    public function __construct(Item $module, Item $moduleBootstrap, $project_path = ".")
+    public function __construct(\zinux\zg\vendor\item $module, \zinux\zg\vendor\item $moduleBootstrap, $project_path = ".")
     {
         $moduleBootstrap->name = preg_replace("#bootstrap$#i","", $moduleBootstrap->name)."Bootstrap";
         $ns = $this->convert_to_relative_path($moduleBootstrap->path, $project_path);

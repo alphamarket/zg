@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendor\creators;
 /**
  * Description of appRoutes
  *
@@ -7,7 +7,7 @@ namespace zinux\zg\vendor;
  */
 class appRoutes extends \zinux\zg\baseZg
 {
-    public function __construct(Item $application, Item $appRoutes, $project_path = ".")
+    public function __construct(\zinux\zg\vendor\item $application, \zinux\zg\vendor\item $appRoutes, $project_path = ".")
     {
         $appRoutes->name = preg_replace("#(\w+)routes$#i","$1", $appRoutes->name)."Routes";
         $ns = $this->convert_to_relative_path($appRoutes->path, $project_path);

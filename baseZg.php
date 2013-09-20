@@ -139,6 +139,22 @@ abstract class baseZg extends \zinux\baseZinux
         
         return false;
     }
+    public function get_pair_arg_value($args, $target_arg)
+    {
+        if(!$this->is_iterable($args))
+            return NULL;
+        
+        while(count($args))
+        {
+            $_value = array_shift($args);
+            if(strtolower($_value) == strtolower($target_arg))
+            {
+                if(!count($args)) return NULL;
+                return array_shift($args);
+            }
+        }
+        return NULL;
+    }
     public function inverse_preg_quote($str, $delimiter = NULL)
     {
         $ar = array(
@@ -167,18 +183,42 @@ abstract class baseZg extends \zinux\baseZinux
             $ar["\\$delimiter"] = $delimiter;
         return strtr($str, $ar);
     }
-    public function convert_to_relative_path($path, $project_dir = ".")
+    public function convert_to_relative_path($path, $project_dir = ".", \zinux\zg\vendor\status $s = null)
     {
-        $s = $this->GetStatus($project_dir);
+        if(!$s)
+            $s = $this->GetStatus($project_dir);
         if(!$s)
             $this->CheckZG(1);
-        if(is_file($path))
+        if(is_file($path) && false)
             $path = dirname($path);
         $path = preg_replace(
-            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i"),
-            array("", "$1\\"), 
+            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i","#[.]\w+$#i"),
+            array("", "$1\\", ""), 
             str_replace($s->project->path, "", dirname($path))
         );
         return $path;
+    }
+    
+    public function check_php_syntax($file_name, $throw_exception_on_error = 1)
+    {
+        $_file_name = $file_name;
+        if(!strlen($file_name) || 
+            !($file_name = \zinux\kernel\utilities\fileSystem::resolve_path($file_name, 1)))
+            throw new \zinux\kernel\exceptions\notFoundException("'$_file_name' not found...");
+        $ret = 0;
+        ob_start();
+            system( "php -l $file_name 2>&1", $ret);
+        $output = ob_get_clean();
+        if( $ret !== 0 )
+        {
+            $matches = array();
+            if(preg_match_all( "/Errors\s+parsing\s+".preg_quote($file_name, "/")."/i", $output, $matches) && $throw_exception_on_error)    
+            {
+                $this->cout("Error parsing '$file_name'",0,self::hiRed);
+                throw new \zinux\kernel\exceptions\invalideOperationException($output);
+            }
+            return false;
+        }
+        return true;
     }
 }

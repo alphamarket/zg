@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendor\creators;
 /**
  * Description of createmoduleBootstrap
  *
@@ -7,7 +7,7 @@ namespace zinux\zg\vendor;
  */
 class appBootstrap extends \zinux\zg\baseZg
 {
-    public function __construct(Item $application, Item $appBootstrap, $project_path = ".")
+    public function __construct(\zinux\zg\vendor\item $application, \zinux\zg\vendor\item $appBootstrap, $project_path = ".")
     {
         $appBootstrap->name = preg_replace("#(\w+)bootstrap$#i","$1", $appBootstrap->name)."Bootstrap";
         $ns = $this->convert_to_relative_path($appBootstrap->path, $project_path);
@@ -46,7 +46,7 @@ class {$appBootstrap->name} extends \\zinux\\kernel\\application\\applicationBoo
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $appBootstrap->parent = $application;
-        $s->project->bootstraps[strtolower($appBootstrap->name)]  = $appBootstrap;
+        $s->project->bootstrap[strtolower($appBootstrap->name)]  = $appBootstrap;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

@@ -36,7 +36,7 @@ class zg extends \zinux\zg\baseZg
         catch(\Exception $e)
         {
             $zg ->cout("[ Error occured ]",0,self::red)
-                  ->cout($e->getMessage(), 1, self::yellow);
+                  ->cout(preg_replace(array("#(<br\s*(/)?>)#i", "#(\n)#i"), array("$1    ", "$1    "), $e->getMessage()), 1, self::yellow);
             if(RUNNING_ENV=="DEVELOPMENT")
             {
                 
