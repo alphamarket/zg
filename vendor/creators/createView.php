@@ -19,7 +19,11 @@ class createView extends \zinux\zg\baseZg
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($view->path)))
             mkdir(dirname($view->path), 0775);
         $this->cout("+", 1, self::green,0);
-        $mbc = "<p>
+        $mbc = "<!--
+ The $ns\\{$view->name}
+ @by Zinux Generator <b.g.dariush@gmail.com>
+ -->
+<p>
     A view for <b>{$controller->name}</b>.<br />
     Location '<b>{$view->path}</b>'.
 </p>";
