@@ -44,7 +44,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         $this->SaveStatus($this->s);
         $this ->cout()
                 ->cout()
-                ->cout(self::green."+".self::defColor." The built config file has saved ".self::green."successfully".self::defColor.".");
+                ->cout(self::green."+".self::defColor." The built config file has saved ".self::green."successfully".self::defColor.".", 1);
         $this->saveLogs();
     }
 }
