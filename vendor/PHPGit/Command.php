@@ -36,7 +36,7 @@ class Command
 
     public function run()
     {
-        $commandToRun = sprintf('cd %s && %s', escapeshellarg($this->dir), $this->commandString);
+        $commandToRun = sprintf('cd %s && %s 2>&1', escapeshellarg($this->dir), $this->commandString);
 
         if($this->debug) {
             print $commandToRun."\n";
