@@ -93,7 +93,8 @@ class _new extends baseOperator
         if(isset($s->modules->modules[$args[1]]->controller[$args[0]]))
             throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />    Try 'zg reload' command!");
         $c = new \zinux\zg\vendor\creator;
-        $c->createController($args[0], $s->modules->modules[$args[1]]);
+        $controller = $c->createController($args[0], $s->modules->modules[$args[1]]);
+        $c->createView("index", $controller);
     }
     
     public function action($args)
