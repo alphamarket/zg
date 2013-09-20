@@ -411,7 +411,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                 ->cout("Logged events# ".self::yellow.count($this->log).self::defColor.".", 2)
                 ->cout("Processed items# ".self::yellow.count($this->processed).self::defColor.".", 2)
                 ->cout()
-                ->cout("Use '".self::yellow."zg build logs".self::defColor."' to print logged info.", 1);
+                ->cout("Use '".self::yellow."zg build log".self::defColor."' to print logged info.", 1);
     }
     protected function step_show($step_cout = 1, $char = ".", $color = self::hiGreen)
     {

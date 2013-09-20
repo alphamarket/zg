@@ -81,9 +81,9 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         {
             case 0:
             case 1:
-                if(!isset($all['log']))
+                if(!isset($all['log']) || !count($all['log']))
                 {
-                    $this ->cout("[X] ", 1, self::red, 0);
+                    $this ->cout("[X] ", 0.5, self::red, 0);
                     $this->cout("No event record found ...!");
                     goto __END_EV;
                 }
@@ -95,9 +95,9 @@ __END_EV:
                     break;
                 $this->cout();
             case 2:
-                if(!isset($all['processed']))
+                if(!isset($all['processed']) || !count($all['processed']))
                 {
-                    $this ->cout("[X] ", 1, self::red, 0);
+                    $this ->cout("[X] ", 0.5, self::red, 0);
                     $this->cout("No processed record found...!");
                     return;
                 }
