@@ -403,7 +403,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                     unset($this->log[$index1]); 
             }
         }
-        $fc = new \zinux\kernel\caching\fileCache(__METHOD__);
+        $fc = new \zinux\kernel\caching\fileCache("ZG_BUILD_COMMAND_LOG");
         $fc->save("log", $this->log);
         $fc->save("processed", $this->processed);
         $this ->cout()
