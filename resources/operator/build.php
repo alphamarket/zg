@@ -83,16 +83,24 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
     {
         foreach($this->s->modules->modules as $name => $module)
         {
-            foreach($module->controller  as $cname => $contoller)
+            foreach($module->controller  as $cname => $controller)
             {
-                $class = $this->convert_to_relative_path($contoller->path, $this->root, $this->s)."\\$cname";
+                $class = $this->convert_to_relative_path($controller->path, $this->root, $this->s)."\\$cname";
                 # this if should never reach TRUE, cause the 
                 if(!class_exists($class))
-                    require_once $contoller->path;
+                    require_once $controller->path;
                 foreach(get_class_methods($class) as $key => $method)
                 {
                     if(preg_match("#\w+action#i", $method))
-                        $this->cout("$key   =>   $method");
+                    {
+                        if(!is_callable(array($class, $method)))
+                            $this->log[] = new \zinux\zg\vendor\item("Method '$method' is not callable", "In class '$class' method '$method' is not callable!");
+                        $action = new \zinux\zg\vendor\item($method, $method, $controller);
+                        $this->s->modules->
+                            modules[strtolower($name)]->
+                            controller[strtolower($cname)]->
+                            action[strtolower($action->name)] = $action;
+                    }
                 }
             }
         }
