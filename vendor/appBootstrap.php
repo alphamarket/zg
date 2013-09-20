@@ -10,18 +10,14 @@ class appBootstrap extends \zinux\zg\baseZg
     public function __construct(Item $application, Item $appBootstrap, $project_path = ".")
     {
         $appBootstrap->name = preg_replace("#(\w+)bootstrap$#i","$1", $appBootstrap->name)."Bootstrap";
+        $ns = $this->convert_to_relative_path($appBootstrap->path, $project_path);
         $this ->cout("Creating new application bootstrap '", 1,  self::defColor, 0)
                 ->cout($appBootstrap->name, 0, self::yellow, 0)
                 ->cout("' at '",0,self::defColor, 0)
-                ->cout(dirname($appBootstrap->path), 0, self::yellow, 0)
+                ->cout($ns, 0, self::yellow, 0)
                 ->cout("'.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($appBootstrap->path)))
             mkdir(dirname($appBootstrap->path), 0775);
-        $ns = preg_replace(
-            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i"),
-            array("", "$1\\"), 
-            str_replace($application->path, "", dirname($appBootstrap->path))
-        );
         $this->cout("+", 1, self::green,0);
         $mbc = "<?php
 namespace $ns;

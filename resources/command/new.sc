@@ -54,8 +54,24 @@
             "help":
             {
                 "command":"zg new action $action_name ($controller_name : index) ($module_name : default)",
-                "alias": "zg n a $controller_name ($controller_name : index) ($module_name : default)",
-                "detail":"Creates a new controller for module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
+                "alias": "zg n a $action_name ($controller_name : index) ($module_name : default)",
+                "detail":"Creates a new controller for a module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
+            }
+        },
+        "view":
+        {
+            "title":"Add new view to a controller", 
+            "alias":"v",
+            "instance":
+            {
+                "class":"\\zinux\\zg\\resources\\operator\\_new",
+                "method":"view"
+            },
+            "help":
+            {
+                "command":"zg new view $view_name ($controller_name : index) ($module_name : default)",
+                "alias": "zg n v $view_name ($controller_name : index) ($module_name : default)",
+                "detail":"Creates a new view for a controller in a module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
             }
         },
         "application":

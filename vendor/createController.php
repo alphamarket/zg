@@ -11,17 +11,13 @@ class createController extends \zinux\zg\resources\operator\baseOperator
     public function __construct(Item $module, Item $controller, $project_path = ".")
     {
         $controller->name = preg_replace("#controller$#i","", $controller->name)."Controller";
+        $ns = $this->convert_to_relative_path($controller->path, $project_path);
         $this ->cout("Creating new controller '",1,  self::defColor, 0)
                 ->cout($controller->name, 0, self::yellow, 0)
                 ->cout("' at '",0,self::defColor, 0)
-                ->cout("{$module->parent->name}\\{$module->name}\\controllers", 0, self::yellow, 0)
+                ->cout($ns, 0, self::yellow, 0)
                 ->cout("'.");
         $this->cout("+", 1, self::green,0);
-        $ns = preg_replace(
-            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i"),
-            array("", "$1\\"), 
-            str_replace(dirname($module->parent->path), "", dirname($controller->path))
-        );
         $mbc = "<?php
 namespace $ns;
     
