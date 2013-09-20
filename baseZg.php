@@ -163,4 +163,18 @@ abstract class baseZg extends \zinux\baseZinux
             $ar["\\$delimiter"] = $delimiter;
         return strtr($str, $ar);
     }
+    public function convert_to_relative_path($path, $project_dir = ".")
+    {
+        $s = $this->GetStatus($project_dir);
+        if(!$s)
+            $this->CheckZG(1);
+        if(is_file($path))
+            $path = dirname($path);
+        $path = preg_replace(
+            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i"),
+            array("", "$1\\"), 
+            str_replace($s->project->path, "", dirname($path))
+        );
+        return $path;
+    }
 }
