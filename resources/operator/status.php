@@ -16,6 +16,8 @@ class status extends baseOperator
         
         if(!$this->has_arg($args, "+h"))
             unset($s->history);
+        if(isset($s->configs->show_parents))
+            $this->show_parents = 1;
         
         $this->RecursivePrint($s);
     }
@@ -30,6 +32,13 @@ class status extends baseOperator
         if($this->is_iterable($status))
             foreach($status as $key => $value)
             {
+                if(strtolower($key)=="parent"  && !isset($this->show_parents)) 
+                {
+                    $this ->cout($key, $indent+1, self::yellow, 0)
+                            ->cout(" : ", 0, self::defColor, 0);
+                    $this->cout()->cout("{", $indent+1)->cout("Due to configurations parent property skiped!", $indent+2, self::hiRed)->cout("}", $indent+1);
+                    continue;
+                }
                 $this->cout($key, $indent+1, self::yellow, 0)
                         ->cout(" : ", 0, self::defColor, 0);
                 if(!$this->is_iterable($value))

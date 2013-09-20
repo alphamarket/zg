@@ -81,7 +81,7 @@ __NEXT_ARG:
 __ERROR:
         $this->args = str_replace(array_keys($post_key_words), array_values($post_key_words), $this->args);
         throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid command '".self::yellow."{$this->parsed_string} ".
-            implode(" ", $this->args)."'".self::defColor."<br />    Try zg --help.");
+            implode(" ", $this->args)."'".self::defColor."<br />    Try zg -h.");
 __EXECUTE:
         $this->args = str_replace(array_keys($post_key_words), array_values($post_key_words), $this->args);
         return $current_parsing;
