@@ -36,7 +36,7 @@ class status extends baseOperator
                 {
                     $this ->cout($key, $indent+1, self::yellow, 0)
                             ->cout(" : ", 0, self::defColor, 0);
-                    $this->cout()->cout("{", $indent+1)->cout("Due to configurations parent property skiped!", $indent+2, self::hiRed)->cout("}", $indent+1);
+                    $this->cout("{ ", 0,self::defColor, 0)->cout("Due to configurations parent property skiped!", 0, self::hiRed, 0)->cout(" }");
                     continue;
                 }
                 $this->cout($key, $indent+1, self::yellow, 0)
