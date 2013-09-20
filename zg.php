@@ -35,11 +35,11 @@ class zg extends \zinux\zg\baseZg
         }
         catch(\Exception $e)
         {
+            $s = "$1".str_repeat(" ", 4);
             $zg ->cout("[ Error occured ]",0,self::red)
-                  ->cout(preg_replace(array("#(<br\s*(/)?>)#i", "#(\n)#i"), array("$1    ", "$1    "), $e->getMessage()), 1, self::yellow);
+                  ->cout(preg_replace(array("#(<br\s*(/)?>)#i", "#(\n)#i"), array($s, $s), $e->getMessage()), 1, self::yellow);
             if(RUNNING_ENV=="DEVELOPMENT")
             {
-                
                 $zg   ->cout(str_repeat("=", 60))
                         ->cout(preg_replace("/([#]\d+)/i", "$1", $e->getTraceAsString()));
             }
