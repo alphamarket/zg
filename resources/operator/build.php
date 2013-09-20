@@ -33,6 +33,8 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         $this->fetchAction();
         $this->fetchModels();
         $this->fetchHelpers();
+        $this->fetchLayouts();
+        $this->fetchViewes();
         \zinux\kernel\utilities\debug::_var($this->log);
     }
     protected function fetchModules()
@@ -214,10 +216,9 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
             foreach(glob("$mp/*") as $file)
             {
                 $name = basename($file, ".phtml");
-                if(is_file($file) && preg_match("#\w+\b(.phtml)\b$#i", $file))
+                if(is_file($file) && preg_match("#\w+layout.phtml$#i", $file))
                 {
                     $this->check_php_syntax($file);
-                    $class = $this->convert_to_relative_path($file, $this->root, $this->s)."\\$name";
                     if(!is_readable($file))
                     {
                         $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
@@ -228,7 +229,45 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                     $this->processed[] = $layout;
                 }
                 elseif(is_file($file))
-                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
+                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard layout file pattern.");
+            }
+        }
+    }
+    protected function fetchViewes()
+    {
+        foreach($this->s->modules->modules as $name => $module)
+        {
+            if(!isset($module->controller))
+            {
+                $this->log[] = new \zinux\zg\vendor\item("No controller found in {$module->name}", "");
+                continue;
+            }
+            foreach($module->controller  as $cname => $controller)
+            {
+                $name = preg_replace("#controller#i", "", $cname);
+                if(!($vp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/view/$name")))
+                {
+                    echo $this->log[] = new \zinux\zg\vendor\item("Views folder not found at '{$module->path}/views/view/$name'", "");
+                    continue;
+                }
+                foreach(glob("$vp/*") as $file)
+                {
+                    $name = basename($file, ".phtml");
+                    if(is_file($file) && preg_match("#\w+view.phtml$#i", $file))
+                    {
+                        $this->check_php_syntax($file);
+                        if(!is_readable($file))
+                        {
+                            $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                            continue;
+                        }
+                        $view = new \zinux\zg\vendor\Item($name, $file, $controller);
+                        $T = $this->s->modules->modules[strtolower($module->name)]->controller[strtolower($controller->name)]->view[strtolower($view->name)] = $view;
+                        $this->processed[] = $view;
+                    }
+                    elseif(is_file($file))
+                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard view file pattern.");
+                }
             }
         }
     }
