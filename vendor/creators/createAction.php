@@ -30,7 +30,7 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$controller->path}"))
             throw new \zinux\kernel\exceptions\notFoundException("{$controller->name} not found ...");
         $this->cout("+", 0, self::green,0);
-        $this->check_php_syntax($controller->name);
+        $this->check_php_syntax($controller->path);
         $this->cout("+", 0, self::green,0);
         require_once $controller->path;
         $this->cout("+", 0, self::green,0);

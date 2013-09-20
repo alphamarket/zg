@@ -29,6 +29,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         $this->s->modules->meta = new \zinux\zg\vendor\Item("modules", $this->modules, $this->s->project);
         $this->fetchModules();
         $this->fetchController();
+        $this->fetchAction();
         #\zinux\kernel\utilities\debug::_var($this->log);
     }
     protected function fetchModules()
@@ -55,15 +56,19 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                 if(is_file($file) && preg_match("#\w+controller$#i", $name))
                 {
                     $this->check_php_syntax($file);
-                    if(!is_readable($file) || !(require_once $file))
+                    $class = $this->convert_to_relative_path($file, $this->root, $this->s)."\\$name";
+                    if(class_exists($class))
+                    {
+                        $this->log[] = new \zinux\zg\vendor\item("Skipped requiring '$file'", "The class '$class' already defined!");
+                    }
+                    elseif(!is_readable($file) || !(require_once $file))
                     {
                         $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
                         continue;
                     }
-                    $ns = $this->convert_to_relative_path($file, $this->root, $this->s);
-                    if(!class_exists("$ns\\$name"))
+                    if(!class_exists($class))
                     {
-                        $this->log[] = new \zinux\zg\vendor\item("Controller '$file' found, but relative class '$ns\\$name' not found","");  
+                        $this->log[] = new \zinux\zg\vendor\item("Controller '$file' found, but relative class '$class' not found","");  
                         continue;
                     }
                     $controller = new \zinux\zg\vendor\Item($name, $file, $module);
@@ -71,6 +76,24 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                 }
                 elseif(is_file($file))
                     $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
+            }
+        }
+    }
+    protected function fetchAction()
+    {
+        foreach($this->s->modules->modules as $name => $module)
+        {
+            foreach($module->controller  as $cname => $contoller)
+            {
+                $class = $this->convert_to_relative_path($contoller->path, $this->root, $this->s)."\\$cname";
+                # this if should never reach TRUE, cause the 
+                if(!class_exists($class))
+                    require_once $contoller->path;
+                foreach(get_class_methods($class) as $key => $method)
+                {
+                    if(preg_match("#\w+action#i", $method))
+                        $this->cout("$key   =>   $method");
+                }
             }
         }
     }
