@@ -56,11 +56,20 @@ class helpParser extends baseParser
                 ->cout($content->title, 1, self::cyan)
                 ->cout(self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->command), 2, self::defColor);
         if(isset($content->help->alias))
-            $this->cout("Alias: [ ".self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->alias).self::defColor." ]", 3, self::defColor, 0);
-        $this->cout();
+            $this->cout("Alias: [ ".self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->alias).self::defColor." ]", 3, self::defColor);
         $rep_pat = "$1".str_repeat(" ", 3*5);
         $this ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat),  $content->help->detail), 3);
-        
+        if(isset($content->notes))
+        {
+            $this ->cout("Notes:", 2, self::hiYellow);
+            $rep_pat = "$1".str_repeat(" ", 3*6);
+            foreach($content->notes as $index => $note)
+            {
+                $index++;
+                $this ->cout("$index ) ", 3, self::yellow, 0)
+                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $note));
+            }
+        }
         if($render_options && isset($content->options))
         {
             $this->cout("Options: ", 2, self::hiYellow);

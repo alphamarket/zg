@@ -120,7 +120,11 @@
                 "command":"zg new helper $helper_name ($module_name : default)",
                 "alias": "zg n h $layout_name ($module_name : default)",
                 "detail":"Creates a new helper for a module<br />if no module name supplied 'defaultModule' will be targeted"
-            }
+            },
+            "notes":
+            [
+                "In order to have free uses in models there will be NO<br />naming convention when creating models.<br />i.e the command 'zg new model foo $module_name'<br />will exactly creates a model named 'foo' in target module."
+            ]
         },
         "application":
         {
