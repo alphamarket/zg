@@ -10,6 +10,6 @@
         {
             "command":"zg help ($command)",
             "alias":"zg h ($command)",
-            "detail":"Output help content, you may can pass a command to output the help content (optional)"
+            "detail":"Output help content, you may can pass a command to<br />output the help content (optional)"
         }
 }

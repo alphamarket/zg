@@ -39,7 +39,7 @@
             {
                 "command":"zg new controller $controller_name ($module_name : default)",
                 "alias": "zg n c $controller_name ($module_name : default)",
-                "detail":"Creates a new controller for a module, if no module name supplied 'defaultModule' will be targeted"
+                "detail":"Creates a new controller for a module<br />if no module name supplied 'defaultModule' will be targeted"
             }
         },
         "action":
@@ -55,7 +55,7 @@
             {
                 "command":"zg new action $action_name ($controller_name : index) ($module_name : default)",
                 "alias": "zg n a $action_name ($controller_name : index) ($module_name : default)",
-                "detail":"Creates a new action for a controller in a module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
+                "detail":"Creates a new action for a controller in a module<br />if no module or no controller name supplied<br />'defaultModule' or 'indexController' will be targeted"
             }
         },
         "view":
@@ -71,7 +71,7 @@
             {
                 "command":"zg new view $view_name ($controller_name : index) ($module_name : default)",
                 "alias": "zg n v $view_name ($controller_name : index) ($module_name : default)",
-                "detail":"Creates a new view for a controller in a module, if no module or no controller name supplied 'defaultModule' or 'indexController' will be targeted"
+                "detail":"Creates a new view for a controller in a module<br />if no module or no controller name supplied<br />'defaultModule' or 'indexController' will be targeted."
             }
         },
         "layout":
@@ -87,7 +87,39 @@
             {
                 "command":"zg new layout $layout_name ($module_name : default)",
                 "alias": "zg n l $layout_name ($module_name : default)",
-                "detail":"Creates a new layout for a module, if no module name supplied 'defaultModule' will be targeted"
+                "detail":"Creates a new layout for a module<br />if no module name supplied 'defaultModule' will be targeted"
+            }
+        },
+        "model":
+        {
+            "title":"Add new model", 
+            "alias":"m",
+            "instance":
+            {
+                "class":"\\zinux\\zg\\resources\\operator\\_new",
+                "method":"model"
+            },
+            "help":
+            {
+                "command":"zg new model $model_name ($module_name : default)",
+                "alias": "zg n m $model_name ($module_name : default)",
+                "detail":"Creates a new model for a module<br />if no module name supplied 'defaultModule' will be targeted"
+            }
+        },
+        "helper":
+        {
+            "title":"Add new helper", 
+            "alias":"h",
+            "instance":
+            {
+                "class":"\\zinux\\zg\\resources\\operator\\_new",
+                "method":"helper"
+            },
+            "help":
+            {
+                "command":"zg new helper $helper_name ($module_name : default)",
+                "alias": "zg n h $layout_name ($module_name : default)",
+                "detail":"Creates a new helper for a module<br />if no module name supplied 'defaultModule' will be targeted"
             }
         },
         "application":
