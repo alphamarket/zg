@@ -7,8 +7,9 @@ class update extends baseOperator
     {
         $this->restrictArgCount($args, 0);
         $this->cout("Updating your project's zinux framework from its online repo.");
+        $this->cout("Testing your network, please wait....");
         # check network 
-        if(false && preg_match("#ssh:(.*)Could(.*)not(.*)resolve(.*)hostname(.*)github.com(.*)#i", exec("ssh -T git@github.com 2>&1 0>&1")))
+        if(!$this->is_connected())
         {
             throw new \zinux\kernel\exceptions\invalideOperationException
                 (self::defColor."You need to have ".self::yellow."network connection".self::defColor." to do this operation!<br />".self::red."[ Aborting ]");
@@ -83,4 +84,15 @@ class update extends baseOperator
         if(isset($this->verbose))
             $this->cout("repository '".self::yellow.$name.self::defColor."' and its all sup-repositories are updated ...", $indent, self::green);
     }
+    protected function is_connected()
+    {
+        $connected = @fsockopen("www.google.com", 80); //website and port
+        if ($connected)
+        {
+            fclose($connected);
+            return true;
+        }
+        return false;
+    }
+    
 }
