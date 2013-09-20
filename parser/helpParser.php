@@ -67,7 +67,8 @@ class helpParser extends baseParser
             {
                 $index++;
                 $this ->cout("$index ) ", 3, self::yellow, 0)
-                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $note));
+                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $note))
+                        ->cout();
             }
         }
         if($render_options && isset($content->options))
