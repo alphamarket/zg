@@ -15,7 +15,9 @@
         "options":
         {
                 "-history":"Enable history recording",
-                "+history":"Disable history recording"
+                "+history":"Disable history recording",
+                "-show-parents":"Skip parent property in 'zg status' command",
+                "+show-parents":"Do not skip parent property in 'zg status' command"
         },
         "show":
         {

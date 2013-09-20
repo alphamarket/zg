@@ -32,6 +32,14 @@ class config extends baseOperator
                     unset($s->configs->skip_history);
                     $m[] = new \zinux\zg\vendor\item("Histories will record.", 1);
                     break;
+                case "-show-parents":
+                    unset($s->configs->show_parents);
+                    $m[] = new \zinux\zg\vendor\item("Parents will not show in 'zg status'.", 1);
+                    break;
+                case "+show-parents":
+                    $s->configs->show_parents = 1;
+                    $m[] = new \zinux\zg\vendor\item("Parents will show in 'zg status'.", 1);
+                    break;
                 default:
                     throw new \zinux\kernel\exceptions\invalideArgumentException("Undefined config '$value' passed ...");
             }
