@@ -16,6 +16,7 @@ class update extends baseOperator
     }
     public function update($args)
     {
+        # should support --cache to update cache files...!
         $this->restrictArgCount($args, 0);
         $this->cout("Updating your project's zinux framework from its online repo.");
         $this->cout("Testing your network, please wait.... ", 0, self::defColor, 0);
@@ -34,11 +35,10 @@ class update extends baseOperator
         
         $this->update_repo("zinux", $zinux_dir);
         $this->cout("Now your project's zinux framework is updated ...");
-        
     }
     protected function update_repo($name, $repo_path, $indent = 0, $clone_uri = "https://github.com/dariushha/zinux")
     {
-        if(!($path = \zinux\kernel\utilities\fileSystem::resolve_path($repo_path)))
+        if(false && !($path = \zinux\kernel\utilities\fileSystem::resolve_path($repo_path)))
             throw new \zinux\kernel\exceptions\notFoundException("'$repo_path' not found!");
         $indent+= 0.5;
         $debug_git = 0; 
