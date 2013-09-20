@@ -30,18 +30,7 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$controller->path}"))
             throw new \zinux\kernel\exceptions\notFoundException("{$controller->name} not found ...");
         $this->cout("+", 0, self::green,0);
-        ob_start();
-            system( "php -c '".dirname(__FILE__)."/php.ini' -l {$controller->path}", $ret );
-        $output = ob_get_clean();
-        if( $ret !== 0 )
-        {
-            $matches = array();
-            if(preg_match_all( '/Parse error:\s*syntax error,(.+?)\s+in\s+.+?\s*line\s+(\d+)/i', $output, $matches))    
-            {
-                $this->cout("Error parsing '{$controller->name}'",0,self::hiRed);
-                throw new \zinux\kernel\exceptions\invalideOperationException($matches[0][0]);
-            }
-        }
+        $this->check_php_syntax($controller->name);
         $this->cout("+", 0, self::green,0);
         require_once $controller->path;
         $this->cout("+", 0, self::green,0);
