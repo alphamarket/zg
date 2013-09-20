@@ -36,7 +36,7 @@ class update extends baseOperator
         $this->cout("Now your project's zinux framework is updated ...");
         
     }
-    protected function update_repo($name, $repo_path, $indent = 0)
+    protected function update_repo($name, $repo_path, $indent = 0, $clone_uri = "https://github.com/dariushha/zinux")
     {
         if(!($path = \zinux\kernel\utilities\fileSystem::resolve_path($repo_path)))
             throw new \zinux\kernel\exceptions\notFoundException("'$repo_path' not found!");
@@ -54,8 +54,8 @@ class update extends baseOperator
         {
             $this->cout("- The git repository/manifest not found in '$repo_path", $indent,self::red);
             $this->cout("+ Trying to download a new repository...", $indent, self::green);
-            #exec("rm -fr $zinux_dir");
-            #\zinux\zg\vendor\PHPGit\Repository::cloneUrl("https://github.com/dariushha/zinux", "zinux", 1, array('git_executable' => 'git'));
+            exec("rm -fr $repo_path");
+            exec("cd ".dirname($repo_path)." && git clone '$clone_uri' '$name' 1>/dev/null 2>&1 ");
             $repo = new \zinux\zg\vendor\PHPGit\Repository($repo_path, $debug_git, array('git_executable' => 'git'));
             if(!\zinux\kernel\utilities\fileSystem::resolve_path($repo_man))
             {
@@ -90,7 +90,7 @@ class update extends baseOperator
         $this->cout("Updating $name depenency repositories.", $indent, self::yellow);
         foreach($manifest->dependencies as $value)
         {
-            $this->update_repo($value->name, $repo_path.DIRECTORY_SEPARATOR.$value->path, $indent+0.5);
+            $this->update_repo($value->name, $repo_path.DIRECTORY_SEPARATOR.$value->path, $indent+0.5, $value->repo);
         }
         if(isset($this->verbose))
             $this->cout("Updating ".self::yellow.$name.self::defColor."'s depenency repositories is done.", $indent);
@@ -114,5 +114,6 @@ class update extends baseOperator
             parent::cout($content, $tap_index, $color, $auto_break);
         echo preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""), ob_get_clean());
         ob_flush();
+        return $this;
     }
 }
