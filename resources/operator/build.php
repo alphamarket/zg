@@ -7,6 +7,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
     {
         parent::__construct($suppress_header_text);
         $this->log = array();
+        $this->processed = array();
     }
     public function build($args)
     {
@@ -31,10 +32,12 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         $this->fetchController();
         $this->fetchAction();
         $this->fetchModels();
-        #\zinux\kernel\utilities\debug::_var($this->log);
+        $this->fetchHelpers();
+        \zinux\kernel\utilities\debug::_var($this->log);
     }
     protected function fetchModules()
     {
+        $this->s->modules->modules = array();
         foreach(glob("{$this->modules}/*", GLOB_ONLYDIR) as $module)
         {
             if(preg_match("#\w+module$#i", $module))
@@ -42,6 +45,14 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                 $name = basename($module);
                 $module = new \zinux\zg\vendor\item("{$name}", "{$this->s->modules->meta->path}/{$name}", $this->s->modules->meta);
                 $this->s->modules->modules[strtolower($module->name)] = $module;
+                $bs = preg_replace("#module$#i","Bootstrap.php", $name);
+                if(($bootstrap = \zinux\kernel\utilities\fileSystem::resolve_path($module->path.DIRECTORY_SEPARATOR.$bs)))
+                {
+                    $moduleBootstrap = new \zinux\zg\vendor\item(basename($bs, ".php"), $bootstrap, $module);
+                    $s->modules->modules[strtolower($module->name)]->bootstrap = $moduleBootstrap;
+                    $this->processed[] = $moduleBootstrap;
+                }
+                $this->processed[] = $module;
             }
             else
                 $this->log[] = new \zinux\zg\vendor\item("Folder '$module' skipped", "Didn't match with standrad module folder pattern.");
@@ -53,13 +64,13 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         {
             if(!($cp = \zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/controllers")))
             {
-                $this->log[] = new \zinux\zg\vendor\item("Controllers folder not found at '{$module->path}'");
+                $this->log[] = new \zinux\zg\vendor\item("Controllers folder not found at '{$module->path}'", "");
                 continue;
             }
             foreach(glob("$cp/*") as $file)
             {
                 $name = basename($file, ".php");
-                if(is_file($file) && preg_match("#\w+controller$#i", $name))
+                if(is_file($file) && preg_match("#\w+controller.php$#i", $file))
                 {
                     $this->check_php_syntax($file);
                     $class = $this->convert_to_relative_path($file, $this->root, $this->s)."\\$name";
@@ -79,6 +90,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                     }
                     $controller = new \zinux\zg\vendor\Item($name, $file, $module);
                     $this->s->modules->modules[strtolower($module->name)]->controller[strtolower($controller->name)] = $controller;
+                    $this->processed[] = $controller;
                 }
                 elseif(is_file($file))
                     $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
@@ -89,6 +101,11 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
     {
         foreach($this->s->modules->modules as $name => $module)
         {
+            if(!isset($module->controller))
+            {
+                $this->log[] = new \zinux\zg\vendor\item("No controller found in {$module->name}", "");
+                continue;
+            }
             foreach($module->controller  as $cname => $controller)
             {
                 $class = $this->convert_to_relative_path($controller->path, $this->root, $this->s)."\\$cname";
@@ -106,6 +123,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                             modules[strtolower($name)]->
                             controller[strtolower($cname)]->
                             action[strtolower($action->name)] = $action;
+                        $this->processed[] = $action;
                     }
                 }
             }
@@ -117,7 +135,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         {
             if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/models")))
             {
-                $this->log[] = new \zinux\zg\vendor\item("Models folder not found at '{$module->path}'");
+                $this->log[] = new \zinux\zg\vendor\item("Models folder not found at '{$module->path}'", "");
                 continue;
             }
             foreach(glob("$mp/*") as $file)
@@ -143,6 +161,71 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                     }
                     $model = new \zinux\zg\vendor\Item($name, $file, $module);
                     $this->s->modules->modules[strtolower($module->name)]->model[strtolower($model->name)] = $model;
+                    $this->processed[] = $model;
+                }
+                elseif(is_file($file))
+                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
+            }
+        }
+    }
+    public function fetchHelpers()
+    {
+        foreach($this->s->modules->modules as $name => $module)
+        {
+            if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/helper")))
+            {
+                $this->log[] = new \zinux\zg\vendor\item("Helpers folder not found at '{$module->path}/views/helper'", "");
+                continue;
+            }
+            foreach(glob("$mp/*") as $file)
+            {
+                $name = basename($file, ".php");
+                if(is_file($file) && preg_match("#\w+\b(.php)\b$#i", $file))
+                {
+                    $this->check_php_syntax($file);
+                    $class = $this->convert_to_relative_path($file, $this->root, $this->s)."\\$name";
+                    if(class_exists($class))
+                    {
+                        $this->log[] = new \zinux\zg\vendor\item("Skipped requiring '$file'", "The class '$class' already defined!");
+                    }
+                    elseif(!is_readable($file) || !(require_once $file))
+                    {
+                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                        continue;
+                    }
+                    $helper = new \zinux\zg\vendor\Item($name, $file, $module);
+                    $this->s->modules->modules[strtolower($module->name)]->helper[strtolower($helper->name)] = $helper;
+                    $this->processed[] = $helper;
+                }
+                elseif(is_file($file))
+                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
+            }
+        }
+    }
+    public function fetchLayouts()
+    {
+        foreach($this->s->modules->modules as $name => $module)
+        {
+            if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/layout")))
+            {
+                $this->log[] = new \zinux\zg\vendor\item("Layouts folder not found at '{$module->path}/views/layout'", "");
+                continue;
+            }
+            foreach(glob("$mp/*") as $file)
+            {
+                $name = basename($file, ".phtml");
+                if(is_file($file) && preg_match("#\w+\b(.phtml)\b$#i", $file))
+                {
+                    $this->check_php_syntax($file);
+                    $class = $this->convert_to_relative_path($file, $this->root, $this->s)."\\$name";
+                    if(!is_readable($file))
+                    {
+                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                        continue;
+                    }
+                    $layout = new \zinux\zg\vendor\Item($name, $file, $module);
+                    $this->s->modules->modules[strtolower($module->name)]->layout[strtolower($layout->name)] = $layout;
+                    $this->processed[] = $layout;
                 }
                 elseif(is_file($file))
                     $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");

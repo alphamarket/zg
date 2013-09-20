@@ -203,19 +203,19 @@ abstract class baseZg extends \zinux\baseZinux
     {
         $_file_name = $file_name;
         if(!strlen($file_name) || 
-            !($file_name = \zinux\kernel\utilities\fileSystem::resolve_path($file_name)))
+            !($file_name = \zinux\kernel\utilities\fileSystem::resolve_path($file_name, 1)))
             throw new \zinux\kernel\exceptions\notFoundException("'$_file_name' not found...");
         $ret = 0;
         ob_start();
-            system( "php -l $file_name", $ret);
+            system( "php -l $file_name 2>&1", $ret);
         $output = ob_get_clean();
         if( $ret !== 0 )
         {
             $matches = array();
-            if(preg_match_all( '/Parse error:\s*syntax error,(.+?)\s+in\s+.+?\s*line\s+(\d+)/i', $output, $matches) && $throw_exception_on_error)    
+            if(preg_match_all( "/Errors\s+parsing\s+".preg_quote($file_name, "/")."/i", $output, $matches) && $throw_exception_on_error)    
             {
                 $this->cout("Error parsing '$file_name'",0,self::hiRed);
-                throw new \zinux\kernel\exceptions\invalideOperationException($matches[0][0]);
+                throw new \zinux\kernel\exceptions\invalideOperationException($output);
             }
             return false;
         }
