@@ -114,6 +114,8 @@ class _new extends baseOperator
             throw new \zinux\kernel\exceptions\notFoundException("Action '{$args[2]}/{$args[1]}/{$args[0]}' already exists in zg manifest!<br />    Try 'zg reload' command!");
         $c = new \zinux\zg\vendor\creator;
         $c->createAction($args[0], $s->modules->modules[$args[2]]->controller[$args[1]]);
+        $args[0] = preg_replace("#(\w+)action#i", "$1", $args[0]);
+        $this->view($args);
     }
     public function view($args)
     {
