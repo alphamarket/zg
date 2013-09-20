@@ -33,7 +33,7 @@ class createLayout extends \zinux\zg\baseZg
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $layout->parent = $module;
-        $s->modules->modules[$module->name]->layout[$layout->name] = $module;
+        $s->modules->modules[strtolower($module->name)]->layout[strtolower($layout->name)] = $module;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

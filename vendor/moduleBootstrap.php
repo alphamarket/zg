@@ -42,7 +42,7 @@ class {$moduleBootstrap->name}
         $this->cout("+", 1, self::green,0);
         $s = $this->GetStatus($project_path);
         $moduleBootstrap->parent = $module;
-        $s->modules->modules[$module->name]->bootstrap = $moduleBootstrap;
+        $s->modules->modules[strtolower($module->name)]->bootstrap = $moduleBootstrap;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

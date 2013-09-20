@@ -25,7 +25,7 @@ class creator extends \zinux\zg\resources\operator\baseOperator
             throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$name}' already exists ...");
             
         $module = new \zinux\zg\vendor\item("{$name}", "{$s->modules->meta->path}/{$name}", $s->modules->meta);
-        $s->modules->modules[$module->name] = $module;
+        $s->modules->modules[strtolower($module->name)] = $module;
         $this->SaveStatus($s);
         
         $this->Run(array(
@@ -102,9 +102,19 @@ class creator extends \zinux\zg\resources\operator\baseOperator
         $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);
         $name = preg_replace("#(\w+)helper$#i","$1", $name)."Helper";
-        $controller = new \zinux\zg\vendor\Item($name, $module->path."/views/helper/{$name}.php");
-        new \zinux\zg\vendor\creators\createHelper($module, $controller, $projectDir);
-        return $controller;
+        $helper = new \zinux\zg\vendor\Item($name, $module->path."/views/helper/{$name}.php");
+        new \zinux\zg\vendor\creators\createHelper($module, $helper, $projectDir);
+        return $helper;
+    }
+    public function createModel($name, Item $module ,$projectDir = ".")
+    {
+        $this->CheckZG($projectDir,1);
+        $s = $this->GetStatus($projectDir);
+        # no naming convention for models
+        # $name = preg_replace("#(\w+)helper$#i","$1", $name)."Helper";
+        $model = new \zinux\zg\vendor\Item($name, $module->path."/models/{$name}.php");
+        new \zinux\zg\vendor\creators\createModel($module, $model, $projectDir);
+        return $model;
     }
     
 }
