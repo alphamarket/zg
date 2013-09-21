@@ -36,7 +36,7 @@ class update extends baseOperator
                     throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid argument '$args[0]' supplied ...");
             }
         }
-        $this->cout("Updating your project's zinux framework from its online repo.");
+        $this->cout("Updating zinux framework from its online repo.");
         $this->cout("Testing your network, please wait.... ", 0, self::defColor, 0);
         # check network 
         if(!isset($this->simulate) && !$this->is_connected())
@@ -95,7 +95,15 @@ class update extends baseOperator
             $repo->git("checkout master");
         $this->cout("Updating '".self::yellow.$repo_path.self::defColor."' repo. ", $indent-0.5, self::defColor, 0);
         if(!isset($this->simulate))
-            $repo->git("pull origin master");
+            try
+            {
+                $repo->git("pull origin master");
+            }
+            catch(\Exception $e)
+            {
+                $this->cout("[ FAILED ]", 0, self::red);
+                throw $e;
+            }
         $this->cout("[ OK ]", 0, self::green);
         if($man_failed) return;
         
