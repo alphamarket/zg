@@ -64,9 +64,9 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
                 $matches
         ))
             throw new \zinux\kernel\exceptions\notFoundException("Didn't find any match with '{$controller->name}' controller class");
-            throw new \zinux\kernel\exceptions\notImplementedException;
         $this->cout("+", 0, self::green,0);
         $matched = stripslashes($matches[0]);
+            throw new \zinux\kernel\exceptions\notImplementedException;
         echo preg_quote($matched, "#").PHP_EOL;
         echo ($pat = "#(public?[\s|\n]+function[\s|\n]+{$action->name}[\s|\n]*)#i").PHP_EOL;
         preg_match($pat, preg_quote($matched, "#"), $matched);

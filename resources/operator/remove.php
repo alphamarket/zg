@@ -66,6 +66,7 @@ class remove extends baseOperator
             throw new \zinux\kernel\exceptions\notFoundException("Action '{$args[2]}/{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         $c = new \zinux\zg\vendor\remover;
         $c->removeAction($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->action[strtolower($args[0])]);
+        return;
         $args[0] = preg_replace("#(\w+)action#i", "$1", $args[0]);
         $this->view($args);
     }
@@ -144,10 +145,10 @@ class remove extends baseOperator
         $s = $this->GetStatus();
         if(!isset($s->modules->collection[strtolower($args[1])]))
             throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exist in zg manifest!<br />Try 'zg build' command!");
-        if(isset($s->modules->collection[strtolower($args[1])]->model[strtolower($args[0])]))
+        if(!isset($s->modules->collection[strtolower($args[1])]->model[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Model '{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
             
         $c = new \zinux\zg\vendor\remover;
-        $c->removeModel($args[0], $s->modules->collection[strtolower($args[1])]);
+        $c->removeFS($s->modules->collection[strtolower($args[1])]->model[strtolower($args[0])]);
     }
 }
