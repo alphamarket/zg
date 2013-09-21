@@ -52,8 +52,6 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
             throw new \zinux\kernel\exceptions\invalideOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
         if(!method_exists(new $class, $action->path))
            throw new \zinux\kernel\exceptions\invalideOperationException("'$class' does not contain method '{$action->path}'...");
-        if(false && !is_callable(array(new $class, $action->path)))
-            throw new \zinux\kernel\exceptions\invalideOperationException("{$action->name} is not callable ...");
         
         $cr = new \zinux\zg\vendor\reflections\ReflectionClass($class);
         $cr->RemoveMethod(new \zinux\zg\vendor\reflections\ReflectionMethod($class, $action->name));
