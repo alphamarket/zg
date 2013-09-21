@@ -55,77 +55,8 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
         if(!is_callable(array(new $class, $action->path)))
             throw new \zinux\kernel\exceptions\invalideOperationException("{$action->name} is not callable ...");
            
-        $file_cont = file_get_contents($controller->path);
-        $crf = new \ReflectionMethod($class, $action->name);
-        $fl = explode(PHP_EOL, $file_cont);
-        $new_file_cont = "";
-        $class_cont = "";
-        \zinux\kernel\utilities\debug::_var(array($crf->getStartLine(),$crf->getEndLine()));
-        for($i = $rf->getStartLine()-1; $i<$rf->getEndLine()-1; $i++)
-        {
-            if($i>=$crf->getStartLine()-1 && $i<$crf->getEndLine())
-                $i = $crf->getEndLine();
-            $class_cont .= $fl[$i].PHP_EOL;
-        }
-//        echo $file_cont;
-//        echo $new_file_cont;
-//        echo $class_cont;
-        $modifiers = array(self::LAST_ABSTRACT=>0,self::LAST_CMNT=>0, self::LAST_FINAL=>0, self::LAST_FUNC=>0, self::LAST_PUBLIC=>0);
-        $g = self::green;
-        for($i = $rf->getStartLine()-1; $i<$rf->getEndLine()-1; $i++)
-        {
-            $txt = $fl[$i];
-            
-            if(preg_match("#^(//)#i", $txt, $matches)) continue;
-            if(preg_match("#(.*\*/)#i", $txt, $matches))
-            {
-                $modifiers[self::LAST_CMNT] = 0;
-            }
-            if(preg_match("#(/\*.*)#i", $txt, $matches))
-            {
-                #\zinux\kernel\utilities\debug::_var($matches);
-                $modifiers[self::LAST_CMNT] = 1;
-            }
-            if($modifiers[self::LAST_CMNT]) continue;
-            /**
-             * 
-             * 
-             * USE EXPLODE
-             * 
-             * 
-             */
-            $txt = preg_replace("#(/\*.*\*/|.*\*/|\(.*\))#i", "", trim($txt));
-            #$this->cout($txt),0,self::yellow);
-            foreach (explode(" ", trim($txt)) as $key=> $token)
-            {
-                $token = trim($token);
-                if(!strlen($token)) continue;
-                //echo $value." ~ ";
-                foreach(array("final", "abstract", "public", "function") as $index => $value)
-                {
-                    if(strtolower($value) == strtolower($token))
-                    {
-                        $modifiers[$index] = $i;
-                    }
-                    elseif($modifiers[self::LAST_FUNC])
-                    {
-                        $this->cout("FUNC: ".$token);
-                        if(strtolower($token)==strtolower($action->name))
-                            goto __END;
-                        $modifiers = array(0,0,0,0,0);
-                    }
-                }
-            };
-            #$this->cout();
-            #$this->cout($txt = preg_replace("#(/\*.*\*/|.*\*/)#i", "", trim($txt)),0,$g);
-            
-            if($i%2)
-                $g=self::green;
-            else
-                $g=self::red;
-        }
-__END:
-        \zinux\kernel\utilities\debug::_var($modifiers);
+        $mr =new \zinux\zg\vendor\ReflectionMethod($class, $action->name, file_get_contents($controller->path));
+        echo $mr->getStartLine();
         return;
         $this->cout("+", 0, self::green,0);
         $new_file_cont =  str_replace($new_file_cont, $new_file_cont.$mbc, $file_cont);
