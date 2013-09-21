@@ -1,8 +1,13 @@
 <?php
 namespace zinux\zg\resources\operator;
 
-class new_app extends baseOperator
+class remove_app extends baseOperator
 {
+    public function __construct($suppress_header_text = 0)
+    {
+        throw new \zinux\kernel\exceptions\notImplementedException;
+        parent::__construct($suppress_header_text);
+    }
     public function bootstrap($args)
     {
         if(!$this->CheckZG()) return;

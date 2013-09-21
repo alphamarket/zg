@@ -2,18 +2,18 @@
     "alias":"r",
     "controller":
     {
-        "title":"Remove new controller", 
+        "title":"Remove controller", 
         "alias":"c",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "class":"\\zinux\\zg\\resources\\operator\\remove",
             "method":"controller"
         },
         "help":
         {
             "command":"zg remove controller $controller_name ($module_name)",
-            "alias": "zg n c $controller_name ($module_name)",
-            "detail":"Creates a new controller for a module."
+            "alias": "zg r c $controller_name ($module_name)",
+            "detail":"Removes a controller in a module."
         },
         "defaults":
         {
@@ -22,18 +22,18 @@
     },
     "action":
     {
-        "title":"Remove new action", 
+        "title":"Remove action", 
         "alias":"a",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "class":"\\zinux\\zg\\resources\\operator\\remove",
             "method":"action"
         },
         "help":
         {
             "command":"zg remove action $action_name ($controller_name) ($module_name)",
-            "alias": "zg n a $action_name ($controller_name) ($module_name)",
-            "detail":"Creates a new action for a controller in a module."
+            "alias": "zg r a $action_name ($controller_name) ($module_name)",
+            "detail":"Removes a action in a controller, in a module."
         },
         "defaults":
         {
@@ -43,18 +43,18 @@
     },
     "view":
     {
-        "title":"Remove new view", 
+        "title":"Remove view", 
         "alias":"v",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "class":"\\zinux\\zg\\resources\\operator\\remove",
             "method":"view"
         },
         "help":
         {
             "command":"zg remove view $view_name ($controller_name) ($module_name)",
-            "alias": "zg n v $view_name ($controller_name) ($module_name)",
-            "detail":"Creates a new view for a controller in a module."
+            "alias": "zg r v $view_name ($controller_name) ($module_name)",
+            "detail":"Removes a view in a controller, in a module."
         },
         "defaults":
         {
@@ -64,18 +64,18 @@
     },
     "layout":
     {
-        "title":"Remove new layout", 
+        "title":"Remove layout", 
         "alias":"l",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "class":"\\zinux\\zg\\resources\\operator\\remove",
             "method":"layout"
         },
         "help":
         {
             "command":"zg remove layout $layout_name ($module_name)",
-            "alias": "zg n l $layout_name ($module_name)",
-            "detail":"Creates a new layout for a module."
+            "alias": "zg r l $layout_name ($module_name)",
+            "detail":"Removes a layout in a module."
         },
         "defaults":
         {
@@ -84,18 +84,18 @@
     },
     "model":
     {
-        "title":"Remove new model", 
+        "title":"Remove model", 
         "alias":"m",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "class":"\\zinux\\zg\\resources\\operator\\remove",
             "method":"model"
         },
         "help":
         {
             "command":"zg remove model $model_name ($module_name)",
-            "alias": "zg n m $model_name ($module_name)",
-            "detail":"Creates a new model for a module."
+            "alias": "zg r m $model_name ($module_name)",
+            "detail":"Removes a model in a module."
         },
         "defaults":
         {
@@ -104,18 +104,18 @@
     },
     "helper":
     {
-        "title":"Remove new helper", 
+        "title":"Remove helper", 
         "alias":"h",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "class":"\\zinux\\zg\\resources\\operator\\remove",
             "method":"helper"
         },
         "help":
         {
             "command":"zg remove helper $helper_name ($module_name)",
-            "alias": "zg n h $layout_name ($module_name)",
-            "detail":"Creates a new helper for a module."
+            "alias": "zg r h $layout_name ($module_name)",
+            "detail":"Removes a helper in a module."
         },
         "defaults":
         {
@@ -123,7 +123,7 @@
         },
         "notes":
         [
-            "In order to have free uses in models there will be NO<br />naming convention when creating models.<br />i.e the command 'zg remove model foo $module_name'<br />will exactly creates a model named 'foo' in target module."
+            "In order to have free uses in models there will be NO<br />naming convention when creating models.<br />i.e the command 'zg remove model foo $module_name'<br />will exactly removes a model named 'foo' in target module."
         ]
     },
     "application":
@@ -131,34 +131,34 @@
         "alias":"app",
         "bootstrap":
         {
-            "title":"Creates a new bootstrap file", 
+            "title":"Removes a bootstrap file", 
             "alias":"b",
             "instance":
             {
-                "class":"\\zinux\\zg\\resources\\operator\\new_app",
+                "class":"\\zinux\\zg\\resources\\operator\\remove_app",
                 "method":"bootstrap"
             },
             "help":
             {
                 "command":"zg remove application boostrap $bootstrap_name",
-                "alias": "zg n app b $bootstrap_name",
-                "detail":"Creates a bootstrap file for project with given name"
+                "alias": "zg r app b $bootstrap_name",
+                "detail":"Removes a bootstrap file for project with given name"
             }
         },
         "routes":
         {
-            "title":"Creates a new routes file", 
+            "title":"Removes a routes file", 
             "alias":"r",
             "instance":
             {
-                "class":"\\zinux\\zg\\resources\\operator\\new_app",
+                "class":"\\zinux\\zg\\resources\\operator\\remove_app",
                 "method":"routes"
             },
             "help":
             {
                 "command":"zg remove application routes $routes_name",
-                "alias": "zg n app r $routes_name",
-                "detail":"Creates a routes file for project with given name"
+                "alias": "zg r app r $routes_name",
+                "detail":"Removes a routes file for project with given name"
             }
         }
     }

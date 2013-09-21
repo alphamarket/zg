@@ -1,16 +1,63 @@
 <?php
 namespace zinux\zg\resources\operator;
 
-class remove extends baseOperator
+class _new extends baseOperator
 {
     public function project($args)
     {
-        if(!$this->CheckZG()) return;
         $this->restrictArgCount($args);
         
         $pName = implode("-", $args);
-        if(!\zinux\kernel\utilities\fileSystem::resolve_path($pName))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Project folder '$pName' does not exist...");
+        if(file_exists($pName))
+            throw new \zinux\kernel\exceptions\invalideArgumentException("A folder named '$pName' already exists...");
+        
+        $this->CreateStatusFile($pName);
+        $s = $this->GetStatus($pName);
+        $s->modules->meta = new \zinux\zg\vendor\Item("modules", $s->project->path."/modules", $s->project);
+        $this->SaveStatus($s);
+        
+        $this ->cout("Creating new project '", 1, self::defColor, 0)
+                ->cout("$pName", 0, self::yellow, 0)
+                ->cout("' ...");
+        $vpname = str_replace(" ", "-", $pName);
+        $opt = array(
+                "cp ".ZG_TEMPLE_ROOT."/* $pName/ -R",
+                "cp -rf ".Z_CACHE_ROOT." $pName",
+                "mv ./$pName/".basename(Z_CACHE_ROOT)." ./$pName/zinux",
+                "echo '# add this to apache vhost.conf files
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	ServerName $vpname.local
+	DocumentRoot \"/var/www/$pName/public_html\"
+</VirtualHost>
+
+# add this to /etc/hosts
+# 127.0.0.1 $vpname.local
+' > ./$pName/public_html/$vpname.local",
+                "chmod -R 775 $pName", 
+                "chmod 777 $pName"
+        );
+        /**
+         * instead of copying templates directly we can do following processes
+         * + Create appliaction/boostrap
+         * + Creat application/routes
+         * + Crate public_html
+         * + Create defaultModule
+         *      + COPYING defaultBootstrap.php correspondingly
+         * + COPYING ModuleController.php directly
+         * + Creating IndexController
+         * + Creating IndexAction in IndexController 
+         *      + Creating IndexView.phtml correspondingly
+         * + COPYING defaultLayout.phtml directly
+         */
+        $this->Run($opt, 0);
+        $c = new \zinux\zg\vendor\creator;
+        $module = $c->createModule("default", $pName);
+        $controller = $c->createController("index", $module, $pName);
+        $appBootstrap =  $c->createAppBootstrap("app", $pName);
+        $appRoutes =  $c->createAppRoutes("app", $pName);
+        $layout = $c->createLayout("default", $module, $pName);
+        $view = $c->createView("index", $controller, $pName);
     }
     
     public function module($args)
@@ -156,5 +203,27 @@ class remove extends baseOperator
             
         $c = new \zinux\zg\vendor\creator;
         $c->createModel($args[0], $s->modules->collection[strtolower($args[1])]);
+    }
+    public function app_bootstrap($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args,1,1);
+        $s = $this->GetStatus();
+        $args[0] = preg_replace("#(\w+)bootstrap$#i","$1", $args[0])."Bootstrap";
+        if(isset($s->project->bootstrap[strtolower($args[0])]))
+            throw new \zinux\kernel\exceptions\notFoundException("Application bootstrap '{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
+        $c = new \zinux\zg\vendor\creator();
+        $appBootstrap =  $c->createAppBootstrap($args[0]);
+    }
+    public function app_routes($args)
+    {
+        if(!$this->CheckZG()) return;
+        $this->restrictArgCount($args,1,1);
+        $s = $this->GetStatus();
+        $args[0] = preg_replace("#(\w+)routes$#i","$1", $args[0])."Routes";
+        if(isset($s->project->bootstrap[strtolower($args[0])]))
+            throw new \zinux\kernel\exceptions\notFoundException("Application routes '{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
+        $c = new \zinux\zg\vendor\creator();
+        $appRoutes =  $c->createAppRoutes($args[0]);
     }
 }
