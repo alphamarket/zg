@@ -11,17 +11,17 @@ class remover extends \zinux\zg\resources\operator\baseOperator
     {
         parent::__construct(1);
     }
-    public function removeModule(item $module ,$projectDir = ".")
+    public function removeFS(item $module , $rebuild = 1,$projectDir = ".")
     {
         $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);
-        $b = new \zinux\zg\resources\operator\build(1);
         exec("rm -fr '{$module->path}'");
         $this->cout("- {$module->path}", 1, self::red);
-        $args = array('-p', $s->project->path, "-m", $s->modules->meta->name);
-        $b->build($args);
+        if(!$rebuild) return;
+        $b = new \zinux\zg\resources\operator\build(1);
+        $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
     } 
-    public function removeController($name, Item $module ,$projectDir = ".")
+    public function removeController(Item $controller ,$projectDir = ".")
     {
         $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);

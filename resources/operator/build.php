@@ -61,7 +61,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         if(count($args))
         {
             $found = 0;
-            foreach(array('--all', '--events', '--proc', "--clear") as $index => $value)
+            foreach(array('-a', '-e', '-p', "--clear") as $index => $value)
             {
                 if(strtolower($args[0]) == strtolower($value))
                 {

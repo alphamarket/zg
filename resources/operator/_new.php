@@ -23,7 +23,6 @@ class _new extends baseOperator
         $opt = array(
                 "cp ".ZG_TEMPLE_ROOT."/* $pName/ -R",
                 "cp -rf ".Z_CACHE_ROOT." $pName",
-                "mv ./$pName/".basename(Z_CACHE_ROOT)." ./$pName/zinux",
                 "echo '# add this to apache vhost.conf files
 <VirtualHost *:80>
 	ServerAdmin webmaster@localhost

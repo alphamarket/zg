@@ -41,15 +41,15 @@
         },
         "help":
         {
-            "command":"zg build log (--all | --events | --proc | --clear)",
-            "alias": "zg b l (--all | --events | --proc | --clear)",
+            "command":"zg build log (-a | -e | -p| --clear)",
+            "alias": "zg b l (-a | -e | -p| --clear)",
             "detail":"Print build logs produced by 'zg build' command.<br />By default outputs events log!"
         },
         "options":
         {
-            "--all":"Prints both 'event' and 'processed items' logs.",
-            "--events":"Prints only 'event' logs.",
-            "--proc":"Prints only 'processed items' logs.",
+            "-a":"Prints both 'event' and 'processed items' logs.",
+            "-e":"Prints only 'event' logs.",
+            "-p":"Prints only 'processed items' logs.",
             "--clear":"Clear logs."
         }
     }
