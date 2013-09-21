@@ -2,17 +2,7 @@
 namespace zinux\zg\resources\operator;
 
 class remove extends baseOperator
-{
-    public function project($args)
-    {
-        if(!$this->CheckZG()) return;
-        $this->restrictArgCount($args);
-        
-        $pName = implode("-", $args);
-        if(!\zinux\kernel\utilities\fileSystem::resolve_path($pName))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Project folder '$pName' does not exist...");
-    }
-    
+{    
     public function module($args)
     {
         if(!$this->CheckZG())
@@ -20,15 +10,15 @@ class remove extends baseOperator
         
         $this->restrictArgCount($args, 1);
         
-        $this ->cout("Creating new module '", 0, self::defColor, 0)
+        $this ->cout("Removing module '", 0, self::defColor, 0)
                 ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
         $args[0] = preg_replace("#(\w+)module$#i", "$1", $args[0])."Module";
-        $c = new \zinux\zg\vendor\creator;
-        $module = $c->createModule($args[0]);
-        $controller = $c->createController("index", $module);
-        $layout = $c->createLayout("default", $module);
-        $view = $c->createView("index", $controller);
+        $s = $this->GetStatus();
+        if(!isset($s->modules->collection[strtolower($args[0])]))
+            throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[0]}' does not exists in zg manifest!<br />Try 'zg build' command!");
+        $c = new \zinux\zg\vendor\remover;
+        $module = $c->removeModule($s->modules->collection[strtolower($args[0])]);
     }
     
     public function controller($args)
@@ -44,11 +34,11 @@ class remove extends baseOperator
         $s = $this->GetStatus();
         if(!isset($s->modules->collection[strtolower($args[1])]))
             throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exists in zg manifest!<br />Try 'zg build' command!");
-        if(isset($s->modules->collection[strtolower($args[1])]->controller[strtolower($args[0])]))
+        if(!isset($s->modules->collection[strtolower($args[1])]->controller[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
-        $c = new \zinux\zg\vendor\creator;
-        $controller = $c->createController($args[0], $s->modules->collection[strtolower($args[1])]);
-        $c->createView("index", $controller);
+        $c = new \zinux\zg\vendor\remover;
+        $controller = $c->removeController($args[0], $s->modules->collection[strtolower($args[1])]);
+        $c->removeView("index", $controller);
     }
     
     public function action($args)
@@ -70,8 +60,8 @@ class remove extends baseOperator
             throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[2]}/{$args[1]}' does not exists in zg manifest!<br />Try 'zg build' command!");
         if(isset($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->action[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Action '{$args[2]}/{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
-        $c = new \zinux\zg\vendor\creator;
-        $c->createAction($args[0], $s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]);
+        $c = new \zinux\zg\vendor\remover;
+        $c->removeAction($args[0], $s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]);
         $args[0] = preg_replace("#(\w+)action#i", "$1", $args[0]);
         $this->view($args);
     }
@@ -95,8 +85,8 @@ class remove extends baseOperator
         if(isset($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->view[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("View '{$args[2]}/{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
             
-        $c = new \zinux\zg\vendor\creator;
-        $c->createView($args[0], $s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]);
+        $c = new \zinux\zg\vendor\remover;
+        $c->removeView($args[0], $s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]);
     }
     
     public function layout($args)
@@ -115,8 +105,8 @@ class remove extends baseOperator
         if(isset($s->modules->collection[strtolower($args[1])]->layout[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Layout  '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
             
-        $c = new \zinux\zg\vendor\creator;
-        $c->createLayout($args[0], $s->modules->collection[strtolower($args[1])]);
+        $c = new \zinux\zg\vendor\remover;
+        $c->removeLayout($args[0], $s->modules->collection[strtolower($args[1])]);
     }
     public function helper($args)
     {
@@ -134,8 +124,8 @@ class remove extends baseOperator
         if(isset($s->modules->collection[strtolower($args[1])]->helper[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Helper '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
             
-        $c = new \zinux\zg\vendor\creator;
-        $c->createHelper($args[0], $s->modules->collection[strtolower($args[1])]);
+        $c = new \zinux\zg\vendor\remover;
+        $c->removeHelper($args[0], $s->modules->collection[strtolower($args[1])]);
     }
     public function model($args)
     {
@@ -154,7 +144,7 @@ class remove extends baseOperator
         if(isset($s->modules->collection[strtolower($args[1])]->model[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Model '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
             
-        $c = new \zinux\zg\vendor\creator;
-        $c->createModel($args[0], $s->modules->collection[strtolower($args[1])]);
+        $c = new \zinux\zg\vendor\remover;
+        $c->removeModel($args[0], $s->modules->collection[strtolower($args[1])]);
     }
 }

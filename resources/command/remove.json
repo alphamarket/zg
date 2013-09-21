@@ -1,5 +1,20 @@
 {
     "alias":"r",
+    "module":
+    {
+        "title":"Remove a module", 
+        "instance":
+        {
+            "class":"\\zinux\\zg\\resources\\operator\\remove",
+            "method":"module"
+        },
+        "help":
+        {
+            "command":"zg remove module $module_name",
+            "alias": "zg r module $module_name",
+            "detail":"Remove a module in project"
+        }
+    },
     "controller":
     {
         "title":"Remove controller", 

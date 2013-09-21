@@ -23,6 +23,7 @@
         "help":
         {
             "command":"zg new module $module_name",
+            "alias": "zg n module $module_name",
             "detail":"Creates a new module for project"
         }
     },
