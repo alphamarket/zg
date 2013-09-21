@@ -51,16 +51,8 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
         if(method_exists(new $class, $action->path))
            throw new \zinux\kernel\exceptions\invalideOperationException("'$class' already contains method '{$action->path}'...");
            
-        $file_cont = file_get_contents($controller->path);
-        $fl = explode(PHP_EOL, $file_cont);
-        $new_file_cont = "";
-        for($i = $rf->getStartLine()-1; $i<$rf->getEndLine()-1; $i++)
-        {
-            $new_file_cont.=$fl[$i].PHP_EOL;
-        }
-        $this->cout("+", 0, self::green,0);
-        $new_file_cont =  str_replace($new_file_cont, $new_file_cont.$mbc, $file_cont);
-        file_put_contents($controller->path, $new_file_cont);
+        $n = new \zinux\zg\vendor\reflections\ReflectionClass($class);
+        $n->AddMethod($mbc);
         $this->cout("+", 0, self::green,0);
         $action->parent = $controller;
         $s->modules->collection[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->action[strtolower($action->name)] = $action;

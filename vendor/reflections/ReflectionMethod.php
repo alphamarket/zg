@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendor\reflections;
 
 /**
  * Description of ReflectionMethod
@@ -9,27 +9,44 @@ namespace zinux\zg\vendor;
 class ReflectionMethod extends \ReflectionMethod
 {
     /**
-     * holds method start line#
+     * holds method's start line#
      * @var integer
      */
     protected $start_line = null;
     /**
+     * holds method's end line#
+     * @var integer
+     */
+    protected $end_line = null;
+    /**
+     * holds method's text
+     * @var string
+     */
+    protected $method_txt = null;
+    /**
+     * holds target class's text
+     * @var string
+     */
+    protected $file_content = null;
+    /**
      * holds method class
      * @var \ReflectionClass
      */
-    public $target_class = null;
+    protected $target_class = null;
     
-    const LAST_FINAL = 0;
-    const LAST_ABSTRACT = 1;
-    const LAST_PUBLIC = 2;
-    const LAST_FUNC = 3;
-    const LAST_CMNT = 4;
+    const LAST_FINAL = 0x0;
+    const LAST_ABSTRACT = 0x1;
+    const LAST_PUBLIC = 0x2;
+    const LAST_FUNC = 0x3;
+    const LAST_CMNT = 0x4;
+    const LAST_PRIVATE = 0x5;
+    const LAST_PRTCTD = 0x6;
     
-    public function __construct($class, $name, $class_file_content)
+    public function __construct($class, $name)
     {
         parent::__construct($class, $name);
         $this->target_class = new \ReflectionClass($class);
-        $this->file_content = explode(PHP_EOL, $class_file_content);
+        $this->file_content = explode(PHP_EOL, file_get_contents($this->target_class->getFileName()));
         $this->_getEndLine($this->_getStartLine($this->file_content), $this->file_content);
     }
     
@@ -39,21 +56,22 @@ class ReflectionMethod extends \ReflectionMethod
             $class_file_content = explode(PHP_EOL, $class_file_content);
         
         $fl = $class_file_content;
-        $method_txt = "";
-        $braces = -1;
-        for($i = $start_index; $i<$this->target_class->getEndLine();$i++)
+        $this->method_txt = "";
+        $braces = 0;
+        $matches = array();
+        for($this->end_line = $start_index-1; $this->end_line<$this->target_class->getEndLine();$this->end_line++)
         {
-            $method_txt.=$fl[$i].PHP_EOL;
-            if(preg_match_all("#(\{)#i", $fl[$i], $matches))
+            $this->method_txt.=$fl[$this->end_line].PHP_EOL;
+            if(preg_match_all("#(\{)#i", $fl[$this->end_line], $matches))
+                $braces+=count($matches[0]);
+            if(preg_match_all("#(\})#i", $fl[$this->end_line], $matches))
             {
-                while(count($matches[0]))
-                {
-                    array_push($braces, array_shift($matches[0]));
-                }
+                $braces-=count($matches[0]);
+                if(!$braces)
+                    break;
             }
         }
-        echo $method_txt;
-        
+        return $this->end_line+=1;
     }
     
     protected function _getStartLine($class_file_content)
@@ -63,7 +81,15 @@ class ReflectionMethod extends \ReflectionMethod
         
         $fl = $class_file_content;
         $max = count($fl)+1;
-        $modifiers = array_fill(0, 5, -$max);
+        $keywords = array(
+                    self::LAST_ABSTRACT=>"abstract",
+                    self::LAST_PUBLIC=>"public", 
+                    self::LAST_FINAL=>"final", 
+                    self::LAST_PRIVATE=>"private",
+                    self::LAST_PRTCTD=>"protected",
+                    self::LAST_FUNC=>"function"
+        );
+        $modifiers = array_fill(0, count($keywords), -$max);
         for($i = $this->target_class->getStartLine()-1; $i<$this->target_class->getEndLine()-1; $i++)
         {
             $txt = trim($fl[$i]);
@@ -78,7 +104,7 @@ class ReflectionMethod extends \ReflectionMethod
             {
                 $token = trim($token);
                 if(!strlen($token)) continue;
-                foreach(array("final", "abstract", "public", "function") as $index => $value)
+                foreach($keywords as $index => $value)
                 {
                     if(strtolower($value) == strtolower($token))
                     {
@@ -100,7 +126,19 @@ __END:
             if($modifiers[$i]<=0)
                 unset($modifiers[$i]);
         }
-        return $this->start_line = min($modifiers);
+        return $this->start_line = min($modifiers)+1;
+    }
+    public function getStartLine()
+    {
+        return $this->start_line;
+    }
+    public function getEndLine()
+    {
+        return $this->end_line;
+    }
+    public function getMethodText()
+    {
+        return $this->method_txt;
     }
 }
 

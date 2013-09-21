@@ -52,18 +52,15 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
             throw new \zinux\kernel\exceptions\invalideOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
         if(!method_exists(new $class, $action->path))
            throw new \zinux\kernel\exceptions\invalideOperationException("'$class' does not contain method '{$action->path}'...");
-        if(!is_callable(array(new $class, $action->path)))
+        if(false && !is_callable(array(new $class, $action->path)))
             throw new \zinux\kernel\exceptions\invalideOperationException("{$action->name} is not callable ...");
-           
-        $mr =new \zinux\zg\vendor\ReflectionMethod($class, $action->name, file_get_contents($controller->path));
-        echo $mr->getStartLine();
-        return;
+        
+        $cr = new \zinux\zg\vendor\reflections\ReflectionClass($class);
+        $cr->RemoveMethod(new \zinux\zg\vendor\reflections\ReflectionMethod($class, $action->name));
         $this->cout("+", 0, self::green,0);
-        $new_file_cont =  str_replace($new_file_cont, $new_file_cont.$mbc, $file_cont);
-        file_put_contents($controller->path, $new_file_cont);
         $this->cout("+", 0, self::green,0);
         $action->parent = $controller;
-        $s->modules->collection[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->action[strtolower($action->name)] = $action;
+        unset($s->modules->collection[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->action[strtolower($action->name)]);
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green,1);
     }
