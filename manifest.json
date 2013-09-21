@@ -2,7 +2,7 @@
     "name" : "zg", 
     "path" : ".",
     "repo" : "https://github.com/dariushha/zg",
-    "dependencies":
+    "modules":
     {
     }
 }

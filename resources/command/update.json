@@ -8,13 +8,19 @@
     },
     "help":
     {
-        "command":"zg update",
-        "alias": "zg u",
+        "command":"zg update (--cache | --simulate | --verbose)",
+        "alias": "zg u (--cache | --simulate | --verbose)",
         "detail":"Update zinux framework with its online repository."
+    },
+    "options":
+    {
+        "--cache":"Update cached zinux directory.<br />(This will cause every project you create be updated.)",
+        "--simulate":"Simulate the updating process.<br />(Nothing actually changes during simulation.)",
+        "--verbose":"Output verbosely."
     },
     "notes":
     [
-        "In order to use this command, there must be git installed",
-        "To install git : http://git-scm.com/downloads"
+        "In order to use this command, there must be git installed.",
+        "To install git : http://git-scm.com/downloads."
     ]
 }
