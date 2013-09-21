@@ -8,12 +8,17 @@
         },
         "help":
         {
-            "command":"zg status",
-            "alias": "zg s",
-            "detail":"Showes project status"
+            "command":"zg status (+h) ($section_name)",
+            "alias": "zg s (+h) ($section_name) ",
+            "detail":"Showes project status."
+        },
+        "defaults":
+        {
+            "$section_name":"By default this command will show the entire status object."
         },
         "options":
         {
+            "$section_name":"Narrow down your explore items by passing its path from root to target section name<br />e.g 'zg status modules modules defaultmodule bootstrap':<br />Will show the details about defaultmodule's bootstrap file!",
             "+h":"Also show history print"
         }
 }

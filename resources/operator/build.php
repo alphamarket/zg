@@ -32,7 +32,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         # now we have secured our $root && $module path
         $this->s = $this->creatVirtualStatusFile($this->root);
         $this->s->modules->meta = new \zinux\zg\vendor\Item("modules", $this->modules, $this->s->project);
-        $this->s->modules->modules = array();
+        $this->s->modules->collection = array();
         $this->fetchApplication();
         $this->fetchModules();
         $this->fetchController();

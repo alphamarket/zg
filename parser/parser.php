@@ -12,7 +12,7 @@ class parser extends baseParser
         if(!count($this->args))
             $this->args[] = "-h";
         
-        $current_parsing = $this->getOperator($this->args);
+        $current_parsing = $this->getOperator();
         
         if(!isset($current_parsing->instance->class) || !isset($current_parsing->instance->method))
             throw new \zinux\kernel\exceptions\invalideOperationException
@@ -34,8 +34,13 @@ class parser extends baseParser
         $c->{$current_parsing->instance->method}($this->args);
     }
     
-    public function getOperator()
+    public function getOperator($collection = NULL, $explore_arraies = 0)
     {
+        if(!$collection)
+            $collection = $this->command_generator->Generate();
+        elseif(!$this->is_iterable($collection))
+            throw new \zinux\kernel\exceptions\invalideArgumentException("Produced argument is not iterable!");
+        
         # a fail safe for head keys used command files
         $pre_key_words = array(
                 '#\btitle\b#i' => "@title",
@@ -52,9 +57,9 @@ class parser extends baseParser
                 '@help' => "help",
                 '@options' => "options"
         );
-        $this->args = preg_replace(array_keys($pre_key_words), array_values($pre_key_words), $this->args);
-        $this->parsed_string = "zg";
-        $current_parsing = $this->command_generator->Generate();
+        $args = $this->args = preg_replace(array_keys($pre_key_words), array_values($pre_key_words), $this->args);
+        $this->parsed_string = "";
+        $current_parsing = $collection;
         while($current_parsing)
         {
             if(!count($this->args))
@@ -62,6 +67,9 @@ class parser extends baseParser
             $arg = strtolower($this->args[0]);
             if(!isset($current_parsing->{$arg}))
             {
+                if($explore_arraies && is_array($current_parsing) && isset($current_parsing[$arg]))
+                    goto __NEXT_ROUND;
+                
                 foreach($current_parsing as $key => $value)
                 {
                     if(isset($value->alias) && strtolower($value->alias) == $arg)
@@ -75,14 +83,18 @@ class parser extends baseParser
                 goto __ERROR;
             }
 __NEXT_ROUND:
-            $current_parsing = $current_parsing->{$arg};
+            if(isset($current_parsing->{$arg}))
+                $current_parsing = $current_parsing->{$arg};
+            elseif($explore_arraies && is_array($current_parsing) && isset($current_parsing[$arg]))
+                $current_parsing = $current_parsing[$arg];
+            else
+                goto __ERROR;
 __NEXT_ARG:
-            $this->parsed_string.=(" ".array_shift($this->args));
+            $this->parsed_string.=((strlen($this->parsed_string)?" ":"").array_shift($this->args));
         }
 __ERROR:
         $this->args = str_replace(array_keys($post_key_words), array_values($post_key_words), $this->args);
-        throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid command '".self::yellow."{$this->parsed_string} ".
-            implode(" ", $this->args)."'".self::defColor."<br />    Try zg -h.");
+        throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid command '{$this->parsed_string} {$this->args[0]}' in '".implode(" ", $args)."'<br />    Try zg -h.");
 __EXECUTE:
         $this->args = str_replace(array_keys($post_key_words), array_values($post_key_words), $this->args);
         return $current_parsing;

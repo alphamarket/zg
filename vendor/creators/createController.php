@@ -47,7 +47,7 @@ class ".preg_replace("#controller$#i","", $controller->name)."Controller extends
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $controller->parent = $module;
-        $s->modules->modules[strtolower($module->name)]->controller[strtolower($controller->name)] = $controller;
+        $s->modules->collection[strtolower($module->name)]->controller[strtolower($controller->name)] = $controller;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

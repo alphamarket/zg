@@ -4,22 +4,33 @@ namespace zinux\zg\resources\operator;
 class status extends baseOperator
 {
     public function show($args)
-    {
-        $this->restrictArgCount($args, 1, 0);
-        
+    {        
         if(!$this->CheckZG())
             return;
         
         $this->cout("Outputing project status file ...");
         
         $s = $this->GetStatus();
+        $p = new \zinux\zg\parser\parser($args, new \zinux\zg\command\commandGenerator());
         
         if(!$this->has_arg($args, "+h"))
             unset($s->history);
         if(isset($s->configs->show_parents))
             $this->show_parents = 1;
         
-        $this->RecursivePrint($s);
+        try
+        {
+            $this->RecursivePrint($p->getOperator($s, 1));
+        }
+        catch(\Exception $e)
+        {
+            $matches = array();
+            if(preg_match("#Invalid command \'(.*)\' in \'(.*)\'#i", $e->getMessage(), $matches))
+                $this ->cout("No data found in '".self::yellow.$matches[2].self::defColor."'")
+                        ->cout("Parser broked at '".self::yellow.$matches[1].self::defColor."'");
+            else
+                throw $e;
+        }
     }
     public function RecursivePrint($status, $indent = 0, $depth = 0, $max_depth = 5)
     {

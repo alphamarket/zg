@@ -58,7 +58,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
     }
     protected function fetchModules()
     {
-        $this->s->modules->modules = array();
+        $this->s->modules->collection = array();
         $this->step_show();
         foreach(glob("{$this->modules}/*", GLOB_ONLYDIR) as $module)
         {
@@ -67,12 +67,12 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                 $this->step_show();
                 $name = basename($module);
                 $module = new \zinux\zg\vendor\item("{$name}", "{$this->s->modules->meta->path}/{$name}", $this->s->modules->meta);
-                $this->s->modules->modules[strtolower($module->name)] = $module;
+                $this->s->modules->collection[strtolower($module->name)] = $module;
                 $bs = preg_replace("#module$#i","Bootstrap.php", $name);
                 if(($bootstrap = \zinux\kernel\utilities\fileSystem::resolve_path($module->path.DIRECTORY_SEPARATOR.$bs)))
                 {
                     $moduleBootstrap = new \zinux\zg\vendor\item(basename($bs, ".php"), $bootstrap, $module);
-                    $this->s->modules->modules[strtolower($module->name)]->bootstrap = $moduleBootstrap;
+                    $this->s->modules->collection[strtolower($module->name)]->bootstrap = $moduleBootstrap;
                     $this->processed[] = $moduleBootstrap;
                     $this->step_show();
                 }
@@ -90,7 +90,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
     protected function fetchController()
     {
         $this->step_show();
-        foreach($this->s->modules->modules as $name => $module)
+        foreach($this->s->modules->collection as $name => $module)
         {
             if(!($cp = \zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/controllers")))
             {
@@ -127,7 +127,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                     }
                     $this->step_show(); 
                     $controller = new \zinux\zg\vendor\Item($name, $file, $module);
-                    $this->s->modules->modules[strtolower($module->name)]->controller[strtolower($controller->name)] = $controller;
+                    $this->s->modules->collection[strtolower($module->name)]->controller[strtolower($controller->name)] = $controller;
                     $this->processed[] = $controller;
                     $this->step_show();
                 }
@@ -144,7 +144,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
     protected function fetchAction()
     {
         $this->step_show();
-        foreach($this->s->modules->modules as $name => $module)
+        foreach($this->s->modules->collection as $name => $module)
         {
             if(!isset($module->controller))
             {
@@ -191,7 +191,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
     public function fetchModels()
     {
         $this->step_show();
-        foreach($this->s->modules->modules as $name => $module)
+        foreach($this->s->modules->collection as $name => $module)
         {
             if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/models")))
             {
@@ -229,7 +229,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                     }
                     $this->step_show();
                     $model = new \zinux\zg\vendor\Item($name, $file, $module);
-                    $this->s->modules->modules[strtolower($module->name)]->model[strtolower($model->name)] = $model;
+                    $this->s->modules->collection[strtolower($module->name)]->model[strtolower($model->name)] = $model;
                     $this->processed[] = $model;
                     $this->step_show();
                 }
@@ -247,7 +247,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
     public function fetchHelpers()
     {
         $this->step_show();
-        foreach($this->s->modules->modules as $name => $module)
+        foreach($this->s->modules->collection as $name => $module)
         {
             $this->step_show();
             if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/helper")))
@@ -279,7 +279,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                     }
                     $this->step_show();
                     $helper = new \zinux\zg\vendor\Item($name, $file, $module);
-                    $this->s->modules->modules[strtolower($module->name)]->helper[strtolower($helper->name)] = $helper;
+                    $this->s->modules->collection[strtolower($module->name)]->helper[strtolower($helper->name)] = $helper;
                     $this->processed[] = $helper;
                     $this->step_show();
                 }
@@ -297,7 +297,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
     public function fetchLayouts()
     {
         $this->step_show();
-        foreach($this->s->modules->modules as $name => $module)
+        foreach($this->s->modules->collection as $name => $module)
         {
             $this->step_show();
             if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/layout")))
@@ -323,7 +323,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                     }   
                     $this->step_show();
                     $layout = new \zinux\zg\vendor\Item($name, $file, $module);
-                    $this->s->modules->modules[strtolower($module->name)]->layout[strtolower($layout->name)] = $layout;
+                    $this->s->modules->collection[strtolower($module->name)]->layout[strtolower($layout->name)] = $layout;
                     $this->processed[] = $layout;
                     $this->step_show();
                 }
@@ -340,7 +340,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
     protected function fetchViewes()
     {
         $this->step_show();
-        foreach($this->s->modules->modules as $name => $module)
+        foreach($this->s->modules->collection as $name => $module)
         {
             if(!isset($module->controller))
             {
@@ -375,7 +375,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                         }
                         $this->step_show();
                         $view = new \zinux\zg\vendor\Item($name, $file, $controller);
-                        $this->s->modules->modules[strtolower($module->name)]->controller[strtolower($controller->name)]->view[strtolower($view->name)] = $view;
+                        $this->s->modules->collection[strtolower($module->name)]->controller[strtolower($controller->name)]->view[strtolower($view->name)] = $view;
                         $this->processed[] = $view;
                         $this->step_show();
                     }

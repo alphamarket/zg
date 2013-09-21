@@ -25,7 +25,7 @@ class creator extends \zinux\zg\resources\operator\baseOperator
             throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$name}' already exists ...");
             
         $module = new \zinux\zg\vendor\item("{$name}", "{$s->modules->meta->path}/{$name}", $s->modules->meta);
-        $s->modules->modules[strtolower($module->name)] = $module;
+        $s->modules->collection[strtolower($module->name)] = $module;
         $this->SaveStatus($s);
         
         $this->Run(array(

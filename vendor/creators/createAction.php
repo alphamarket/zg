@@ -89,7 +89,7 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
         file_put_contents($controller->path, $file_cont);
         $this->cout("+", 0, self::green,0);
         $action->parent = $controller;
-        $s->modules->modules[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->action[strtolower($action->name)] = $action;
+        $s->modules->collection[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->action[strtolower($action->name)] = $action;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green,1);
     }
