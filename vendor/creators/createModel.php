@@ -34,7 +34,7 @@ class {$model->name}
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $model->parent = $module;
-        $s->modules->collection[strtolower($module->name)]->model[strtolower($model->name)] = $module;
+        $s->modules->collection[strtolower($module->name)]->model[strtolower($model->name)] = $model;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }
