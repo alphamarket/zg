@@ -11,7 +11,7 @@ class moduleBootstrap extends \zinux\zg\baseZg
     {
         $moduleBootstrap->name = preg_replace("#bootstrap$#i","", $moduleBootstrap->name)."Bootstrap";
         $ns = $this->convert_to_relative_path($moduleBootstrap->path, $project_path);
-        $this ->cout("Creating new module '", 1,  self::defColor, 0)
+        $this ->cout("Removing new module '", 1,  self::defColor, 0)
                 ->cout($moduleBootstrap->name, 0, self::yellow, 0)
                 ->cout("' at '",0,self::defColor, 0)
                 ->cout($ns, 0, self::yellow, 0)

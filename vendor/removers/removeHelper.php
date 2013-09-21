@@ -11,7 +11,7 @@ class removeHelper extends \zinux\zg\baseZg
     {
         $helper->name = preg_replace("#(\w+)helper$#i","$1", $helper->name)."Helper";
         $ns = $this->convert_to_relative_path($helper->path, $project_path);;
-        $this ->cout("Creating new helper '", 1,  self::defColor, 0)
+        $this ->cout("Removing new helper '", 1,  self::defColor, 0)
                 ->cout($helper->name, 0, self::yellow, 0)
                 ->cout("' for '",0,self::defColor, 0)
                 ->cout($ns, 0, self::yellow, 0)

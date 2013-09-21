@@ -8,19 +8,17 @@ namespace zinux\zg\vendor\removers;
 
 class removeAction extends \zinux\zg\resources\operator\baseOperator
 {
-    public function __construct(\zinux\zg\vendor\item $controller, \zinux\zg\vendor\item $action, $project_path = ".")
+    public function __construct(\zinux\zg\vendor\item $action, $project_path = ".")
     {
+        $ns = $this->convert_to_relative_path($action->parent->path, $project_path);
+        $controller = $action->parent;
         $action->path = preg_replace("#(\w+)action$#i","$1", $action->name)."Action";
-        $this ->cout("Creating new action '",1,  self::defColor, 0)
+        $this ->cout("Removing new action '",1,  self::defColor, 0)
                 ->cout($action->path, 0, self::yellow, 0)
                 ->cout("' in '",0,self::defColor, 0)
-                ->cout("\\{$controller->parent->parent->name}\\{$controller->parent->name}\\controllers\\{$controller->name}", 0, self::yellow, 0)
+                ->cout("$ns\\{$controller->name}", 0, self::yellow, 0)
                 ->cout("'.");
         $mbc = "
-    /**
-    * The \\{$controller->parent->parent->name}\\{$controller->parent->name}\\controllers\\{$controller->name}::{$action->path}()
-    * @by Zinux Generator <b.g.dariush@gmail.com>
-    */
     public function {$action->path}()
     {
         
@@ -51,9 +49,10 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
         
         if(!$rf->isSubclassOf('\zinux\kernel\controller\baseController'))
             throw new \zinux\kernel\exceptions\invalideOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
-        if(method_exists(new $class, $action->path))
-           throw new \zinux\kernel\exceptions\invalideOperationException("'$class' already contains method '{$action->path}'...");
-           
+        if(!method_exists(new $class, $action->path))
+           throw new \zinux\kernel\exceptions\invalideOperationException("'$class' does not contain method '{$action->path}'...");
+        if(!is_callable(array(new $class, $action->path)))
+            throw new \zinux\kernel\exceptions\invalideOperationException("{$action->name} is not callable ...");
         $this->cout("+", 0, self::green,0);
         $preg_match = "#([\s|\n]*class[\s|\n]*{$controller->name}[\s|\n]*extends[\s|\n]*((.*)[\s|\n]*)*[\\]zinux[\\]kernel[\\]controller[\\]baseController[\s|\n]*[\\\{]([^\\\}]*)[\\\}])#is";
         $file_cont = preg_quote(file_get_contents($controller->path),"#");
@@ -65,8 +64,13 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
                 $matches
         ))
             throw new \zinux\kernel\exceptions\notFoundException("Didn't find any match with '{$controller->name}' controller class");
+            throw new \zinux\kernel\exceptions\notImplementedException;
         $this->cout("+", 0, self::green,0);
         $matched = stripslashes($matches[0]);
+        echo preg_quote($matched, "#").PHP_EOL;
+        echo ($pat = "#(public?[\s|\n]+function[\s|\n]+{$action->name}[\s|\n]*)#i").PHP_EOL;
+        preg_match($pat, preg_quote($matched, "#"), $matched);
+        \zinux\kernel\utilities\debug::_var($matched);return;
         
         $brace = 0;
         

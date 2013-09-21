@@ -12,7 +12,7 @@ class removeModel extends \zinux\zg\baseZg
         # no naming convention in models
         # $model->name = preg_replace("#(\w+)model$#i","$1", $model->name)."Model";
         $ns = $this->convert_to_relative_path($model->path, $project_path);;
-        $this ->cout("Creating new model '", 1,  self::defColor, 0)
+        $this ->cout("Removing new model '", 1,  self::defColor, 0)
                 ->cout($model->name, 0, self::yellow, 0)
                 ->cout("' for '",0,self::defColor, 0)
                 ->cout($ns, 0, self::yellow, 0)

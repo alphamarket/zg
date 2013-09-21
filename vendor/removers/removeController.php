@@ -12,7 +12,7 @@ class removeController extends \zinux\zg\resources\operator\baseOperator
     {
         $controller->name = preg_replace("#controller$#i","", $controller->name)."Controller";
         $ns = $this->convert_to_relative_path($controller->path, $project_path);
-        $this ->cout("Creating new controller '",1,  self::defColor, 0)
+        $this ->cout("Removing new controller '",1,  self::defColor, 0)
                 ->cout($controller->name, 0, self::yellow, 0)
                 ->cout("' at '",0,self::defColor, 0)
                 ->cout($ns, 0, self::yellow, 0)

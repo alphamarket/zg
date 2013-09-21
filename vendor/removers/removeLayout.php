@@ -11,7 +11,7 @@ class removeLayout extends \zinux\zg\baseZg
     {
         $layout->name = preg_replace("#(\w+)layout$#i","$1", $layout->name)."Layout";
         $ns = $this->convert_to_relative_path($layout->path, $project_path);;
-        $this ->cout("Creating new layout '", 1,  self::defColor, 0)
+        $this ->cout("Removing new layout '", 1,  self::defColor, 0)
                 ->cout($layout->name, 0, self::yellow, 0)
                 ->cout("' for '",0,self::defColor, 0)
                 ->cout($ns, 0, self::yellow, 0)

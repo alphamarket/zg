@@ -30,14 +30,10 @@ class remover extends \zinux\zg\resources\operator\baseOperator
         new \zinux\zg\vendor\removers\removeController($module, $controller, $projectDir);
         return $controller;
     }
-    public function removeAction($name, item $controller,$projectDir = ".")
+    public function removeAction(item $action,$projectDir = ".")
     {
         $this->CheckZG($projectDir,1);
-        $s = $this->GetStatus($projectDir);
-        $name = preg_replace("#(\w+)action$#i","$1", $name)."Action";
-        return new \zinux\zg\vendor\removers\removeAction(
-                $controller, 
-                new \zinux\zg\vendor\item($name, $name));
+        return new \zinux\zg\vendor\removers\removeAction($action);
     }
     
     public function removeAppBootstrap($name, $projectDir = ".")

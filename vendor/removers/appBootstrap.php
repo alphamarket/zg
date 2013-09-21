@@ -11,7 +11,7 @@ class appBootstrap extends \zinux\zg\baseZg
     {
         $appBootstrap->name = preg_replace("#(\w+)bootstrap$#i","$1", $appBootstrap->name)."Bootstrap";
         $ns = $this->convert_to_relative_path($appBootstrap->path, $project_path);
-        $this ->cout("Creating new application bootstrap '", 1,  self::defColor, 0)
+        $this ->cout("Removing new application bootstrap '", 1,  self::defColor, 0)
                 ->cout($appBootstrap->name, 0, self::yellow, 0)
                 ->cout("' at '",0,self::defColor, 0)
                 ->cout($ns, 0, self::yellow, 0)
