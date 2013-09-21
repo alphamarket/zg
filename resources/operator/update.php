@@ -37,6 +37,11 @@ class update extends baseOperator
             }
         }
         $this->cout("Updating zinux framework from its online repo.");
+        $this->cout("Checking Git application.... ",0 ,self::defColor, 0);
+        # check if git exists 
+        if(!exec('git 2>/dev/null | wc -l'))
+            throw new \zinux\kernel\exceptions\notFoundException("'git' not found in system!<br />To install git http://git-scm.com/downloads");
+        $this->cout("[ OK ]", 0, self::green);
         $this->cout("Testing your network, please wait.... ", 0, self::defColor, 0);
         # check network 
         if(!isset($this->simulate) && !$this->is_connected())
@@ -47,11 +52,6 @@ class update extends baseOperator
         }
         $this->cout("[ OK ]",0, self::green);
         $zinux_dir = isset($this->cache_update)?Z_CACHE_ROOT:WORK_ROOT."/zinux";
-        $this->cout("Checking Git application.... ",0 ,self::defColor, 0);
-        # check if git exists 
-        if(!exec('git 2>/dev/null | wc -l'))
-            throw new \zinux\kernel\exceptions\notFoundException("'git' not found in system!<br />To install git http://git-scm.com/downloads");
-        $this->cout("[ OK ]", 0, self::green);
         $this->update_repo("zinux".(isset($this->cache_update)?".cache":""), $zinux_dir);
         $this->cout("Now the ".self::yellow."zinux framework".self::defColor." is updated ...");
     }
