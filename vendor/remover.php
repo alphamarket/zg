@@ -25,7 +25,7 @@ class remover extends \zinux\zg\resources\operator\baseOperator
     public function removeAction(item $action,$projectDir = ".")
     {
         $this->CheckZG($projectDir,1);
-        return new \zinux\zg\vendor\removers\removeAction($action);
+        return new \zinux\zg\vendor\removers\removeAction($action, $projectDir);
     }
 }
 
