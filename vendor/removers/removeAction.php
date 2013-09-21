@@ -9,8 +9,8 @@ namespace zinux\zg\vendor\removers;
 class removeAction extends \zinux\zg\resources\operator\baseOperator
 {
     const LAST_FINAL = 0;
-    const LAST_PUBLIC = 1;
-    const LAST_ABSTRACT = 2;
+    const LAST_ABSTRACT = 1;
+    const LAST_PUBLIC = 2;
     const LAST_FUNC = 3;
     const LAST_CMNT = 4;
     public function __construct(\zinux\zg\vendor\item $action, $project_path = ".")
@@ -95,26 +95,15 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
              * 
              */
             $this->cout($txt = preg_replace("#(/\*.*\*/|.*\*/)#i", "", trim($txt)),0,self::yellow);
-            if(preg_match("#\s+abstract\s+#i", $txt))
+            foreach (explode(" ", trim($txt)) as $key=> $value)
             {
-                $modifiers[self::LAST_ABSTRACT] = 1;
-                $txt = preg_replace("#[\s+](abstract)\s+#i", "", $txt);
-            }
-            if(preg_match("#\s+final\s+#i", $txt))
-            {
-                $modifiers[self::LAST_FINAL] = 1;
-                $txt = preg_replace("#\s+(final)\s+#i", "", $txt);
-            }
-            if(preg_match("#\s+public\s+#i", $txt))
-            {
-                $modifiers[self::LAST_PUBLIC] = 1;
-                $txt = preg_replace("#\s+(public)\s+#i", "", $txt);
-            }
-            if(preg_match("#\s+function\s+#i", $txt))
-            {
-                $modifiers[self::LAST_FUNC] = 1;
-                $txt = preg_replace("#[\s+](function)[\s+]#i", "", $txt);
-            }
+                echo $value." ~ ";
+                foreach(array("final", "abstract", "public", "function") as $key => $value)
+                {
+                    
+                }
+            };
+            $this->cout();
             $this->cout($txt = preg_replace("#(/\*.*\*/|.*\*/)#i", "", trim($txt)),0,$g);
             
             if($i%2)
