@@ -38,9 +38,9 @@ class ReflectionMethod extends \ReflectionMethod
     const LAST_ABSTRACT = 0x1;
     const LAST_PUBLIC = 0x2;
     const LAST_FUNC = 0x3;
-    const LAST_CMNT = 0x4;
-    const LAST_PRIVATE = 0x5;
-    const LAST_PRTCTD = 0x6;
+    const LAST_PRIVATE = 0x4;
+    const LAST_PRTCTD = 0x5;
+    const LAST_CMNT = 0x6;
     
     public function __construct($class, $name)
     {
@@ -71,7 +71,8 @@ class ReflectionMethod extends \ReflectionMethod
                     break;
             }
         }
-        return $this->end_line+=1;
+        # make it one-based #
+        return ++$this->end_line;
     }
     
     protected function _getStartLine($class_file_content)
@@ -87,7 +88,8 @@ class ReflectionMethod extends \ReflectionMethod
                     self::LAST_FINAL=>"final", 
                     self::LAST_PRIVATE=>"private",
                     self::LAST_PRTCTD=>"protected",
-                    self::LAST_FUNC=>"function"
+                    self::LAST_FUNC=>"function",
+                    self::LAST_CMNT => "/*COMMENT*/"
         );
         $modifiers = array_fill(0, count($keywords), -$max);
         for($i = $this->target_class->getStartLine()-1; $i<$this->target_class->getEndLine()-1; $i++)
@@ -106,6 +108,7 @@ class ReflectionMethod extends \ReflectionMethod
                 if(!strlen($token)) continue;
                 foreach($keywords as $index => $value)
                 {
+                    if($index == self::LAST_CMNT) continue;
                     if(strtolower($value) == strtolower($token))
                     {
                         $modifiers[$index] = $i;
@@ -114,19 +117,21 @@ class ReflectionMethod extends \ReflectionMethod
                     {
                         if(strtolower($token)==strtolower($this->name))
                             goto __END;
-                        $modifiers = array_fill(0, 5, -$max);
+                        $modifiers = array_fill(0, count($keywords), -$max);
                     }
                 }
             }
         }
 __END:
         unset($modifiers[self::LAST_CMNT]);
+        $this->start_line = $max;
         for($i = 0;$i<count($modifiers);$i++)
         {
-            if($modifiers[$i]<=0)
-                unset($modifiers[$i]);
+            if($modifiers[$i]>=0 && $this->start_line>$modifiers[$i])
+                $this->start_line = $modifiers[$i];
         }
-        return $this->start_line = min($modifiers)+1;
+        # make it one-based #
+        return ++$this->start_line;
     }
     public function getStartLine()
     {
