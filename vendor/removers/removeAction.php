@@ -60,7 +60,7 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
         $fl = explode(PHP_EOL, $file_cont);
         $new_file_cont = "";
         $class_cont = "";
-        \zinux\kernel\utilities\debug::_var(array($crf->getStartLine()-1,$crf->getEndLine()-1));
+        \zinux\kernel\utilities\debug::_var(array($crf->getStartLine(),$crf->getEndLine()));
         for($i = $rf->getStartLine()-1; $i<$rf->getEndLine()-1; $i++)
         {
             if($i>=$crf->getStartLine()-1 && $i<$crf->getEndLine())
@@ -94,23 +94,38 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
              * 
              * 
              */
-            $this->cout($txt = preg_replace("#(/\*.*\*/|.*\*/)#i", "", trim($txt)),0,self::yellow);
-            foreach (explode(" ", trim($txt)) as $key=> $value)
+            $txt = preg_replace("#(/\*.*\*/|.*\*/|\(.*\))#i", "", trim($txt));
+            #$this->cout($txt),0,self::yellow);
+            foreach (explode(" ", trim($txt)) as $key=> $token)
             {
-                echo $value." ~ ";
-                foreach(array("final", "abstract", "public", "function") as $key => $value)
+                $token = trim($token);
+                if(!strlen($token)) continue;
+                //echo $value." ~ ";
+                foreach(array("final", "abstract", "public", "function") as $index => $value)
                 {
-                    
+                    if(strtolower($value) == strtolower($token))
+                    {
+                        $modifiers[$index] = $i;
+                    }
+                    elseif($modifiers[self::LAST_FUNC])
+                    {
+                        $this->cout("FUNC: ".$token);
+                        if(strtolower($token)==strtolower($action->name))
+                            goto __END;
+                        $modifiers = array(0,0,0,0,0);
+                    }
                 }
             };
-            $this->cout();
-            $this->cout($txt = preg_replace("#(/\*.*\*/|.*\*/)#i", "", trim($txt)),0,$g);
+            #$this->cout();
+            #$this->cout($txt = preg_replace("#(/\*.*\*/|.*\*/)#i", "", trim($txt)),0,$g);
             
             if($i%2)
                 $g=self::green;
             else
                 $g=self::red;
         }
+__END:
+        \zinux\kernel\utilities\debug::_var($modifiers);
         return;
         $this->cout("+", 0, self::green,0);
         $new_file_cont =  str_replace($new_file_cont, $new_file_cont.$mbc, $file_cont);
