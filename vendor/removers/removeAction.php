@@ -8,6 +8,11 @@ namespace zinux\zg\vendor\removers;
 
 class removeAction extends \zinux\zg\resources\operator\baseOperator
 {
+    const LAST_FINAL = 0;
+    const LAST_PUBLIC = 1;
+    const LAST_ABSTRACT = 2;
+    const LAST_FUNC = 3;
+    const LAST_CMNT = 4;
     public function __construct(\zinux\zg\vendor\item $action, $project_path = ".")
     {
         $controller = $action->parent;
@@ -54,23 +59,70 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
         $crf = new \ReflectionMethod($class, $action->name);
         $fl = explode(PHP_EOL, $file_cont);
         $new_file_cont = "";
-        \zinux\kernel\utilities\debug::_var(array($crf->getStartLine(),$crf->getEndLine()));
+        $class_cont = "";
+        \zinux\kernel\utilities\debug::_var(array($crf->getStartLine()-1,$crf->getEndLine()-1));
         for($i = $rf->getStartLine()-1; $i<$rf->getEndLine()-1; $i++)
         {
             if($i>=$crf->getStartLine()-1 && $i<$crf->getEndLine())
-            {
-                $j = $i;
-                while($j)
-                {
-                    if(trim($fl[$j])=="") {$j--; continue;}
-                    if(\zinux\kernel\utilities\string::startsWith(trim($fl), "//")){$j--; continue;}
-                    if(trim($fl)){}
-                }
                 $i = $crf->getEndLine();
-            }
-            $new_file_cont.=$fl[$i].PHP_EOL;
+            $class_cont .= $fl[$i].PHP_EOL;
         }
-        die($new_file_cont);
+//        echo $file_cont;
+//        echo $new_file_cont;
+//        echo $class_cont;
+        $modifiers = array(self::LAST_ABSTRACT=>0,self::LAST_CMNT=>0, self::LAST_FINAL=>0, self::LAST_FUNC=>0, self::LAST_PUBLIC=>0);
+        $g = self::green;
+        for($i = $rf->getStartLine()-1; $i<$rf->getEndLine()-1; $i++)
+        {
+            $txt = $fl[$i];
+            
+            if(preg_match("#^(//)#i", $txt, $matches)) continue;
+            if(preg_match("#(.*\*/)#i", $txt, $matches))
+            {
+                $modifiers[self::LAST_CMNT] = 0;
+            }
+            if(preg_match("#(/\*.*)#i", $txt, $matches))
+            {
+                #\zinux\kernel\utilities\debug::_var($matches);
+                $modifiers[self::LAST_CMNT] = 1;
+            }
+            if($modifiers[self::LAST_CMNT]) continue;
+            /**
+             * 
+             * 
+             * USE EXPLODE
+             * 
+             * 
+             */
+            $this->cout($txt = preg_replace("#(/\*.*\*/|.*\*/)#i", "", trim($txt)),0,self::yellow);
+            if(preg_match("#\s+abstract\s+#i", $txt))
+            {
+                $modifiers[self::LAST_ABSTRACT] = 1;
+                $txt = preg_replace("#[\s+](abstract)\s+#i", "", $txt);
+            }
+            if(preg_match("#\s+final\s+#i", $txt))
+            {
+                $modifiers[self::LAST_FINAL] = 1;
+                $txt = preg_replace("#\s+(final)\s+#i", "", $txt);
+            }
+            if(preg_match("#\s+public\s+#i", $txt))
+            {
+                $modifiers[self::LAST_PUBLIC] = 1;
+                $txt = preg_replace("#\s+(public)\s+#i", "", $txt);
+            }
+            if(preg_match("#\s+function\s+#i", $txt))
+            {
+                $modifiers[self::LAST_FUNC] = 1;
+                $txt = preg_replace("#[\s+](function)[\s+]#i", "", $txt);
+            }
+            $this->cout($txt = preg_replace("#(/\*.*\*/|.*\*/)#i", "", trim($txt)),0,$g);
+            
+            if($i%2)
+                $g=self::green;
+            else
+                $g=self::red;
+        }
+        return;
         $this->cout("+", 0, self::green,0);
         $new_file_cont =  str_replace($new_file_cont, $new_file_cont.$mbc, $file_cont);
         file_put_contents($controller->path, $new_file_cont);
