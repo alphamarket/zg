@@ -8,8 +8,8 @@
         },
         "help":
         {
-            "command":"zg status (+h) ($section_name)",
-            "alias": "zg s (+h) ($section_name) ",
+            "command":"zg status (+h) (+p) ($section_name)",
+            "alias": "zg s (+h) (+p) ($section_name) ",
             "detail":"Showes project status."
         },
         "defaults":
@@ -18,7 +18,8 @@
         },
         "options":
         {
-            "$section_name":"Narrow down your explore items by passing its path from root to target section name<br />e.g 'zg status modules modules defaultmodule bootstrap':<br />Will show the details about defaultmodule's bootstrap file!",
-            "+h":"Also show history print"
+            "+h":"Also show history print",
+            "+p":"Show items parent detail in structure tree",
+            "$section_name":"Narrow down your explore items by passing its path from root to target section name<br />e.g 'zg status modules collection defaultmodule':<br />Will show the details about defaultmodule!"
         }
 }

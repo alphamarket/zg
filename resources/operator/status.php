@@ -11,13 +11,13 @@ class status extends baseOperator
         $this->cout("Outputing project status file ...");
         
         $s = $this->GetStatus();
-        $p = new \zinux\zg\parser\parser($args, new \zinux\zg\command\commandGenerator());
         
         if(!$this->has_arg($args, "+h"))
             unset($s->history);
-        if(isset($s->configs->show_parents))
+        if(isset($s->configs->show_parents) || $this->remove_arg($args, "+p"))
             $this->show_parents = 1;
         
+        $p = new \zinux\zg\parser\parser($args, new \zinux\zg\command\commandGenerator());
         try
         {
             $this->RecursivePrint($p->getOperator($s, 1));
@@ -59,8 +59,9 @@ class status extends baseOperator
             }
         $this->cout("}", $indent);
     }
-    public function version()
+    public function version($args)
     {
+        $this->restrictArgCount($args,0,0);
         $this->cout(ZG_VERSION);
     }
 }

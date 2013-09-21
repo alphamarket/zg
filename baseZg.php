@@ -7,7 +7,7 @@ defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
 defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux");
 defined("CONF_PATH") || define("CONF_PATH","/.zg/");
 defined("CONF_NAME") || define("CONF_NAME",".cfg");
-defined("ZG_VERSION") || define("ZG_VERSION","1.4.2");
+defined("ZG_VERSION") || define("ZG_VERSION","1.4.6");
 defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
 
 /**
@@ -127,6 +127,23 @@ abstract class baseZg extends \zinux\baseZinux
     {
         return (is_array($var) || $var instanceof \Traversable || $var instanceof \stdClass);
     }  
+    public function remove_arg(&$args, $value)
+    {
+        if(!$this->is_iterable($args))
+            return false;
+        
+        foreach($args as $index => $_value)
+        {
+            if(strtolower($_value) == strtolower($value))
+            {
+                unset($args[$index]);
+                \zinux\kernel\utilities\_array::array_normalize($args);
+                return true;
+            }
+        }
+        return false;
+        
+    }
     public function has_arg($args, $value)
     {
         if(!$this->is_iterable($args))
