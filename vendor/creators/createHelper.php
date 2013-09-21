@@ -30,7 +30,7 @@ namespace $ns;
         $this->cout("+", 0, self::green,0);
         $s = $this->GetStatus($project_path);
         $helper->parent = $module;
-        $s->modules->collection[strtolower($module->name)]->helper[strtolower($helper->name)] = $module;
+        $s->modules->collection[strtolower($module->name)]->helper[strtolower($helper->name)] = $helper;
         $this->SaveStatus($s);
         $this->cout("+", 0, self::green);
     }

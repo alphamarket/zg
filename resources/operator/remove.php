@@ -110,7 +110,6 @@ class remove extends baseOperator
             throw new \zinux\kernel\exceptions\notFoundException("Layout  '{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
             
         $c = new \zinux\zg\vendor\remover;
-        \zinux\kernel\utilities\debug::_var($s->modules->collection[strtolower($args[1])]->layout[strtolower($args[0])]); return;
         $c->removeFS($s->modules->collection[strtolower($args[1])]->layout[strtolower($args[0])]);
     }
     public function helper($args)
@@ -126,11 +125,10 @@ class remove extends baseOperator
         $s = $this->GetStatus();
         if(!isset($s->modules->collection[strtolower($args[1])]))
             throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exist in zg manifest!<br />Try 'zg build' command!");
-        if(isset($s->modules->collection[strtolower($args[1])]->helper[strtolower($args[0])]))
+        if(!isset($s->modules->collection[strtolower($args[1])]->helper[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Helper '{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
-            
         $c = new \zinux\zg\vendor\remover;
-        $c->removeHelper($args[0], $s->modules->collection[strtolower($args[1])]);
+        $c->removeFS($s->modules->collection[strtolower($args[1])]->helper[strtolower($args[0])]);
     }
     public function model($args)
     {
