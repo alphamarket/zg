@@ -10,7 +10,7 @@ class commandGenerator extends baseCommandGenerator
 {
     public function Generate()
     {
-        $p = \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT.'/resources/command');
+        $p = \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT.'/resources/commands');
         if(!$p)
             throw new \Exception("No command directory found");
         $commands = "{";

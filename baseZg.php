@@ -13,7 +13,7 @@ if(!defined("ZG_ROOT"))
 
     defined("PRG_CONF_NAME") || define("PRG_CONF_NAME",".cfg");
 
-    defined("ZG_VERSION") || define("ZG_VERSION","1.4.21");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.4.22");
 
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
 
