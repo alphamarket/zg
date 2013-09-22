@@ -66,7 +66,6 @@ class remove extends baseOperator
             throw new \zinux\kernel\exceptions\notFoundException("Action '{$args[2]}/{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         $c = new \zinux\zg\vendor\remover;
         $c->removeAction($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->action[strtolower($args[0])]);
-        return;
         $args[0] = preg_replace("#(\w+)action#i", "$1", $args[0]);
         $this->view($args);
     }
