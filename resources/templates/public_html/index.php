@@ -38,5 +38,5 @@ catch(Exception $e)
     echo "<legend>Oops!</legend>";
     echo "<p>Error happened ...</p>";
     echo "<p><b>Message: </b></p><p>{$e->getMessage()}</p>";
-    echo "<p><b>Stack Trace: </b></p><pre>".preg_replace(PHP_EOL, "<br />", $e->getTraceAsString())."</pre>";
+    echo "<p><b>Stack Trace: </b></p><pre>".$e->getTraceAsString()."</pre>";
 }

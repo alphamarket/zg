@@ -174,8 +174,8 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                         }
                         $action = new \zinux\zg\vendor\item($method, $method, $controller);
                         $this->s->modules->
-                            modules[strtolower($name)]->
-                            controller[strtolower($cname)]->
+                            collection[strtolower($module->name)]->
+                            controller[strtolower($controller->name)]->
                             action[strtolower($action->name)] = $action;
                         $this->processed[] = $action;
                         $this->step_show();
@@ -404,6 +404,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
             }
         }
         $fc = new \zinux\kernel\caching\fileCache("ZG_BUILD_COMMAND_LOG");
+        $fc->setCachePath($this->s->project->path."/.zg/cache");
         $fc->save("log", $this->log);
         $fc->save("processed", $this->processed);
         $this ->cout()

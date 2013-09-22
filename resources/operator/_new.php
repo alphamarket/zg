@@ -44,6 +44,8 @@ class _new extends baseOperator
         $c->createAppRoutes("app", $pName);
         $c->createLayout("default", $module, $pName);
         $c->createView("index", $controller, $pName);
+        $b = new build(1);
+        $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
     }
     
     public function module($args)

@@ -11,21 +11,21 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
     }
     public function build($args)
     {
-        $this->restrictArgCount($args,4,0);
+        $this->restrictArgCount($args,6,0);
         $this->app_pased = 1;
         if(!($_root = $this->get_pair_arg_value($args, "-p")))
             $_root = WORK_ROOT;
         if(!($_app = $this->get_pair_arg_value($args, "-a")))
         {
             unset($this->app_pased);
-            $this->app = "application";
+            $this->app = $_root.DIRECTORY_SEPARATOR."application";
         }
         if(!($_module = $this->get_pair_arg_value($args, "-m")))
             $_module = "modules";
         
         if(!($this->root = \zinux\kernel\utilities\fileSystem::resolve_path($_root)))
             throw new \zinux\kernel\exceptions\notFoundException("'$_root' does not exists...");
-        if(isset($this->app_pased) && !($this->app = \zinux\kernel\utilities\fileSystem::resolve_path($_root.DIRECTORY_SEPARATOR.$_app)))
+        if(isset($this->app_pased) && !($this->app = \zinux\kernel\utilities\fileSystem::resolve_path($_root.DIRECTORY_SEPARATOR.$this->app)))
             throw new \zinux\kernel\exceptions\notFoundException("'".$_root.DIRECTORY_SEPARATOR.$_app."' does not exists...");
         if(!($this->modules = \zinux\kernel\utilities\fileSystem::resolve_path($_root.DIRECTORY_SEPARATOR.$_module)))
             throw new \zinux\kernel\exceptions\notFoundException("'".$_root.DIRECTORY_SEPARATOR.$_module."' does not exists...");
@@ -46,6 +46,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
                 ->cout()
                 ->cout(self::green."+".self::defColor." The built config file has saved ".self::green."successfully".self::defColor.".", 1);
         $this->saveLogs();
+        
     }
     
     public function log($args)
