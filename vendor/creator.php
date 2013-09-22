@@ -5,7 +5,7 @@ namespace zinux\zg\vendor;
  *
  * @author dariush
  */
-class creator extends \zinux\zg\resources\operator\baseOperator
+class creator extends \zinux\zg\operators\baseOperator
 {
     public function __construct()
     {

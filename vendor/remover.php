@@ -5,7 +5,7 @@ namespace zinux\zg\vendor;
  *
  * @author dariush
  */
-class remover extends \zinux\zg\resources\operator\baseOperator
+class remover extends \zinux\zg\operators\baseOperator
 {
     public function __construct()
     {
@@ -18,7 +18,7 @@ class remover extends \zinux\zg\resources\operator\baseOperator
         exec("rm -fr '{$module->path}'");
         $this->cout("- {$module->path}", 1, self::red);
         if(!$rebuild) return;
-        $b = new \zinux\zg\resources\operator\build(1);
+        $b = new \zinux\zg\operators\build(1);
         $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
     } 
    

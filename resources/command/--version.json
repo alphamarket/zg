@@ -2,7 +2,7 @@
         "title":"Show zg's version", 
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\status",
+            "class":"\\zinux\\zg\\operators\\status",
             "method":"version"
         },
         "help":

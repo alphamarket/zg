@@ -36,7 +36,7 @@ class parser extends baseParser
         $c = new $c;
         $rf = new \ReflectionClass($c);
         
-        if(!$rf ->isSubclassOf("\\zinux\\zg\\resources\\operator\\baseOperator"))
+        if(!$rf ->isSubclassOf("\\zinux\\zg\\operators\\baseOperator"))
             throw new \zinux\kernel\exceptions\invalideOperationException
                 ("Target class {$rf->getName()} is not subclass of '\\zinux\\zg\\resources\\operator\\baseOperator'");
         

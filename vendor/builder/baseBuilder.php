@@ -1,7 +1,7 @@
 <?php
 namespace zinux\zg\vendor\builder;
 
-abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
+abstract class baseBuilder extends \zinux\zg\operators\baseOperator
 {
     /**
      * Virtual zg status container

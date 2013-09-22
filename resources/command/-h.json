@@ -2,7 +2,7 @@
         "title":"Show help", 
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\help",
+            "class":"\\zinux\\zg\\operators\\help",
             "method":"show"
         },
         "help":

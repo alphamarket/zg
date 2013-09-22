@@ -3,7 +3,7 @@
     "alias":"b",
     "instance":
     {
-        "class":"\\zinux\\zg\\resources\\operator\\build",
+        "class":"\\zinux\\zg\\operators\\build",
         "method":"build"
     },
     "help":
@@ -36,7 +36,7 @@
         "alias":"l",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\build",
+            "class":"\\zinux\\zg\\operators\\build",
             "method":"log"
         },
         "help":

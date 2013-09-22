@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\resources\operator;
+namespace zinux\zg\operators;
 
 abstract class baseOperator extends \zinux\zg\baseZg
 {    

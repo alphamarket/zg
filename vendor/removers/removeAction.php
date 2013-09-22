@@ -6,7 +6,7 @@ namespace zinux\zg\vendor\removers;
  * @author dariush
  */
 
-class removeAction extends \zinux\zg\resources\operator\baseOperator
+class removeAction extends \zinux\zg\operators\baseOperator
 {
     const LAST_FINAL = 0;
     const LAST_ABSTRACT = 1;

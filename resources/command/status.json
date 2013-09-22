@@ -3,7 +3,7 @@
         "alias":"s",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\status",
+            "class":"\\zinux\\zg\\operators\\status",
             "method":"show"
         },
         "help":

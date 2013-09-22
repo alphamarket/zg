@@ -18,6 +18,7 @@ defined("ZG_VERSION") || define("ZG_VERSION","1.4.19");
 
 defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
 
+//defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
 /**
  * Description of baseZg
  *

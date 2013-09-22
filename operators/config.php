@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\resources\operator;
+namespace zinux\zg\operators;
 
 class config extends baseOperator
 {
@@ -58,7 +58,7 @@ class config extends baseOperator
     {  
         if(!$this->CheckZG()) return;
         $this->restrictArgCount($args,0,0);
-        $st = new \zinux\zg\resources\operator\status(1);
+        $st = new \zinux\zg\operators\status(1);
         $s = $this->GetStatus();
         $st->RecursivePrint($s->configs);
     }

@@ -6,7 +6,7 @@ namespace zinux\zg\vendor\creators;
  * @author dariush
  */
 
-class createAction extends \zinux\zg\resources\operator\baseOperator
+class createAction extends \zinux\zg\operators\baseOperator
 {
     public function __construct(\zinux\zg\vendor\item $controller, \zinux\zg\vendor\item $action, $project_path = ".")
     {

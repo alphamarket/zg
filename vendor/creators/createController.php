@@ -6,7 +6,7 @@ namespace zinux\zg\vendor\creators;
  * @author dariush
  */
 
-class createController extends \zinux\zg\resources\operator\baseOperator
+class createController extends \zinux\zg\operators\baseOperator
 {
     public function __construct(\zinux\zg\vendor\item $module, \zinux\zg\vendor\item $controller, $project_path = ".")
     {

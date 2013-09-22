@@ -3,7 +3,7 @@
     "alias":"u",
     "instance":
     {
-        "class":"\\zinux\\zg\\resources\\operator\\update",
+        "class":"\\zinux\\zg\\operators\\update",
         "method":"update"
     },
     "help":

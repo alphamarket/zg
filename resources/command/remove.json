@@ -5,7 +5,7 @@
         "title":"Remove module", 
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\remove",
+            "class":"\\zinux\\zg\\operators\\remove",
             "method":"module"
         },
         "help":
@@ -21,7 +21,7 @@
         "alias":"c",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\remove",
+            "class":"\\zinux\\zg\\operators\\remove",
             "method":"controller"
         },
         "help":
@@ -41,7 +41,7 @@
         "alias":"a",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\remove",
+            "class":"\\zinux\\zg\\operators\\remove",
             "method":"action"
         },
         "help":
@@ -62,7 +62,7 @@
         "alias":"v",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\remove",
+            "class":"\\zinux\\zg\\operators\\remove",
             "method":"view"
         },
         "help":
@@ -83,7 +83,7 @@
         "alias":"l",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\remove",
+            "class":"\\zinux\\zg\\operators\\remove",
             "method":"layout"
         },
         "help":
@@ -103,7 +103,7 @@
         "alias":"m",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\remove",
+            "class":"\\zinux\\zg\\operators\\remove",
             "method":"model"
         },
         "help":
@@ -123,7 +123,7 @@
         "alias":"h",
         "instance":
         {
-            "class":"\\zinux\\zg\\resources\\operator\\remove",
+            "class":"\\zinux\\zg\\operators\\remove",
             "method":"helper"
         },
         "help":
@@ -150,7 +150,7 @@
             "alias":"b",
             "instance":
             {
-                "class":"\\zinux\\zg\\resources\\operator\\remove",
+                "class":"\\zinux\\zg\\operators\\remove",
                 "method":"app_bootstrap"
             },
             "help":
@@ -166,7 +166,7 @@
             "alias":"r",
             "instance":
             {
-                "class":"\\zinux\\zg\\resources\\operator\\remove",
+                "class":"\\zinux\\zg\\operators\\remove",
                 "method":"app_routes"
             },
             "help":
