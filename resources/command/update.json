@@ -26,6 +26,7 @@
     },
     "notes":
     [
+        "WARNING: This command will 'stash' any local changes before updating branches.<br />Be aware of this!", 
         "In order to use this command, there must be git installed.",
         "To install git : http://git-scm.com/downloads."
     ]

@@ -16,6 +16,7 @@ class update extends baseOperator
     }
     public function update($args)
     {
+        if(!$this->CheckZG()) return;
         # should support --cache to update cache files...!
         $this->restrictArgCount($args, 4, 0);
         while(count($args))
@@ -60,6 +61,7 @@ class update extends baseOperator
                 (self::defColor."You need to have ".self::yellow."internet connection".self::defColor." to do this operation!<br />".self::red."[ Aborting ]");
         }
         $this->cout("[ OK ]",0, self::green);
+        $this->cout("Warning: ".self::defColor."All local changes will be ".self::yellow."stash".self::defColor." ...", 0, self::red);
         $zinux_dir = isset($this->cache_update)?Z_CACHE_ROOT:WORK_ROOT."/zinux";
         $this->update_repo("zinux".(isset($this->cache_update)?".cache":""), $zinux_dir);
         $this->cout("Now the ".self::yellow."zinux framework".self::defColor." is updated ...");
@@ -109,12 +111,18 @@ class update extends baseOperator
         if(!$this->has_arg($repo->getBranches(), "master"))
             throw new \zinux\kernel\exceptions\invalideOperationException("The 'master' branch does not exist!!<br />".self::red."[ Aborting ]");
         if(isset($this->all_branches))
-            $this->branch_name = $repo->getBranches();
-            
+            $this->branch_name = preg_replace(array("#origin\/(\w+)#i", "#(\w+->\w+)#i"), array("$1", ""), $repo->getBranches("-r"));
+        \zinux\kernel\utilities\_array::array_normalize($this->branch_name);
         foreach($this->branch_name as $branch)
         {
             if(!isset($this->simulate))
+            {
                 $repo->git("checkout $branch");
+                $repo->git("stash");
+                if(isset($this->verbose))
+                    $this->cout("Note: ".self::defColor."In case of fail-safe any possible changes", $indent-0.5, self::yellow, 1)
+                        ->cout("in '".self::yellow.$repo_path." : ".$branch.self::defColor."' has been stashed!", $indent+0.5);
+            }
             $this->cout("Updating '".self::yellow.$repo_path." : ".$branch.self::defColor."' repo. ", $indent-0.5, self::defColor, 0);
             if(!isset($this->simulate))
                 try
