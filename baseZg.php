@@ -14,7 +14,7 @@ defined("CONF_PATH") || define("CONF_PATH","/.zg/");
 
 defined("CONF_NAME") || define("CONF_NAME",".cfg");
 
-defined("ZG_VERSION") || define("ZG_VERSION","1.4.19");
+defined("ZG_VERSION") || define("ZG_VERSION","1.4.20");
 
 defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
 
