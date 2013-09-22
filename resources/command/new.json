@@ -158,7 +158,7 @@
         "alias":"app",
         "bootstrap":
         {
-            "title":"Creates a new bootstrap file", 
+            "title":"Add new bootstrap", 
             "alias":"b",
             "instance":
             {
@@ -174,7 +174,7 @@
         },
         "routes":
         {
-            "title":"Creates a new routes file", 
+            "title":"Add new routes", 
             "alias":"r",
             "instance":
             {

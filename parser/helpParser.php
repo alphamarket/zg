@@ -9,14 +9,32 @@ class helpParser extends baseParser
 {    
     public function Run()
     {
-        $arg = null;
+        $stack = array(array("", $this->command_generator->Generate()));
+        $head_lines = $this->remove_arg($this->args, "--heads");
         if(count($this->args))
         {
-            $n = new parser($this->args, $this->command_generator);
-            $this->printHelp($n->getOperator(), 1);
+            $args = $this->args;
+            $n = new parser($args, $this->command_generator);
+            $stack = array(array("", $n->getOperator()));
+        }
+        if($head_lines)
+        {
+            $kw = unserialize(PARSER_KEYWORDS);
+            $this->cout("Valid operation list for '".self::yellow."zg ".implode(" ", $this->args).self::defColor."': ");
+            $found = 0;
+            foreach($stack[0][1] as $key=> $value)
+            {
+                if(array_key_exists($key, $kw))continue;
+                $found = 1;
+                $this->cout("> ", 1, self::yellow, 0)->cout($key, 0, self::cyan);
+            }
+            if(!$found)
+            {
+                $this->cout("'".self::yellow."zg ".implode(" ", $this->args).self::defColor."' is a solo operation!", 1)
+                        ->cout("No sub-operation found!",1, self::red);
+            }
             return;
         }
-        $stack = array(array("", $this->command_generator->Generate()));
         while(count($stack))
         {
             $value = array_pop($stack);
@@ -47,7 +65,8 @@ class helpParser extends baseParser
                 $this->printHelp($value);
             }
         }
-        $this->cout()->cout(">    Type 'zg -h \$command' to print more help about that command", 0,self::hiBlue);
+        $this->cout()->cout(">    Type 'zg -h \$command' to print more help about that command.", 0,self::hiBlue);
+        $this->cout()->cout(">    Type 'zg -h (\$command) --head' to print headline operations.", 0,self::hiBlue);
     }
     
     protected function printHelp($content, $render_options = 0)

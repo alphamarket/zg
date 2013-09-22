@@ -7,7 +7,11 @@
         },
         "help":
         {
-            "command":"zg -h ($command)",
+            "command":"zg -h ($command) (--heads)",
             "detail":"Output help content.<br />By passing a zg command as argument, prints more help about that command."
+        }, 
+        "options":
+        {
+            "--heads" : "Printout the head-lines operations for given command"
         }
 }

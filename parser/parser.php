@@ -1,5 +1,19 @@
 <?php
 namespace zinux\zg\parser;
+defined("PARSER_KEYWORDS") || 
+define("PARSER_KEYWORDS", 
+    serialize(
+        array(
+            'title' => "title",
+            'alias' => "alias",
+            'instance' => "instance", 
+            'help' => "help",
+            'options' => "options",
+            "defaults" => "defaults",    
+            "notes" => "notes",    
+        )
+    )
+);
 /**
  * Description of parser
  *
@@ -48,14 +62,18 @@ class parser extends baseParser
                 '#\binstance\b#i' => "@instance", 
                 '#\bhelp\b#i' => "@help",
                 '#\bdefaults\b#i' => "@defaults",
-                '#\boptions\b#i' => "@options"
+                '#\boptions\b#i' => "@options",
+                "#\bdefaults\b#i" => "@defaults",    
+                "#\bnotes\b#i" => "@notes"    
         );
         $post_key_words = array(
                 '@title' => "title",
                 '@alias' => "alias",
                 '@instance' => "instance", 
                 '@help' => "help",
-                '@options' => "options"
+                '@options' => "options", 
+                "@defaults" => "defaults",    
+                "@notes" => "notes",    
         );
         $args = $this->args = preg_replace(array_keys($pre_key_words), array_values($pre_key_words), $this->args);
         $this->parsed_string = "";
