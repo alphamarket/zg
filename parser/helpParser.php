@@ -11,11 +11,13 @@ class helpParser extends baseParser
     {
         $stack = array(array("", $this->command_generator->Generate()));
         $head_lines = $this->remove_arg($this->args, "--heads");
+        $verbose = 0;
         if(count($this->args))
         {
             $args = $this->args;
             $n = new parser($args, $this->command_generator);
             $stack = array(array("", $n->getOperator()));
+            $verbose = 1;
         }
         if($head_lines)
         {
@@ -62,7 +64,7 @@ class helpParser extends baseParser
                 }
                 while(count($tmps))
                     array_push($stack, array_pop($tmps));
-                $this->printHelp($value);
+                $this->printHelp($value, $verbose);
             }
         }
         $this->cout()->cout(">    Type 'zg -h \$command' to print more help about that command.", 0,self::hiBlue);

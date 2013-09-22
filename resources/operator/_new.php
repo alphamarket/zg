@@ -7,7 +7,10 @@ class _new extends baseOperator
     {
         $this->restrictArgCount($args);
         
+        $empty = $this->remove_arg($args, "--empty");
+        
         $pName = implode("-", $args);
+        
         if(file_exists($pName))
             throw new \zinux\kernel\exceptions\invalideArgumentException("A folder named '$pName' already exists...");
         
@@ -37,6 +40,11 @@ class _new extends baseOperator
                 "chmod 777 $pName"
         );
         $this->Run($opt, 0);
+        if($empty)
+        {
+            $this->cout("An empty project created successfully...", 1);
+            return;
+        }
         $c = new \zinux\zg\vendor\creator;
         $module = $c->createModule("default", $pName);
         $controller = $c->createController("index", $module, $pName);

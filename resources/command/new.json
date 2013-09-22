@@ -8,9 +8,33 @@
     },
     "help":
     {
-        "command":"zg new $project_name",
-        "alias": "zg n $project_name",
+        "command":"zg new project $project_name (--empty)",
+        "alias": "zg n $project_name (--empty)",
         "detail":"Creates a new zinux project"
+    },
+    "options":
+    {
+        "--empty":"Create new empty project"
+    },
+    "project":
+    {
+        "alias":"p",
+        "title":"Create new project",
+        "instance":
+        {
+            "class":"\\zinux\\zg\\resources\\operator\\_new",
+            "method":"project"
+        },
+        "help":
+        {
+            "command":"zg new project $project_name (--empty)",
+            "alias": "zg n $project_name (--empty)",
+            "detail":"Creates a new zinux project"
+        },
+        "options":
+        {
+            "--empty":"Create new empty project"
+        }
     },
     "module":
     {

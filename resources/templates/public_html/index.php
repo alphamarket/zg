@@ -18,10 +18,13 @@ try
     $app 
             # setting cache directory
             ->SetCacheDirectory("../cache")
+            
             # setting router's bootstrap which will route /note/:id:/edit => /note/edit/:id:
-            ->SetRouterBootstrap(new \application\appRoutes)
+            #->SetRouterBootstrap(new \application\appRoutes)
+            
             # set application's bootstrap 
-            ->SetBootstrap(new application\appBootstrap)
+            #->SetBootstrap(new application\appBootstrap)
+            
             # init the application's optz.
             ->Startup()
             # run the application 
