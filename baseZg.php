@@ -7,7 +7,9 @@ defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
 defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux");
 defined("CONF_PATH") || define("CONF_PATH","/.zg/");
 defined("CONF_NAME") || define("CONF_NAME",".cfg");
-defined("ZG_VERSION") || define("ZG_VERSION","1.4.6");
+
+defined("ZG_VERSION") || define("ZG_VERSION","1.4.15");
+
 defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
 
 /**
