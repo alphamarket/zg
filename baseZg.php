@@ -38,11 +38,26 @@ if(!defined("ZG_ROOT_DEFINED"))
             goto __LAUNCH;
     }
     goto __LAUNCH;
-__ERROR:
+__ZINUX_ERROR:
     die("\n\033[31m>    You cannot run 'zg' under zinux sub-directories ....\n");
-
+__NO_PRG_ERROR:
+    die("\n\033[31m>    No project found ....\n");
 __LAUNCH:
-        define("WORK_ROOT", getcwd());
+    chdir($cwd);
+    $d=explode(DIRECTORY_SEPARATOR, getcwd());
+    $dirs = array_filter($d);
+    if(preg_match("#[L|U]inux#i", PHP_OS))
+        $dirs = array_merge(array("/"), $dirs);
+    while(!count(glob(PRG_CONF_DIRNAME."/", GLOB_ONLYDIR)))
+    {
+        if(!chdir(".."))
+            goto __NO_PRG_ERROR;
+        array_pop($dirs);
+        if(!count($dirs))
+            goto __NO_PRG_ERROR;
+    }
+    unset($d, $dirs, $cwd);
+    define("WORK_ROOT", getcwd());
 }
 require_once dirname(__FILE__)."/../baseZinux.php";
 
