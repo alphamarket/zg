@@ -110,7 +110,7 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
                     if(class_exists($class))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("Skipped requiring '$file'", "The class '$class' already defined!");
+                        # $this->log[] = new \zinux\zg\vendor\item("Skipped requiring '$file'", "The class '$class' already defined!");
                     }
                     elseif(!is_readable($file) || !(require_once $file))
                     {  
