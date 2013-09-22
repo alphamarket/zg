@@ -30,7 +30,7 @@ class parser extends baseParser
         
         if(!isset($current_parsing->instance->class) || !isset($current_parsing->instance->method))
             throw new \zinux\kernel\exceptions\invalideOperationException
-                ("The {$this->parsed_string} metadata structure is mis-configured, target action's {class} or {method} has not been specified ...");
+                (self::yellow."No operator found for '".self::cyan.$this->parsed_string.self::yellow."'.");
         
         $c = $current_parsing->instance->class;
         $c = new $c;

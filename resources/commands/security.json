@@ -1,0 +1,41 @@
+{
+    "encrypt":
+    {
+        "title":"Encrypt project",
+        "instance":
+        {
+            "class":"\\zinux\\zg\\operators\\security",
+            "method":"encrypt"
+        },
+        "help":
+        {
+            "command":"zg security encrypt $encryption_key",
+            "detail":"Encrypt your project content"
+        },
+        "notes":
+        [
+            "This command will encrypt your entire project except the 'zinux' folder.<br />Which obviously is a public project!",
+            "If you ever forger your $encryption_key, your project will be lost for good<br />So make sure you pass a easy to remember but hard to guess crypt key.",
+            "If your $encryption_key is a multiline key put it between quotation marks!"
+        ]
+    },
+    "decrypt":
+    {
+        "title":"Decrypt project",
+        "instance":
+        {
+            "class":"\\zinux\\zg\\operators\\security",
+            "method":"decrypt"
+        },
+        "help":
+        {
+            "command":"zg security decrypt $decryption_key",
+            "detail":"Decrypt your project content"
+        },
+        "notes":
+        [
+            "This command will decrypt your entire project which encrypted by 'zg security encrypt' command!!",
+            "If your $decryption_key is a multiline key put it between quotation marks!"
+        ]
+    }
+}
