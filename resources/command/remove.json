@@ -150,8 +150,8 @@
             "alias":"b",
             "instance":
             {
-                "class":"\\zinux\\zg\\resources\\operator\\remove_app",
-                "method":"bootstrap"
+                "class":"\\zinux\\zg\\resources\\operator\\remove",
+                "method":"app_bootstrap"
             },
             "help":
             {
@@ -166,8 +166,8 @@
             "alias":"r",
             "instance":
             {
-                "class":"\\zinux\\zg\\resources\\operator\\remove_app",
-                "method":"routes"
+                "class":"\\zinux\\zg\\resources\\operator\\remove",
+                "method":"app_routes"
             },
             "help":
             {
