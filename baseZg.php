@@ -159,18 +159,26 @@ abstract class baseZg extends \zinux\baseZinux
         
         return false;
     }
-    public function get_pair_arg_value($args, $target_arg)
+    public function get_pair_arg_value(&$args, $target_arg, $auto_remove = 0)
     {
         if(!$this->is_iterable($args))
             return NULL;
-        
-        while(count($args))
+        $found = array(0, 0);
+        foreach($args as $index => $value)
         {
-            $_value = array_shift($args);
-            if(strtolower($_value) == strtolower($target_arg))
+            if($found[0])
             {
-                if(!count($args)) return NULL;
-                return array_shift($args);
+                if($auto_remove)
+                {
+                    unset($args[$index]);
+                    unset($args[$found[1]]);
+                    \zinux\kernel\utilities\_array::array_normalize($args);
+                }
+                return $value;
+            }
+            if(strtolower($value) == strtolower($target_arg))
+            {
+                $found = array(1, $index);
             }
         }
         return NULL;

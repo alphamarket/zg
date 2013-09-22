@@ -12,15 +12,22 @@ class status extends baseOperator
         
         $s = $this->GetStatus();
         
-        if(!$this->has_arg($args, "+h"))
+        if(!$this->remove_arg($args, "+h"))
             unset($s->history);
+        
         if(isset($s->configs->show_parents) || $this->remove_arg($args, "+p"))
             $this->show_parents = 1;
+        
+        $max_depth = $this->get_pair_arg_value($args, "-d", 1);
+        if(!$max_depth)
+            $max_depth = 5;
+        if(!is_numeric($max_depth))
+            throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid depth # '$max_depth'.");
         
         $p = new \zinux\zg\parser\parser($args, new \zinux\zg\command\commandGenerator());
         try
         {
-            $this->RecursivePrint($p->getOperator($s, 1));
+            $this->RecursivePrint($p->getOperator($s, 1), 0, 0, $max_depth);
         }
         catch(\Exception $e)
         {
@@ -55,7 +62,7 @@ class status extends baseOperator
                 if(!$this->is_iterable($value))
                     $this ->cout($value, 0, self::cyan);
                 else
-                    $this->RecursivePrint($value, $indent+1, $depth+1);
+                    $this->RecursivePrint($value, $indent+1, $depth+1, $max_depth);
             }
         $this->cout("}", $indent);
     }

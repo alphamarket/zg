@@ -39,7 +39,7 @@ class _new extends baseOperator
                 "chmod -R 775 $pName", 
                 "chmod 777 $pName"
         );
-        $this->Run($opt, 0);
+        $this->Run($opt);
         if($empty)
         {
             $this->cout("An empty project created successfully...", 1);
