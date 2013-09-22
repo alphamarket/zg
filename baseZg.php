@@ -1,24 +1,50 @@
 <?php
 namespace zinux\zg;
+
+if(!defined("ZG_ROOT"))
+{
+    defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
+
+    defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
+
+    defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux");
+
+    defined("CONF_PATH") || define("CONF_DIRNAME",".zg");
+
+    defined("CONF_PATH") || define("CONF_PATH","/".CONF_DIRNAME."/");
+
+    defined("CONF_NAME") || define("CONF_NAME",".cfg");
+
+    defined("ZG_VERSION") || define("ZG_VERSION","1.4.21");
+
+    defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
+
+    //defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
+
+    $d=explode(DIRECTORY_SEPARATOR, WORK_ROOT);
+
+    $dirs = array_filter($d);
+
+    if(preg_match("#[L|U]inux#i", PHP_OS))
+        $dirs = array_merge(array("/"), $dirs);
+
+    while(!count(glob("baseZinux.php")))
+    {
+        if(!chdir(".."))
+            goto __LAUNCH;
+        array_pop($dirs);
+        if(!count($dirs))
+            goto __LAUNCH;
+    }
+    
+    die("\n\033[31m>    You cannot run 'zg' under zinux sub-directories ....\n");
+
+    __LAUNCH:
+        chdir(WORK_ROOT);
+}
 require_once dirname(__FILE__)."/../baseZinux.php";
 
-defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
-
 defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
-
-defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
-
-defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux");
-
-defined("CONF_PATH") || define("CONF_PATH","/.zg/");
-
-defined("CONF_NAME") || define("CONF_NAME",".cfg");
-
-defined("ZG_VERSION") || define("ZG_VERSION","1.4.20");
-
-defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
-
-//defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
 /**
  * Description of baseZg
  *
@@ -118,6 +144,7 @@ abstract class baseZg extends \zinux\baseZinux
             else
             {
                 $this ->cout("No project have found ...", 0, self::yellow)
+                        ->cout("Try to run 'zg build'!", 0, self::green)
                         ->cout("[ Aborting ]", 0, self::red);
                 return false;
             }

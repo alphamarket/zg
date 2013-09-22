@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg;
+namespace zinux\zg;    
 require_once 'baseZg.php';
 /**
  * Description of zg
