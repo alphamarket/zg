@@ -13,7 +13,7 @@ class ReflectionClass extends \ReflectionClass
     }
     public function RemoveMethod(ReflectionMethod $method)
     {
-        file_put_contents($this->getFileName(), str_replace($method->getMethodText(), "", file_get_contents($this->getFileName())));
+        file_put_contents($this->getFileName(), $method->Remove());
     }
     public function AddMethod($mehod)
     {

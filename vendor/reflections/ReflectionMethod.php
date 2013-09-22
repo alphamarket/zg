@@ -58,19 +58,28 @@ class ReflectionMethod extends \ReflectionMethod
         $fl = $class_file_content;
         $this->method_txt = "";
         $braces = 0;
+        $last_count = 0;
         $matches = array();
         for($this->end_line = $start_index-1; $this->end_line<$this->target_class->getEndLine();$this->end_line++)
         {
-            $this->method_txt.=$fl[$this->end_line].PHP_EOL;
             if(preg_match_all("#(\{)#i", $fl[$this->end_line], $matches))
                 $braces+=count($matches[0]);
             if(preg_match_all("#(\})#i", $fl[$this->end_line], $matches))
             {
-                $braces-=count($matches[0]);
+                $last_count = count($matches[0]);;
+                $braces -= $last_count;
                 if(!$braces)
                     break;
             }
+            $this->method_txt.=$fl[$this->end_line].PHP_EOL;
         }
+        $i = 0;
+        while($last_count)
+        {
+            if($fl[$this->end_line][$i]=="}") $last_count--;
+            $this->method_txt.=$fl[$this->end_line][$i++];
+        }
+        $this->method_txt.=(PHP_EOL);
         # make it one-based #
         return ++$this->end_line;
     }
@@ -145,6 +154,45 @@ __END:
     {
         return $this->method_txt;
     }
+    /**
+     * @return string The class content with function removed!
+     */
+    public function Remove()
+    {
+        $class_file_content = $this->file_content;
+        if(is_string($class_file_content))
+            $class_file_content = explode(PHP_EOL, $class_file_content);
+        $removed = "";
+        $i = 0;
+        while($i<$this->target_class->getStartLine()-1)
+        {
+            $removed .= $class_file_content[$i++].PHP_EOL;
+        }
+        for(; $i<$this->target_class->getEndLine(); $i++)
+        {
+            if($i>=$this->start_line-1 && $i<$this->end_line-1) 
+            {
+                $matches = array();
+                preg_match_all("#(\})#i", $class_file_content[$this->end_line-1], $matches);
+                $last_count = count($matches[0]);
+                $j = 0;
+                while($last_count)
+                    if($class_file_content[$this->end_line-1][$j++]=="}")
+                        $last_count--;
+                $removed.=str_repeat(" ", 4);
+                for(;$j<strlen($class_file_content[$this->end_line-1]);$j++)
+                    $removed.=$class_file_content[$this->end_line-1][$j];
+                $removed.=(PHP_EOL);
+                $i = $this->end_line-1;
+                continue;
+            }
+            $removed.=($class_file_content[$i].PHP_EOL);
+        }
+        while($i<count($class_file_content))
+        {
+            $removed .= $class_file_content[$i++].PHP_EOL;
+        }
+        return $removed;
+    }
 }
-
 ?>
