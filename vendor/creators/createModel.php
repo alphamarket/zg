@@ -19,7 +19,7 @@ class createModel extends \zinux\zg\baseZg
                 ->cout("' module.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($model->path)))
             mkdir(dirname($model->path), 0775);
-        $this->cout("+", 1, self::green,0);
+        
         $mbc = "<?php
 namespace $ns;
     
@@ -31,11 +31,10 @@ class {$model->name}
 {
 }";
         file_put_contents($model->path, $mbc);
-        $this->cout("+", 0, self::green,0);
+        
         $s = $this->GetStatus($project_path);
         $model->parent = $module;
         $s->modules->collection[strtolower($module->name)]->model[strtolower($model->name)] = $model;
         $this->SaveStatus($s);
-        $this->cout("+", 0, self::green);
     }
 }

@@ -18,7 +18,7 @@ class createLayout extends \zinux\zg\baseZg
                 ->cout("' module.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($layout->path)))
             mkdir(dirname($layout->path), 0775);
-        $this->cout("+", 1, self::green,0);
+        
         $mbc = "<!doctype html>
 <html>
     <head>
@@ -30,11 +30,10 @@ class createLayout extends \zinux\zg\baseZg
     </body>
 </html>";
         file_put_contents($layout->path, $mbc);
-        $this->cout("+", 0, self::green,0);
+        
         $s = $this->GetStatus($project_path);
         $layout->parent = $module;
         $s->modules->collection[strtolower($module->name)]->layout[strtolower($layout->name)] = $layout;
         $this->SaveStatus($s);
-        $this->cout("+", 0, self::green);
     }
 }

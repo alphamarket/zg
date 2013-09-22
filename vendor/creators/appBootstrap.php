@@ -18,7 +18,7 @@ class appBootstrap extends \zinux\zg\baseZg
                 ->cout("'.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($appBootstrap->path)))
             mkdir(dirname($appBootstrap->path), 0775);
-        $this->cout("+", 1, self::green,0);
+        
         $mbc = "<?php
 namespace $ns;
 /**
@@ -43,12 +43,11 @@ class {$appBootstrap->name} extends \\zinux\\kernel\\application\\applicationBoo
     }
 }";
         file_put_contents($appBootstrap->path, $mbc);
-        $this->cout("+", 0, self::green,0);
+        
         $s = $this->GetStatus($project_path);
         $appBootstrap->parent = $application;
         $s->project->bootstrap[strtolower($appBootstrap->name)]  = $appBootstrap;
         $this->SaveStatus($s);
-        $this->cout("+", 0, self::green);
     }
 }
 

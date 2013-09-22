@@ -44,8 +44,10 @@ class _new extends baseOperator
         $c->createAppRoutes("app", $pName);
         $c->createLayout("default", $module, $pName);
         $c->createView("index", $controller, $pName);
-        $b = new build(1);
-        $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
+        ob_start();
+            $b = new build(1);
+            $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
+        ob_end_clean();
     }
     
     public function module($args)
@@ -55,7 +57,7 @@ class _new extends baseOperator
         
         $this->restrictArgCount($args, 1);
         
-        $this ->cout("Creating new module '", 0, self::defColor, 0)
+        $this ->cout("Creating new module '", 1, self::defColor, 0)
                 ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
         $args[0] = preg_replace("#(\w+)module$#i", "$1", $args[0])."Module";

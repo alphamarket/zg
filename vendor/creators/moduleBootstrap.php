@@ -39,12 +39,11 @@ class {$moduleBootstrap->name}
     }
 }";
         file_put_contents($moduleBootstrap->path, $mbc);
-        $this->cout("+", 1, self::green,0);
+        
         $s = $this->GetStatus($project_path);
         $moduleBootstrap->parent = $module;
         $s->modules->collection[strtolower($module->name)]->bootstrap = $moduleBootstrap;
         $this->SaveStatus($s);
-        $this->cout("+", 0, self::green);
     }
 }
 

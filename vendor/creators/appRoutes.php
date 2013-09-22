@@ -18,7 +18,7 @@ class appRoutes extends \zinux\zg\baseZg
                 ->cout("'.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($appRoutes->path)))
             mkdir(dirname($appRoutes->path), 0775);
-        $this->cout("+", 1, self::green,0);
+        
         $mbc ="<?php
 namespace $ns;
 /**
@@ -41,12 +41,11 @@ class {$appRoutes->name} extends \\zinux\\kernel\\routing\\routerBootstrap
     }
 }";
         file_put_contents($appRoutes->path, $mbc);
-        $this->cout("+", 0, self::green,0);
+        
         $s = $this->GetStatus($project_path);
         $appRoutes->parent = $application;
         $s->project->routes[strtolower($appRoutes->name)]  = $appRoutes;
         $this->SaveStatus($s);
-        $this->cout("+", 0, self::green);
     }
 }
 

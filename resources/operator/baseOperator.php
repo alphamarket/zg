@@ -9,10 +9,9 @@ abstract class baseOperator extends \zinux\zg\baseZg
         if(!$suppress_header_text)
             $this->PrintTItleString();
     }
-    public function Run($opt, $record_history = 1, $new_line = 1)
+    public function Run($opt, $record_history = 1)
     {
         $s = $this->GetStatus();
-        $this->cout("", 1,self::defColor, 0);
         foreach($opt as $value)
         {
             system($value);
@@ -23,12 +22,9 @@ abstract class baseOperator extends \zinux\zg\baseZg
                 $h->time = date("M-d-Y H:i:s");
                 $s->history[] = $h;
             }
-            $this->cout("+", 0, self::green, 0);
         }
         if($s)
             $this->SaveStatus($s);
-        if($new_line)
-            $this->cout();
     }
     
     public function PrintTItleString()

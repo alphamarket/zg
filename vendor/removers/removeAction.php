@@ -29,14 +29,14 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
         
     }
 ";
-        $this->cout("+", 1, self::green,0);
+        
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$controller->path}"))
             throw new \zinux\kernel\exceptions\notFoundException("{$controller->name} not found ...");
-        $this->cout("+", 0, self::green,0);
+        
         $this->check_php_syntax($controller->path);
-        $this->cout("+", 0, self::green,0);
+        
         require_once $controller->path;
-        $this->cout("+", 0, self::green,0);
+        
         
         $s = $this->GetStatus($project_path);
         
@@ -45,7 +45,7 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
         if(!class_exists($class))
             throw new \zinux\kernel\exceptions\notFoundException("Class {$controller->name} not found ....");
     
-        $this->cout("+", 0, self::green,0);
+        
         $rf = new \ReflectionClass($class);
         
         if(!$rf->isSubclassOf('\zinux\kernel\controller\baseController'))
@@ -55,12 +55,12 @@ class removeAction extends \zinux\zg\resources\operator\baseOperator
         
         $cr = new \zinux\zg\vendor\reflections\ReflectionClass($class);
         $cr->RemoveMethod(new \zinux\zg\vendor\reflections\ReflectionMethod($class, $action->name));
-        $this->cout("+", 0, self::green,0);
-        $this->cout("+", 0, self::green,0);
+        
+        
         $action->parent = $controller;
         unset($s->modules->collection[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->action[strtolower($action->name)]);
         $this->SaveStatus($s);
-        $this->cout("+", 0, self::green,1);
+        
     }
 }
 ?>

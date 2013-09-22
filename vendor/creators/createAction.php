@@ -27,14 +27,14 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
         
     }
 ";
-        $this->cout("+", 1, self::green,0);
+        
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$controller->path}"))
             throw new \zinux\kernel\exceptions\notFoundException("{$controller->name} not found ...");
-        $this->cout("+", 0, self::green,0);
+        
         $this->check_php_syntax($controller->path);
-        $this->cout("+", 0, self::green,0);
+        
         require_once $controller->path;
-        $this->cout("+", 0, self::green,0);
+        
         
         $s = $this->GetStatus($project_path);
         
@@ -43,7 +43,7 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
         if(!class_exists($class))
             throw new \zinux\kernel\exceptions\notFoundException("Class {$controller->name} not found ....");
     
-        $this->cout("+", 0, self::green,0);
+        
         $rf = new \ReflectionClass($class);
         
         if(!$rf->isSubclassOf('\zinux\kernel\controller\baseController'))
@@ -53,11 +53,11 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
             $n = new \zinux\zg\vendor\reflections\ReflectionClass($class);
             $n->AddMethod($mbc);
         }
-        $this->cout("+", 0, self::green,0);
+        
         $action->parent = $controller;
         $s->modules->collection[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->action[strtolower($action->name)] = $action;
         $this->SaveStatus($s);
-        $this->cout("+", 0, self::green,1);
+        
     }
 }
 ?>
