@@ -28,11 +28,11 @@ class helpParser extends baseParser
             {
                 if(array_key_exists($key, $kw))continue;
                 $found = 1;
-                $this->cout("> ", 1, self::yellow, 0)->cout($key, 0, self::cyan);
+                $this->cout("> ", 0.5, self::yellow, 0)->cout($key, 0, self::cyan);
             }
             if(!$found)
             {
-                $this->cout("'".self::yellow."zg ".implode(" ", $this->args).self::defColor."' is a solo operation!", 1)
+                $this->cout("'".self::yellow."zg ".implode(" ", $this->args).self::defColor."' is a solo operation!", 0.5)
                         ->cout("No sub-operation found!",1, self::red);
             }
             return;

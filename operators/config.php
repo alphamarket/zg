@@ -48,9 +48,9 @@ class config extends baseOperator
         foreach($m as $value)
         {
             if($value->path)
-                $this->cout("+ ", 1, self::green, 0);
+                $this->cout("+ ", 0.5, self::green, 0);
             else
-                $this->cout("- ", 1, self::red, 0);
+                $this->cout("- ", 0.5, self::red, 0);
             $this->cout($value->name, 0);
         }
     }

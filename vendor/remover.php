@@ -16,7 +16,7 @@ class remover extends \zinux\zg\operators\baseOperator
         $this->CheckZG($projectDir,1);
         $s = $this->GetStatus($projectDir);
         exec("rm -fr '{$module->path}'");
-        $this->cout("- {$module->path}", 1, self::red);
+        $this->cout("- {$module->path}", 0.5, self::red);
         if(!$rebuild) return;
         $b = new \zinux\zg\operators\build(1);
         $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));

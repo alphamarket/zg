@@ -11,7 +11,7 @@ class appRoutes extends \zinux\zg\baseZg
     {
         $appRoutes->name = preg_replace("#(\w+)routes$#i","$1", $appRoutes->name)."Routes";
         $ns = $this->convert_to_relative_path($appRoutes->path, $project_path);
-        $this ->cout("Creating new application routes '", 1,  self::defColor, 0)
+        $this ->cout("Creating new application routes '", 0.5,  self::defColor, 0)
                 ->cout($appRoutes->name, 0, self::yellow, 0)
                 ->cout("' at '",0,self::defColor, 0)
                 ->cout($ns, 0, self::yellow, 0)

@@ -108,7 +108,7 @@ __END_EV:
                 break;
             case 3:
                 $fc->deleteAll();
-                $this ->cout("- ", 1, self::red, 0)
+                $this ->cout("- ", 0.5, self::red, 0)
                         ->cout("Build log cleared!");
                 break;
             default:

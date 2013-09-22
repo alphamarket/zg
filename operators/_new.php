@@ -19,7 +19,7 @@ class _new extends baseOperator
         $s->modules->meta = new \zinux\zg\vendor\Item("modules", $s->project->path."/modules", $s->project);
         $this->SaveStatus($s);
         
-        $this ->cout("Creating new project '", 1, self::defColor, 0)
+        $this ->cout("Creating new project '", 0.5, self::defColor, 0)
                 ->cout("$pName", 0, self::yellow, 0)
                 ->cout("' ...");
         $vpname = str_replace(" ", "-", $pName);
@@ -42,7 +42,7 @@ class _new extends baseOperator
         $this->Run($opt);
         if($empty)
         {
-            $this->cout("An empty project created successfully...", 1);
+            $this->cout("An empty project created successfully...", 0.5);
             return;
         }
         $c = new \zinux\zg\vendor\creator;
@@ -65,7 +65,7 @@ class _new extends baseOperator
         
         $this->restrictArgCount($args, 1);
         
-        $this ->cout("Creating new module '", 1, self::defColor, 0)
+        $this ->cout("Creating new module '", 0.5, self::defColor, 0)
                 ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
         $args[0] = preg_replace("#(\w+)module$#i", "$1", $args[0])."Module";
