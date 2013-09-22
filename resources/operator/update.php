@@ -117,11 +117,11 @@ class update extends baseOperator
         {
             if(!isset($this->simulate))
             {
-                $repo->git("checkout $branch");
                 $repo->git("stash");
                 if(isset($this->verbose))
                     $this->cout("Note: ".self::defColor."In case of fail-safe any possible changes", $indent-0.5, self::yellow, 1)
                         ->cout("in '".self::yellow.$repo_path." : ".$branch.self::defColor."' has been stashed!", $indent+0.5);
+                $repo->git("checkout $branch");
             }
             $this->cout("Updating '".self::yellow.$repo_path." : ".$branch.self::defColor."' repo. ", $indent-0.5, self::defColor, 0);
             if(!isset($this->simulate))
