@@ -48,9 +48,9 @@ abstract class baseBuilder extends \zinux\zg\resources\operator\baseOperator
             if(!is_file($file)) continue;
             $name = basename($file, ".php");
             $sp = preg_split("/((?<=[a-z])(?=[A-Z])|(?=[A-Z][a-z]))/",$name);
-            $type = strtolower(array_pop($sp)."s");
+            $type = strtolower(array_pop($sp));
             $app = new \zinux\zg\vendor\item($name, $file, $this->s->project);
-            $this->s->project->{$type}[] = $app;
+            $this->s->project->{$type}[strtolower($name)] = $app;
             $this->processed[] = $app;
             $this->step_show();
         }
