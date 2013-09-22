@@ -36,27 +36,14 @@ class _new extends baseOperator
                 "chmod -R 775 $pName", 
                 "chmod 777 $pName"
         );
-        /**
-         * instead of copying templates directly we can do following processes
-         * + Create appliaction/boostrap
-         * + Creat application/routes
-         * + Crate public_html
-         * + Create defaultModule
-         *      + COPYING defaultBootstrap.php correspondingly
-         * + COPYING ModuleController.php directly
-         * + Creating IndexController
-         * + Creating IndexAction in IndexController 
-         *      + Creating IndexView.phtml correspondingly
-         * + COPYING defaultLayout.phtml directly
-         */
         $this->Run($opt, 0);
         $c = new \zinux\zg\vendor\creator;
         $module = $c->createModule("default", $pName);
         $controller = $c->createController("index", $module, $pName);
-        $appBootstrap =  $c->createAppBootstrap("app", $pName);
-        $appRoutes =  $c->createAppRoutes("app", $pName);
-        $layout = $c->createLayout("default", $module, $pName);
-        $view = $c->createView("index", $controller, $pName);
+        $c->createAppBootstrap("app", $pName);
+        $c->createAppRoutes("app", $pName);
+        $c->createLayout("default", $module, $pName);
+        $c->createView("index", $controller, $pName);
     }
     
     public function module($args)
@@ -212,7 +199,7 @@ class _new extends baseOperator
         if(isset($s->project->bootstrap[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Application bootstrap '{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         $c = new \zinux\zg\vendor\creator();
-        $appBootstrap =  $c->createAppBootstrap($args[0]);
+        $c->createAppBootstrap($args[0]);
     }
     public function app_routes($args)
     {
@@ -223,6 +210,6 @@ class _new extends baseOperator
         if(isset($s->project->routes[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Application routes '{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         $c = new \zinux\zg\vendor\creator();
-        $appRoutes =  $c->createAppRoutes($args[0]);
+        $c->createAppRoutes($args[0]);
     }
 }

@@ -17,7 +17,7 @@ class update extends baseOperator
     public function update($args)
     {
         # should support --cache to update cache files...!
-        $this->restrictArgCount($args, 3, 0);
+        $this->restrictArgCount($args, 4, 0);
         while(count($args))
         {
             $arg = array_shift($args);
@@ -32,23 +32,32 @@ class update extends baseOperator
                 case "--verbose":
                     $this->verbose = 1;
                     break;
-                default:
-                    throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid argument '$args[0]' supplied ...");
+                case "--all":
+                    if(isset($this->branch_name))
+                        throw new \zinux\kernel\exceptions\invalideArgumentException("In-compatible argument, '\$branch_name'  is in-compatible with '--all'.");
+                    $this->all_branches = 1;
+                    break;
+                default:                    
+                    if(isset($this->all_branches))
+                        throw new \zinux\kernel\exceptions\invalideArgumentException("In-compatible argument, '\$branch_name'  is in-compatible with '--all'.");
+                    $this->branch_name = array($arg);
             }
         }
+        if(!isset($this->branch_name))
+            $this->branch_name = array("master");
         $this->cout("Updating zinux framework from its online repo.");
         $this->cout("Checking Git application.... ",0 ,self::defColor, 0);
         # check if git exists 
         if(!exec('git 2>/dev/null | wc -l'))
             throw new \zinux\kernel\exceptions\notFoundException("'git' not found in system!<br />To install git http://git-scm.com/downloads");
         $this->cout("[ OK ]", 0, self::green);
-        $this->cout("Testing your network, please wait.... ", 0, self::defColor, 0);
+        $this->cout("Testing your internet connection, please wait.... ", 0, self::defColor, 0);
         # check network 
         if(!isset($this->simulate) && !$this->is_connected())
         {
             $this->cout('[ FAILED ]',0, self::red);
             throw new \zinux\kernel\exceptions\invalideOperationException
-                (self::defColor."You need to have ".self::yellow."network connection".self::defColor." to do this operation!<br />".self::red."[ Aborting ]");
+                (self::defColor."You need to have ".self::yellow."internet connection".self::defColor." to do this operation!<br />".self::red."[ Aborting ]");
         }
         $this->cout("[ OK ]",0, self::green);
         $zinux_dir = isset($this->cache_update)?Z_CACHE_ROOT:WORK_ROOT."/zinux";
@@ -91,26 +100,41 @@ class update extends baseOperator
                     $man_failed = 0;
             }
         }
-        if(!isset($this->simulate))
-            $repo->git("checkout master");
-        $this->cout("Updating '".self::yellow.$repo_path.self::defColor."' repo. ", $indent-0.5, self::defColor, 0);
-        if(!isset($this->simulate))
-            try
-            {
-                $repo->git("pull origin master");
-            }
-            catch(\Exception $e)
-            {
-                $this->cout("[ FAILED ]", 0, self::red);
-                throw $e;
-            }
-        $this->cout("[ OK ]", 0, self::green);
-        if($man_failed) return;
-        
-        $manifest = json_decode(file_get_contents(\zinux\kernel\utilities\fileSystem::resolve_path($repo_man)));
+        if(!isset($this->all_branches) && !$this->has_arg($repo->getBranches(), $this->branch_name[0]))
+        {
+            $this->cout("No branch named  '".self::yellow.$this->branch_name[0].self::red."' in '".self::yellow.$name.self::red."' repository.", $indent, self::red);
+            goto __SKIP_PULL;
+        }
         
         if(!$this->has_arg($repo->getBranches(), "master"))
             throw new \zinux\kernel\exceptions\invalideOperationException("The 'master' branch does not exist!!<br />".self::red."[ Aborting ]");
+        if(isset($this->all_branches))
+            $this->branch_name = $repo->getBranches();
+            
+        foreach($this->branch_name as $branch)
+        {
+            if(!isset($this->simulate))
+                $repo->git("checkout $branch");
+            $this->cout("Updating '".self::yellow.$repo_path." : ".$branch.self::defColor."' repo. ", $indent-0.5, self::defColor, 0);
+            if(!isset($this->simulate))
+                try
+                {
+                    $repo->git("pull origin $branch");
+                }
+                catch(\Exception $e)
+                {
+                    $this->cout("[ FAILED ]", 0, self::red);
+                    throw $e;
+                }
+            $this->cout("[ OK ]", 0, self::green);
+        }
+__SKIP_PULL:
+    
+        $repo->git("checkout master");
+
+        if($man_failed) return;
+        
+        $manifest = json_decode(file_get_contents(\zinux\kernel\utilities\fileSystem::resolve_path($repo_man)));
         if(!isset($manifest->modules) || !count($manifest->modules))
         {
             $this ->cout("According to ".self::yellow.$name.self::defColor."'s manifest file no module exists!", $indent)
@@ -118,16 +142,16 @@ class update extends baseOperator
             return;
         }
         if(isset($this->verbose))
-            $this->cout("Updating ".self::yellow.$name.self::defColor."'s module repositories.", $indent);
+            $this->cout("Updating '".self::yellow.$name.self::defColor."'s module repositories.", $indent);
         foreach($manifest->modules as $value)
         {
             $this->update_repo($value->name, $repo_path.DIRECTORY_SEPARATOR.$value->path, $indent+0.5, $value->repo);
         }
         if(isset($this->verbose))
-            $this->cout("Updating ".self::yellow.$name.self::defColor."'s module repositories is done.", $indent);
+            $this->cout("Updating '".self::yellow.$name.self::defColor."'s module repositories is done.", $indent);
         $indent-=0.5;
         if(isset($this->verbose))
-            $this->cout("repository '".self::yellow.$name.self::defColor."' and its all sup-repositories are updated ...", $indent, self::green);
+            $this->cout("repository '".self::yellow.$name.self::green."' and its all sup-repositories are updated ...", $indent, self::green);
     }
     protected function is_connected()
     {
