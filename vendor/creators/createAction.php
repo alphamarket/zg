@@ -48,11 +48,11 @@ class createAction extends \zinux\zg\resources\operator\baseOperator
         
         if(!$rf->isSubclassOf('\zinux\kernel\controller\baseController'))
             throw new \zinux\kernel\exceptions\invalideOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
-        if(method_exists(new $class, $action->path))
-           throw new \zinux\kernel\exceptions\invalideOperationException("'$class' already contains method '{$action->path}'...");
-           
-        $n = new \zinux\zg\vendor\reflections\ReflectionClass($class);
-        $n->AddMethod($mbc);
+        if(!method_exists(new $class, $action->path))
+        {
+            $n = new \zinux\zg\vendor\reflections\ReflectionClass($class);
+            $n->AddMethod($mbc);
+        }
         $this->cout("+", 0, self::green,0);
         $action->parent = $controller;
         $s->modules->collection[strtolower($controller->parent->name)]->controller[strtolower($controller->name)]->action[strtolower($action->name)] = $action;
