@@ -3,11 +3,13 @@ namespace zinux\zg\operators;
 
 class build extends \zinux\zg\vendor\builder\baseBuilder
 {    
-    public function __construct($suppress_header_text = 0)
+    protected $verbose = 1;
+    public function __construct($suppress_header_text = 0, $verbose = 1)
     {
         parent::__construct($suppress_header_text);
         $this->log = array();
         $this->processed = array();
+        $this->verbose = $verbose;
     }
     public function build($args)
     {
@@ -41,12 +43,27 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         $this->fetchHelpers();
         $this->fetchLayouts();
         $this->fetchViewes();
+        if(!count($this->processed))
+        {
+            $this ->cout()
+                    ->cout("The current directory structure didn't with any standard zinux project", 1, self::yellow)
+                    ->cout("No zinux project has been built!", 1, self::red)
+                    ->cout("[ Aborting ]", 1, self::red);
+                exec("rm -fr .".PRG_CONF_PATH);
+            return;
+        }
         $this->SaveStatus($this->s);
         $this ->cout()
                 ->cout()
                 ->cout(self::green."+".self::defColor." The built config file has saved ".self::green."successfully".self::defColor.".", 1);
         $this->saveLogs();
         
+    }
+    public function cout($content = "<br />", $tap_index = 0, $color = self::defColor, $auto_break = 1)
+    {
+        if(!$this->verbose) return $this;
+        parent::cout($content, $tap_index, $color, $auto_break);
+        return $this;
     }
     
     public function log($args)
@@ -121,23 +138,23 @@ __END_EV:
         foreach($log as $value)
         {
             $c++;
-            $this ->cout("[ {$c} ]", 2, self::yellow,0)
+            $this ->cout("[ {$c} ]", 1, self::yellow,0)
                     ->cout(" : ")
-                    ->cout("{", 2);
+                    ->cout("{", 1);
             if(!isset($value->path) || !strlen($value->path))
             {
                 $value->path = $value->name;
                 unset($value->name);
             }
             if(isset($value->name))
-                $this ->cout("Title", 3, self::yellow,0)
+                $this ->cout("Title", 2, self::yellow,0)
                         ->cout(" : ", 0, self::yellow, 0)
                         ->cout($value->name);
-            $this ->cout("Detail", 3, self::yellow,0)
+            $this ->cout("Detail", 2, self::yellow,0)
                     ->cout(" : ", 0, self::yellow, 0)
                     ->cout($value->path);
 
-            $this->cout("}", 2);
+            $this->cout("}", 1);
         }
     }
 }

@@ -1,19 +1,18 @@
 <?php
 namespace zinux\zg;
 
-if(!defined("ZG_ROOT"))
+if(!defined("ZG_ROOT_DEFINED"))
 {
+    define("ZG_ROOT_DEFINED",1);
     defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
-
-    defined("WORK_ROOT") ||  define("WORK_ROOT", getcwd());
 
     defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux");
 
-    defined("CONF_PATH") || define("CONF_DIRNAME",".zg");
+    defined("PRG_CONF_DIRNAME") || define("PRG_CONF_DIRNAME",".zg");
 
-    defined("CONF_PATH") || define("CONF_PATH","/".CONF_DIRNAME."/");
+    defined("PRG_CONF_PATH") || define("PRG_CONF_PATH","/".PRG_CONF_DIRNAME."/");
 
-    defined("CONF_NAME") || define("CONF_NAME",".cfg");
+    defined("PRG_CONF_NAME") || define("PRG_CONF_NAME",".cfg");
 
     defined("ZG_VERSION") || define("ZG_VERSION","1.4.21");
 
@@ -21,13 +20,15 @@ if(!defined("ZG_ROOT"))
 
     //defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
 
-    $d=explode(DIRECTORY_SEPARATOR, WORK_ROOT);
+    $cwd = getcwd();
+    
+    $d=explode(DIRECTORY_SEPARATOR, $cwd);
 
     $dirs = array_filter($d);
 
     if(preg_match("#[L|U]inux#i", PHP_OS))
         $dirs = array_merge(array("/"), $dirs);
-
+    
     while(!count(glob("baseZinux.php")))
     {
         if(!chdir(".."))
@@ -36,11 +37,12 @@ if(!defined("ZG_ROOT"))
         if(!count($dirs))
             goto __LAUNCH;
     }
-    
+    goto __LAUNCH;
+__ERROR:
     die("\n\033[31m>    You cannot run 'zg' under zinux sub-directories ....\n");
 
-    __LAUNCH:
-        chdir(WORK_ROOT);
+__LAUNCH:
+        define("WORK_ROOT", getcwd());
 }
 require_once dirname(__FILE__)."/../baseZinux.php";
 
@@ -102,8 +104,8 @@ abstract class baseZg extends \zinux\baseZinux
     public function GetStatus($path = ".")
     {
         $s = NULL;
-        if(file_exists("$path".CONF_PATH.CONF_NAME))
-            $s =  unserialize(file_get_contents("$path".CONF_PATH.CONF_NAME));
+        if(file_exists("$path".PRG_CONF_PATH.PRG_CONF_NAME))
+            $s =  unserialize(file_get_contents("$path".PRG_CONF_PATH.PRG_CONF_NAME));
         if(!$s)
             return $s;
         if(!isset($s->hs))
@@ -119,21 +121,21 @@ abstract class baseZg extends \zinux\baseZinux
     {
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name"))
             mkdir($project_name, 0775);
-        if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name".CONF_PATH))
-            mkdir("./$project_name".CONF_PATH);
+        if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name".PRG_CONF_PATH))
+            mkdir("./$project_name".PRG_CONF_PATH);
         
         $s = new \zinux\zg\vendor\status;
         $parent = new vendor\item(basename(realpath(".")), realpath("."));
         $s->project = new vendor\Item("project", realpath("./$project_name/"),$parent);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
-        return file_put_contents("./$project_name".CONF_PATH.CONF_NAME, serialize($s), LOCK_EX);
+        return file_put_contents("./$project_name".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
     }
     
     public function SaveStatus(\zinux\zg\vendor\status $s)
     {
         unset($s->hs);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
-        return file_put_contents("{$s->project->path}/".CONF_PATH.CONF_NAME, serialize($s), LOCK_EX);
+        return file_put_contents("{$s->project->path}/".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
     }
     public function CheckZG($path = ".", $throw_exception = 0)
     {
