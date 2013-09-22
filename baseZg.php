@@ -1,9 +1,8 @@
 <?php
 namespace zinux\zg;
 
-if(!defined("ZG_ROOT_DEFINED"))
+if(!defined("ZG_ROOT"))
 {
-    define("ZG_ROOT_DEFINED",1);
     defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
 
     defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux");
@@ -20,44 +19,29 @@ if(!defined("ZG_ROOT_DEFINED"))
 
     //defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
 
-    $cwd = getcwd();
-    
-    $d=explode(DIRECTORY_SEPARATOR, $cwd);
-
-    $dirs = array_filter($d);
-
+    /**
+     * Trying to locate a zinux project either under CWD
+     * or the parent folders
+     */
+    $d=explode(DIRECTORY_SEPARATOR, getcwd());
+    $d = array_filter($d);
     if(preg_match("#[L|U]inux#i", PHP_OS))
-        $dirs = array_merge(array("/"), $dirs);
-    
-    while(!count(glob("baseZinux.php")))
-    {
-        if(!chdir(".."))
-            goto __LAUNCH;
-        array_pop($dirs);
-        if(!count($dirs))
-            goto __LAUNCH;
-    }
+        $d = array_merge(array("/"), $d);
     goto __LAUNCH;
-__ZINUX_ERROR:
-    die("\n\033[31m>    You cannot run 'zg' under zinux sub-directories ....\n");
 __NO_PRG_ERROR:
     die("\n\033[31m>    No project found ....\n");
 __LAUNCH:
-    chdir($cwd);
-    $d=explode(DIRECTORY_SEPARATOR, getcwd());
-    $dirs = array_filter($d);
-    if(preg_match("#[L|U]inux#i", PHP_OS))
-        $dirs = array_merge(array("/"), $dirs);
     while(!count(glob(PRG_CONF_DIRNAME."/", GLOB_ONLYDIR)))
     {
         if(!chdir(".."))
             goto __NO_PRG_ERROR;
-        array_pop($dirs);
-        if(!count($dirs))
+        array_pop($d);
+        if(!count($d))
             goto __NO_PRG_ERROR;
     }
-    unset($d, $dirs, $cwd);
-    define("WORK_ROOT", getcwd());
+    unset($d);
+    
+    defined("WORK_ROOT") || define("WORK_ROOT", getcwd());
 }
 require_once dirname(__FILE__)."/../baseZinux.php";
 
