@@ -138,7 +138,7 @@
         },
         "notes":
         [
-            "In order to have free uses in models there will be NO<br />naming convention when creating models.<br />i.e the command 'zg remove model foo $module_name'<br />will exactly removes a model named 'foo' in target module."
+            "In order to have free uses in models there will be NO.<br />naming convention when creating models.<br />i.e the command 'zg remove model foo $module_name'.<br />will exactly removes a model named 'foo' in target module."
         ]
     },
     "application":
