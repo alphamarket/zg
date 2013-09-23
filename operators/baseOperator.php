@@ -33,6 +33,6 @@ abstract class baseOperator extends \zinux\zg\baseZg
      */
     public function PrintTItleString()
     {
-        $this->cout("Zinux Generator by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013", 0, self::yellow);
+        $this->cout("Zinux Generator(v".ZG_VERSION.") by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013", 0, self::yellow);
     }
 }
