@@ -128,6 +128,7 @@ class update extends baseOperator
 __SKIP_PULL:
     
         $repo->git("checkout master");
+        $repo->git("git fetch --tags");
 
         if($man_failed) return;
         
