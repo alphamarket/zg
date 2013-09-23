@@ -22,7 +22,8 @@ if(!defined("ZG_ROOT"))
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
 
     //defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
-
+    
+    $cwd  = getcwd();
     /**
      * Trying to locate a zinux project either under CWD
      * or the parent folders
@@ -33,7 +34,19 @@ if(!defined("ZG_ROOT"))
         $d = array_merge(array("/"), $d);
     goto __LAUNCH;
 __NO_PRG_ERROR:
+    if($argv[0]==$_SERVER['SCRIPT_NAME'])
+    {
+        array_shift($argv);
+        $argc--;
+    }
+    if(!count($argv))
+        goto __SKIP_ERROR;
+    if(strtolower($argv[0])=="n" || strtolower($argv[0])=="new")
+        goto __SKIP_ERROR;
     die("\n\033[31m>    No project found ....\n");
+__SKIP_ERROR:
+    chdir($cwd);
+    goto __ZG;
 __LAUNCH:
     while(!count(glob(PRG_CONF_DIRNAME."/", GLOB_ONLYDIR)))
     {
@@ -44,7 +57,7 @@ __LAUNCH:
             goto __NO_PRG_ERROR;
     }
     unset($d);
-    
+__ZG:
     defined("WORK_ROOT") || define("WORK_ROOT", getcwd());
 }
 require_once dirname(__FILE__)."/../baseZinux.php";

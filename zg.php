@@ -21,8 +21,12 @@ class zg extends \zinux\zg\baseZg
         $zg = null;
         try
         {
-            if(!count($argv))
-                throw new Exception("No argument supplied ...");
+            if(count($argv) && $argv[0]==$_SERVER['SCRIPT_NAME'])
+            {
+                global $argc;
+                array_shift($argv);
+                $argc = count($argv);
+            }
             
             \zinux\kernel\caching\fileCache::RegisterCachePath(WORK_ROOT."/.zg/cache");
             
@@ -49,7 +53,7 @@ class zg extends \zinux\zg\baseZg
     
     public function __construct($argv)
     {
-        if($argv[0] == $_SERVER['SCRIPT_NAME'])
+        if(count($argv) && $argv[0] == $_SERVER['SCRIPT_NAME'])
             array_shift($argv);
         
         $this->args = $argv;
