@@ -3,17 +3,6 @@ namespace zinux\zg\operators;
 
 class update extends baseOperator
 {    
-    public function __construct($suppress_header_text = 0)
-    {
-        parent::__construct($suppress_header_text);
-        $this->output_buffering = ini_get("output_buffering");
-        ini_set('output_buffering','on');
-        
-    }
-    public function __destruct()
-    {
-        ini_set('output_buffering',$this->output_buffering);
-    }
     public function update($args)
     {
         if(!$this->CheckZG()) return;
@@ -170,13 +159,5 @@ __SKIP_PULL:
             return true;
         }
         return false;
-    }
-    public function cout($content = "<br />", $tap_index = 0, $color = self::defColor, $auto_break = 1)
-    {
-        ob_start();
-            parent::cout($content, $tap_index, $color, $auto_break);
-        echo preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""), ob_get_clean());
-        ob_flush();
-        return $this;
     }
 }

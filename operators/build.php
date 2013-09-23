@@ -11,6 +11,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         $this->processed = array();
         $this->verbose = $verbose;
     }
+    
     public function build($args)
     {
         $this->restrictArgCount($args,6,0);
