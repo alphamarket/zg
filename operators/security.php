@@ -78,6 +78,11 @@ class security extends baseOperator
         }
         $s->project->cryption->meta->is_encrypted = 1;
         $this->SaveStatus($s);
+        $this ->cout()
+                ->cout(count($s->project->cryption->collection), 1, self::yellow, 0)
+                ->cout(" files encrypted ", 0, self::defColor, 0)
+                ->cout("successfully", 0, self::green,0)
+                ->cout("...");
     }
     public function decrypt($args)
     {
@@ -145,6 +150,11 @@ class security extends baseOperator
         unset($s->project->cryption->meta->is_encrypted);
         $this->SaveStatus($s);
         $this ->cout()
+                ->cout(count($s->project->cryption->cache), 1, self::yellow, 0)
+                ->cout(" files decrypted ", 0, self::defColor, 0)
+                ->cout("successfully", 0, self::green,0)
+                ->cout("...");
+        $this ->cout()
                 ->cout("You can always undo ".self::yellow."last".self::defColor." '".self::cyan."zg security decrypt".self::defColor."' command's effects, ")
                 ->cout("By '".self::cyan."zg security cache --reset".self::defColor."' command", 2.5);
     }
@@ -190,7 +200,8 @@ class security extends baseOperator
                 }
                 
                 $this ->cout()
-                        ->cout("All registered files reseted ", 0, self::defColor, 0)
+                        ->cout(count($s->project->cryption->cache), 1, self::yellow, 0)
+                        ->cout(" registered files reseted ", 0, self::defColor, 0)
                         ->cout("successfully", 0, self::green, 0)
                         ->cout("...");
                 $s->project->cryption->meta->is_encrypted = 1;
