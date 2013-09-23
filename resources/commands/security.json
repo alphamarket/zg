@@ -16,7 +16,7 @@
         {
             "-i":"Number of encryption iteration. and must be greater than 0."
         },
-        "default":
+        "defaults":
         {
             "-i":"1"
         },
@@ -46,7 +46,7 @@
         {
             "-i":"Number of encryption iteration. and must be greater than 0."
         },
-        "default":
+        "defaults":
         {
             "-i":"1"
         },
