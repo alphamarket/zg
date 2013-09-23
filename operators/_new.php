@@ -136,7 +136,7 @@ class _new extends baseOperator
         if(!$this->CheckZG()) return;
         # this module can have maximum 2 args and minimum 1 arg
         $this->restrictArgCount($args, 2,1);
-        # if no module supplied suppose it is the default moduel
+        # if no module supplied suppose it is the default module
         if(count($args)==1)
             $args[] = "default";
         # a fail safe for args
