@@ -22,9 +22,10 @@
         },
         "notes":
         [
+            "When you encrypt your project, you cannot lost your '.zg' folder and its content.<br />The project without its '.zg' will be un-retrieval!",
             "Be careful with command if you make mistake it is possible to blow up your project.",
             "This command will encrypt your entire project except the 'zinux' folder.<br />Which obviously is a public project!",
-            "If you ever forger your $encryption_key, your project will be lost for good<br />So make sure you pass a easy to remember but hard to guess crypt key.",
+            "If you ever forger your $encryption_key, your project will be lost for good.<br />So make sure you pass a easy to remember but hard to guess crypt key.",
             "If your $encryption_key is a multiline key put it between quotation marks!"
         ]
     },
@@ -52,7 +53,7 @@
         "notes":
         [
             "Be careful with command if you make mistake it is possible to blow up your project.",
-            "In case of fail safe, this command will store encrypted files into its cache directory<br />So if you make a mistake it possible to get back things!",
+            "In case of fail safe, this command will store encrypted files into its cache directory.<br />So if you make a mistake it possible to get back things!",
             "This command will decrypt your entire project which encrypted by 'zg security encrypt' command!!",
             "If your $decryption_key is a multiline key put it between quotation marks!"
         ]
