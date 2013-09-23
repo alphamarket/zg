@@ -29,13 +29,18 @@ class config extends baseOperator
     {
         # this opt is valid under project directories
         if(!$this->CheckZG()) return;
-        # this can shoud have at l
+        # this can shoud have at least 1 arg
         $this->restrictArgCount($args);
+        # get status object
         $s = $this->GetStatus();
+        # an array for messages
         $m = array();
+        # for all args
         while(count($args))
         {
+            # get current arg
             $value = array_shift($args);
+            # match with available conf options
             switch($value)
             {
                 case "-show-parents":
@@ -46,13 +51,17 @@ class config extends baseOperator
                     $s->configs->show_parents = 1;
                     $m[] = new \zinux\zg\vendor\item("Parents will show in 'zg status'.", 1);
                     break;
+                # if no case this is an invalid arg
                 default:
                     throw new \zinux\kernel\exceptions\invalideArgumentException("Undefined config '$value' passed ...");
             }
         }
+        # save the status object to file
         $this->SaveStatus($s);
+        # foreach generated message
         foreach($m as $value)
         {
+            # print it
             if($value->path)
                 $this->cout("+ ", 0.5, self::green, 0);
             else
@@ -60,12 +69,20 @@ class config extends baseOperator
             $this->cout($value->name, 0);
         }
     }
+    /**
+     * zg config show handler
+     */
     public function show($args)
     {  
+        # this opt is valid under project directories
         if(!$this->CheckZG()) return;
+        # no arg expected
         $this->restrictArgCount($args,0,0);
+        # invoke a status printer
         $st = new \zinux\zg\operators\status(1);
+        # get status object
         $s = $this->GetStatus();
+        # only print config part of it
         $st->RecursivePrint($s->configs);
     }
 }
