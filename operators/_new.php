@@ -99,37 +99,58 @@ class _new extends baseOperator
     {
         # this opt is valid under project directories
         if(!$this->CheckZG()) return;
-        
-        $this->restrictArgCount($args, 1);
-        
+        # this opt should only have 1 passed arg 
+        $this->restrictArgCount($args, 1, 1);
+        # indicate the phase
         $this ->cout("Creating new module '", 0.5, self::defColor, 0)
                 ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
+        # normalize the arg
         $args[0] = preg_replace("#(\w+)module$#i", "$1", $args[0])."Module";
+        # invoke a creator 
         $c = new \zinux\zg\vendor\creator;
+        # create a module based on passed arg
         $module = $c->createModule($args[0]);
+        # create an index controller in created module
         $controller = $c->createController("index", $module);
-        $layout = $c->createLayout("default", $module);
-        $view = $c->createView("index", $controller);
+        # create a default layout for created module
+        $c->createLayout("default", $module);
+        # create an index controller for created module
+        # it also creates an index view for created controller
+        $c->createView("index", $controller);
     }
-    
+    /**
+     * zg new controller handler
+     * @throws \zinux\kernel\exceptions\notFoundException in case of target module does not exist or target controller already exists
+     */
     public function controller($args)
     {
+        # this opt is valid under project directories
         if(!$this->CheckZG()) return;
+        # this module can have maximum 2 args and minimum 1 arg
         $this->restrictArgCount($args, 2,1);
+        # if no module supplied suppose it is the default moduel
         if(count($args)==1)
             $args[] = "default";
-        # fail safe
+        # a fail safe for args
         $this->restrictArgCount($args, 2,2);
+        # normalize module and controller names
         $args[0] = preg_replace("#(\w+)controller$#i", "$1", $args[0])."Controller";
         $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        # get status object
         $s = $this->GetStatus();
+        # if module does not exist
         if(!isset($s->modules->collection[strtolower($args[1])]))
             throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[1]}' does not exists in zg manifest!<br />Try 'zg build' command!");
+        # if controller already exists
         if(isset($s->modules->collection[strtolower($args[1])]->controller[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
+        # invoke a creator
         $c = new \zinux\zg\vendor\creator;
+        # create a new controller 
+        # it also manually creates an index action
         $controller = $c->createController($args[0], $s->modules->collection[strtolower($args[1])]);
+        # create an index view for created controller
         $c->createView("index", $controller);
     }
     
