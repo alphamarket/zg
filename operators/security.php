@@ -18,7 +18,8 @@ class security extends baseOperator
         if(!file_exists($crypt_cache_path))
             mkdir($crypt_cache_path, 0755);
         $s = $this->GetStatus();
-        $s->project->cryption->meta = new \zinux\zg\vendor\item("cryption", realpath($crypt_cache_path)."/", $s->project);
+        if(!isset($s->project->cryption->meta ))
+            $s->project->cryption->meta = new \zinux\zg\vendor\item("cryption", realpath($crypt_cache_path)."/", $s->project);
         $this->SaveStatus($s);
     }
     
@@ -43,21 +44,23 @@ class security extends baseOperator
         
         $key = md5($args[0].sha1($args[0]));
         
-        return array($iter, \zinux\kernel\security\hash::Generate($key, 1), \zinux\kernel\security\hash::Generate($key, 1, 1));
+        return array($iter, \zinux\kernel\security\hash::Generate($iter), \zinux\kernel\security\hash::Generate($key), \zinux\kernel\security\hash::Generate($key, 1, 1));
     }
     public function encrypt($args)
     {
-        list($iter, $key, $hash_sum) = $this->enc_head_op($args);
+        $this->cout("Initiating encryption operations ...<br />");
+        list($iter, $iter_sum, $key, $hash_sum) = $this->enc_head_op($args);
         
         $s = $this->GetStatus();
-        $s->project->key_check_sum = $hash_sum;
+        $s->project->cryption->meta->key_check_sum = $hash_sum;
+        $s->project->cryption->meta->iter_check_sum = $iter_sum;
         $s->project->cryption->collection = array();
         foreach ($this->getFiles() as $file)
         {
             if(!is_writable($file)) 
             {
                 $this->cout("> ", 0.5, self::red, 0);
-                $this->cout("'$file' is not writable!", 0, self::defColor, 0);
+                $this->cout("'".self::cyan.$file.self::defColor."' is not writable!", 0, self::defColor, 0);
                 $this->cout(" [ FAILED ]", 0, self::red);
                 continue;
             }
@@ -73,14 +76,15 @@ class security extends baseOperator
             file_put_contents($file, $file_cont);
             $this->cout(" [ OK ]", 0, self::green);
         }
-        $s->project->cryption->is_encrypted = 1;
+        $s->project->cryption->meta->is_encrypted = 1;
         $this->SaveStatus($s);
     }
     public function decrypt($args)
     {
-        list($iter, $key, $hash_sum) = $this->enc_head_op($args);
+        $this->cout("Initiating decryption operations ...<br />");
+        list($iter, $iter_sum, $key, $hash_sum) = $this->enc_head_op($args);
         $s = $this->GetStatus();
-        if(!isset($s->project->cryption) || !isset($s->project->cryption->is_encrypted) || !isset($s->project->cryption->collection))
+        if(!isset($s->project->cryption) || !isset($s->project->cryption->meta->is_encrypted) || !isset($s->project->cryption->collection))
         {
             $this->cout("[ DANGER CLOSE ]", 0, self::red)
                     ->cout("The project didn't flaged as encrypted!", 0.5, self::yellow)
@@ -100,9 +104,9 @@ class security extends baseOperator
             $risky = 1;
         }
         if(!isset($risky))
-            if(!isset($s->project->key_check_sum) || $s->project->key_check_sum != $hash_sum)
+            if(!isset($s->project->cryption->meta->key_check_sum) || $s->project->cryption->meta->key_check_sum != $hash_sum)
                 throw new \zinux\kernel\exceptions\invalideOperationException("The '".self::cyan."encryption key".self::yellow."' doesn't match with encrypted key!");
-        
+            
         $crypt_cache_path = $s->project->cryption->meta->path;
         if(!isset($s->project->cryption->collection))
             $files = $this->getFiles();
@@ -114,7 +118,7 @@ class security extends baseOperator
             if(!is_writable($file)) 
             {
                 $this->cout("> ", 0.5, self::red, 0);
-                $this->cout("'$file' is not writable!", 0, self::defColor, 0);
+                $this->cout("'".self::cyan.$file.self::defColor."' is not writable!", 0, self::defColor, 0);
                 $this->cout(" [ FAILED ]", 0, self::red);
                 continue;
             }
@@ -138,8 +142,11 @@ class security extends baseOperator
         }
         exec("chmod 775 {$s->project->path} -R >/dev/null 2>&1");
         exec("chmod 777 {$s->project->path}");
-        unset($s->project->cryption->is_encrypted);
+        unset($s->project->cryption->meta->is_encrypted);
         $this->SaveStatus($s);
+        $this ->cout()
+                ->cout("You can always undo ".self::yellow."last".self::defColor." '".self::cyan."zg security decrypt".self::defColor."' command's effects, ")
+                ->cout("By '".self::cyan."zg security cache --reset".self::defColor."' command", 2.5);
     }
     public function cache($args)
     {
@@ -151,6 +158,10 @@ class security extends baseOperator
         switch(true)
         {
             case $this->has_arg($args, "--clear"):
+                if(isset($s->project->cryption->meta->is_encrypted))
+                    throw new 
+                        \zinux\kernel\exceptions\invalideOperationException
+                            ("The project is already encrypted!<br />You cannot clear cryption cache while the project is encrypted!<br />Decrypt the project first!");
                 if(!isset($s->project->cryption->meta->path))
                     throw new \zinux\kernel\exceptions\invalideOperationException("No metadata found on cryption data!");
                 exec("rm -rf '{$s->project->cryption->meta->path}'");
@@ -168,7 +179,7 @@ class security extends baseOperator
                     if(!is_writable($file)) 
                     {
                         $this->cout("> ", 0.5, self::red, 0);
-                        $this->cout("'$file' is not writable!", 0, self::defColor, 0);
+                        $this->cout("'".self::cyan.$file.self::defColor."' is not writable!", 0, self::defColor, 0);
                         $this->cout(" [ FAILED ]", 0, self::red);
                         continue;
                     }
@@ -179,10 +190,10 @@ class security extends baseOperator
                 }
                 
                 $this ->cout()
-                        ->cout("All encrypted files reseted ", 0, self::defColor, 0)
+                        ->cout("All registered files reseted ", 0, self::defColor, 0)
                         ->cout("successfully", 0, self::green, 0)
                         ->cout("...");
-                $s->project->cryption->is_encrypted = 1;
+                $s->project->cryption->meta->is_encrypted = 1;
                 break;
             default:
                 throw new \zinux\kernel\exceptions\invalideArgumentException;
