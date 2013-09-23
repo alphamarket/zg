@@ -3,6 +3,8 @@ namespace zinux\zg;
 
 if(!defined("ZG_ROOT"))
 {
+    ini_set('output_buffering','on');
+        
     defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
 
     defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux");
@@ -13,7 +15,7 @@ if(!defined("ZG_ROOT"))
 
     defined("PRG_CONF_NAME") || define("PRG_CONF_NAME",".cfg");
 
-    defined("ZG_VERSION") || define("ZG_VERSION","1.4.22");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.4.23");
 
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
 
@@ -91,13 +93,15 @@ abstract class baseZg extends \zinux\baseZinux
     
     public function cout($content = "<br />", $tap_index = 0, $color = self::defColor, $auto_break = 1)
     {
-       echo str_repeat(" ", $tap_index*4);
-        
-        echo $color.$content.self::defColor;
-        
-        if($content != "<br />" && $auto_break)
-            echo "<br />";
-        
+        ob_start();
+            echo str_repeat(" ", $tap_index*4);
+
+             echo $color.$content.self::defColor;
+
+             if($content != "<br />" && $auto_break)
+                 echo "<br />";
+        echo preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""), ob_get_clean());
+        ob_flush();
         return $this;
     }
     public function GetStatus($path = ".")
