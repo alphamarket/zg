@@ -22,14 +22,6 @@ class security extends baseOperator
             $s->project->cryption->meta = new \zinux\zg\vendor\item("cryption", realpath($crypt_cache_path)."/", $s->project);
         $this->SaveStatus($s);
     }
-    
-    public function rglob($pattern='*', $flags = 0, $path='')
-    {
-        $paths=  glob($path.'*', GLOB_MARK|GLOB_ONLYDIR|GLOB_NOSORT);
-        $files=  glob($path.$pattern, $flags);
-        foreach ($paths as $path) { $files=array_merge($files,$this->rglob($pattern, $flags, $path)); }
-        return $files;
-    }
     protected function enc_head_op($args)
     {
         $this->CheckZG(".", 1);
@@ -67,7 +59,7 @@ class security extends baseOperator
             $s->project->cryption->collection[] =$file;
             $this->cout("> ", 0.5, self::green, 0);
             $this->cout($file, 0, self::defColor, 0);
-            $e = new \zinux\kernel\security\encryption(MCRYPT_BlOWFISH, MCRYPT_MODE_CBC);
+            $e = new \zinux\kernel\security\encryption;
             $file_cont = file_get_contents($file);
             for($i = 0;$i<$iter;$i++)
             {
@@ -132,7 +124,7 @@ class security extends baseOperator
             while(file_exists($p))
                 $p.=$i++;
             $p.=".crypt";
-            $e = new \zinux\kernel\security\encryption(MCRYPT_BlOWFISH, MCRYPT_MODE_CBC);
+            $e = new \zinux\kernel\security\encryption;
             $file_cont = file_get_contents($file);
             file_put_contents($p, $file_cont);
             $this->cout("> ", 0.5, self::green, 0);
@@ -213,7 +205,7 @@ class security extends baseOperator
     }
     protected function getFiles()
     {
-        $m = preg_grep("/^zinux\/.*/i",($this->rglob("*")),PREG_GREP_INVERT);
+        $m = preg_grep("/^zinux\/.*/i",(\zinux\kernel\utilities\fileSystem::rglob("*")),PREG_GREP_INVERT);
         foreach($m as $key=> $value)
         {
             if(is_dir($value))
