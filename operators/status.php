@@ -1,12 +1,18 @@
 <?php
 namespace zinux\zg\operators;
-
+/**
+ * zg status handler
+ */
 class status extends baseOperator
 {
+    /**
+     * zg status show handler
+     * @throws \zinux\kernel\exceptions\invalideArgumentException in case of provided depth is invalid
+     * @throws \zinux\zg\operators\Exception
+     */
     public function show($args)
     {        
-        if(!$this->CheckZG())
-            return;
+        if(!$this->CheckZG()) return;
         
         $this->cout("Outputing project status file ...");
         
