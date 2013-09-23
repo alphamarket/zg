@@ -128,7 +128,17 @@ class update extends baseOperator
 __SKIP_PULL:
     
         $repo->git("checkout master");
-        $repo->git("git fetch --tags");
+        $this->cout("Fetching '".self::yellow.$repo_path.self::defColor."' repo's tags. ", $indent-0.5, self::defColor, 0);
+        try
+        {
+            $repo->git("git fetch --tags");
+        }
+        catch(\Exception $e)
+        {
+            $this->cout("[ FAILED ]", 0, self::red);
+            throw $e;
+        }
+        $this->cout("[ OK ]", 0, self::green);
 
         if($man_failed) return;
         
