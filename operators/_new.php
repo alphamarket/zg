@@ -3,33 +3,53 @@ namespace zinux\zg\operators;
 
 class _new extends baseOperator
 {
+    /**
+     * zg new project handler 
+     * @param array $args passed argument
+     * @throws \zinux\kernel\exceptions\invalideArgumentException if a folder with passed name found in current directory!
+     */
     public function project($args)
     {
+        # this opt shoud has args -gt 0 
         $this->restrictArgCount($args);
-        
+        # check if client wants an empty project
         $empty = $this->remove_arg($args, "--empty");
-        
+        # create a proper project file name
         $pName = implode("-", $args);
-        
+        # validate project name with currently existed directories
         if(file_exists($pName))
             throw new \zinux\kernel\exceptions\invalideArgumentException("A folder named '$pName' already exists...");
-        
+        # create an status file
+        # this also creates project direcroty as well
         $this->CreateStatusFile($pName);
+        # get an initial status object
         $s = $this->GetStatus($pName);
+        # create a meta object about project
         $s->modules->meta = new \zinux\zg\vendor\Item("modules", $s->project->path."/modules", $s->project);
+        # save the status file
         $this->SaveStatus($s);
-        
+        /**
+         * Officially at this stage the project has created
+         * from this point we only create project items
+         */
+        # indicate that project has been created
         $this ->cout("Creating new project '", 0.5, self::defColor, 0)
                 ->cout("$pName", 0, self::yellow, 0)
                 ->cout("' ...");
-        $vpname = str_replace(" ", "-", $pName);
+        /**
+         * Operations in this array:
+         *      # creates public_html
+         *      # copies zinux project
+         *      # creates a virtual-host sample suite for project
+         *      # creates proper permission for project directory and its sub-directories
+         */
         $opt = array(
                 "cp ".ZG_TEMPLE_ROOT."/* $pName/ -R",
                 "cp -rf ".Z_CACHE_ROOT." $pName",
                 "echo '# add this to apache vhost.conf files
 <VirtualHost *:80>
 	ServerAdmin webmaster@localhost
-	ServerName $vpname.local
+	ServerName $pName.local
 	DocumentRoot \"/var/www/$pName/public_html\"
 </VirtualHost>
 
@@ -39,21 +59,37 @@ class _new extends baseOperator
                 "chmod -R 775 $pName", 
                 "chmod 777 $pName"
         );
+        # run the above command
         $this->Run($opt);
+        # if the client wants an empty project
         if($empty)
         {
+            # no further opertaion needed
             $this->cout("An empty project created successfully...", 0.5);
             return;
         }
+        # invoke an item creator
         $c = new \zinux\zg\vendor\creator;
+        # create a module name default
         $module = $c->createModule("default", $pName);
+        # create a controller name index
+        # this also manually create an index action
+        # it won't create index view too!
         $controller = $c->createController("index", $module, $pName);
+        # create an application bootstrap named app
         $c->createAppBootstrap("app", $pName);
+        # create an application routes named app
         $c->createAppRoutes("app", $pName);
+        # craete a default layout for index controller
         $c->createLayout("default", $module, $pName);
+        # manually create an index view for index controller
         $c->createView("index", $controller, $pName);
+        # invoke a config builder
         $b = new build(1, 0);
+        # build new configuration file based on created items
         $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
+        # remove the un-wanted cache direcroty in CWD
+        $this->Run(array("rm -fr ./".PRG_CONF_DIRNAME));
     }
     
     public function module($args)
