@@ -66,6 +66,20 @@ class status extends baseOperator
             }
         $this->cout("}", $indent);
     }
+    
+    public function RecursiveWalk($status, $callBack)
+    {
+        if(!is_callable($callBack)) 
+            throw new \zinux\kernel\exceptions\invalideArgumentException("The argument is not callable!");
+        if($this->is_iterable($status))
+            foreach($status as $key => $value)
+            {
+                if(strtolower($key)=="parent") continue;
+                if(!$this->is_iterable($value)) continue;
+                if(!$callBack($value)) return;
+                $this->RecursiveWalk($value, $callBack);
+            }
+    }
     public function version($args)
     {
         $this->restrictArgCount($args,0,0);
