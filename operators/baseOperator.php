@@ -1,32 +1,36 @@
 <?php
 namespace zinux\zg\operators;
 
+/**
+ * A base class for operators
+ */
 abstract class baseOperator extends \zinux\zg\baseZg
 {    
-    
+    /**
+     * Construct a new operator
+     * @param boolean $suppress_header_text check if you want to have general header output or not!
+     */
     public function __construct($suppress_header_text = 0)
     {
         if(!$suppress_header_text)
             $this->PrintTItleString();
     }
-    public function Run($opt, $record_history = 1)
+    /**
+     * Runs exec command
+     * @param array $opt the system commands to run
+     */
+    public function Run($opt)
     {
-        $s = $this->GetStatus();
+        # for each command 
         foreach($opt as $value)
         {
-            system($value);
-            if($record_history && $s && !isset($s->configs->skip_history))
-            {
-                $h = new \stdClass();
-                $h->opt = $value;
-                $h->time = date("M-d-Y H:i:s");
-                $s->history[] = $h;
-            }
+            # run it
+            exec($value);
         }
-        if($s)
-            $this->SaveStatus($s);
     }
-    
+    /**
+     * General header printer
+     */
     public function PrintTItleString()
     {
         $this->cout("Zinux Generator by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013", 0, self::yellow);

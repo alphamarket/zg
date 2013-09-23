@@ -20,11 +20,8 @@ class zg extends \zinux\zg\baseZg
         ob_start();
         $zg = null;
         try
-        {
-            if(!count($argv))
-                throw new Exception("No argument supplied ...");
-            
-            \zinux\kernel\caching\fileCache::RegisterCachePath(WORK_ROOT."/.zg/cache");
+        {            
+            \zinux\kernel\caching\fileCache::RegisterCachePath(PRG_CACHE_PATH);
             
             $zg = new zg($argv);
             
@@ -49,15 +46,10 @@ class zg extends \zinux\zg\baseZg
     
     public function __construct($argv)
     {
-        if($argv[0] == $_SERVER['SCRIPT_NAME'])
+        if(count($argv) && $argv[0] == $_SERVER['SCRIPT_NAME'])
             array_shift($argv);
         
         $this->args = $argv;
-        # normalize the array
-        foreach($argv as $key=> $value)
-        {   break;
-            $this->args[$key] = strtolower($value);
-        }
     }
     
     public function  Run()
@@ -66,6 +58,12 @@ class zg extends \zinux\zg\baseZg
         $parser = new \zinux\zg\parser\parser($this->args, new \zinux\zg\command\commandGenerator());
         # run the parser instance
         $parser->Run();
+    }
+    
+    public function __destruct()
+    {
+        if(!$this->GetStatus())
+            exec("rm -fr ".WORK_ROOT.PRG_CONF_DIRNAME);
     }
 }
 
