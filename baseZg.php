@@ -18,6 +18,8 @@ if(!defined("ZG_ROOT"))
     defined("ZG_VERSION") || define("ZG_VERSION","1.4.28");
 
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
+    
+    defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
 
     //defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
 
