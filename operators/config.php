@@ -1,19 +1,35 @@
 <?php
 namespace zinux\zg\operators;
-
+/**
+ * zg config * handler
+ */
 class config extends baseOperator
 {
+    /**
+     * ctor a new config handler
+     * @param boolean $suppress_header_text check if should it suppress header txt
+     */
     public function __construct($suppress_header_text = 0)
     {
         parent::__construct($suppress_header_text);
         $s = $this->GetStatus();
+        if(!$s) return;
         if(!isset($s->configs))
+        {
             $s->configs = new \stdClass();
-        $this->SaveStatus($s);
+            $this->SaveStatus($s);
+        }
     }
+    /**
+     * zg config handler
+     * @param type $args
+     * @throws \zinux\kernel\exceptions\invalideArgumentException if case of invalid argument supplied
+     */
     public function config($args)
     {
+        # this opt is valid under project directories
         if(!$this->CheckZG()) return;
+        # this can shoud have at l
         $this->restrictArgCount($args);
         $s = $this->GetStatus();
         $m = array();
@@ -22,16 +38,6 @@ class config extends baseOperator
             $value = array_shift($args);
             switch($value)
             {
-                case "-history":
-                    $s->configs->skip_history = 1;
-                    unset($s->history);
-                    $m[] = new \zinux\zg\vendor\item("History recording will skip.", 1);
-                    $m[] = new \zinux\zg\vendor\item("History records deleted.", 0);
-                    break;
-                case "+history":
-                    unset($s->configs->skip_history);
-                    $m[] = new \zinux\zg\vendor\item("Histories will record.", 1);
-                    break;
                 case "-show-parents":
                     unset($s->configs->show_parents);
                     $m[] = new \zinux\zg\vendor\item("Parents will not show in 'zg status'.", 1);

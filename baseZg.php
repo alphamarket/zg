@@ -50,7 +50,9 @@ __LAUNCH:
     }
     unset($d);
 __ZG:
-    defined("WORK_ROOT") || define("WORK_ROOT", getcwd());
+    defined("WORK_ROOT") || define("WORK_ROOT", getcwd()."/");
+    
+    defined("PRG_CACHE_PATH") || define("PRG_CACHE_PATH", WORK_ROOT.PRG_CONF_PATH."cache");
 }
 require_once dirname(__FILE__)."/../baseZinux.php";
 

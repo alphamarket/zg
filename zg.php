@@ -21,7 +21,7 @@ class zg extends \zinux\zg\baseZg
         $zg = null;
         try
         {            
-            \zinux\kernel\caching\fileCache::RegisterCachePath(WORK_ROOT."/.zg/cache");
+            \zinux\kernel\caching\fileCache::RegisterCachePath(PRG_CACHE_PATH);
             
             $zg = new zg($argv);
             
@@ -58,6 +58,12 @@ class zg extends \zinux\zg\baseZg
         $parser = new \zinux\zg\parser\parser($this->args, new \zinux\zg\command\commandGenerator());
         # run the parser instance
         $parser->Run();
+    }
+    
+    public function __destruct()
+    {
+        if(!$this->GetStatus())
+            exec("rm -fr ".WORK_ROOT.PRG_CONF_DIRNAME);
     }
 }
 
