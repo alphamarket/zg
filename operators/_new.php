@@ -54,8 +54,8 @@ class _new extends baseOperator
 </VirtualHost>
 
 # add this to /etc/hosts
-# 127.0.0.1 $vpname.local
-' > ./$pName/public_html/$vpname.local",
+# 127.0.0.1 $pName.local
+' > ./$pName/public_html/$pName.local",
                 "chmod -R 775 $pName", 
                 "chmod 777 $pName"
         );
@@ -91,11 +91,14 @@ class _new extends baseOperator
         # remove the un-wanted cache direcroty in CWD
         $this->Run(array("rm -fr ./".PRG_CONF_DIRNAME));
     }
-    
+    /**
+     * zg new module handler
+     * @param array $args
+     */
     public function module($args)
     {
-        if(!$this->CheckZG())
-            return;
+        # this opt is valid under project directories
+        if(!$this->CheckZG()) return;
         
         $this->restrictArgCount($args, 1);
         

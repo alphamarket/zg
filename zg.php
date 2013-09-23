@@ -20,14 +20,7 @@ class zg extends \zinux\zg\baseZg
         ob_start();
         $zg = null;
         try
-        {
-            if(count($argv) && $argv[0]==$_SERVER['SCRIPT_NAME'])
-            {
-                global $argc;
-                array_shift($argv);
-                $argc = count($argv);
-            }
-            
+        {            
             \zinux\kernel\caching\fileCache::RegisterCachePath(WORK_ROOT."/.zg/cache");
             
             $zg = new zg($argv);
@@ -57,11 +50,6 @@ class zg extends \zinux\zg\baseZg
             array_shift($argv);
         
         $this->args = $argv;
-        # normalize the array
-        foreach($argv as $key=> $value)
-        {   break;
-            $this->args[$key] = strtolower($value);
-        }
     }
     
     public function  Run()

@@ -34,15 +34,7 @@ if(!defined("ZG_ROOT"))
         $d = array_merge(array("/"), $d);
     goto __LAUNCH;
 __NO_PRG_ERROR:
-    if($argv[0]==$_SERVER['SCRIPT_NAME'])
-    {
-        array_shift($argv);
-        $argc--;
-    }
-    if(!count($argv))
-        goto __SKIP_ERROR;
-    if(strtolower($argv[0])=="n" || strtolower($argv[0])=="new")
-        goto __SKIP_ERROR;
+    goto __SKIP_ERROR;
     die("\n\033[31m>    No project found ....\n");
 __SKIP_ERROR:
     chdir($cwd);
