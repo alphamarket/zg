@@ -1,6 +1,8 @@
 <?php
 namespace zinux\zg\operators;
-
+/**
+ * zg new * handler
+ */
 class _new extends baseOperator
 {
     /**
