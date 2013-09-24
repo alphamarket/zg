@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendors;
 /**
  * Zinux item remotion handler
  */
@@ -14,7 +14,7 @@ class remover extends \zinux\zg\operators\baseOperator
     }
     /**
      * removes items from file system
-     * @param \zinux\zg\vendor\item $item target item to remove
+     * @param \zinux\zg\vendors\item $item target item to remove
      * @param boolean $rebuild should re-build the project after remotion
      * @param string $projectDir project directory
      */
@@ -37,7 +37,7 @@ class remover extends \zinux\zg\operators\baseOperator
     } 
    /**
     * removes an action from its parent
-    * @param \zinux\zg\vendor\item $action target action to remove
+    * @param \zinux\zg\vendors\item $action target action to remove
     * @param string $projectDir project directory
     */
     public function removeAction(item $action,$projectDir = ".")
@@ -45,6 +45,6 @@ class remover extends \zinux\zg\operators\baseOperator
         # this opt is valid under project directories
         $this->CheckZG($projectDir,1);
         # invoke an action remover
-        new \zinux\zg\vendor\removers\removeAction($action, $projectDir);
+        new \zinux\zg\vendors\removers\removeAction($action, $projectDir);
     }
 }

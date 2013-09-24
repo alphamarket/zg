@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\creators;
+namespace zinux\zg\vendors\creators;
 /**
  * Description of createmoduleBootstrap
  *
@@ -8,7 +8,7 @@ namespace zinux\zg\vendor\creators;
 
 class createAction extends \zinux\zg\operators\baseOperator
 {
-    public function __construct(\zinux\zg\vendor\item $controller, \zinux\zg\vendor\item $action, $project_path = ".")
+    public function __construct(\zinux\zg\vendors\item $controller, \zinux\zg\vendors\item $action, $project_path = ".")
     {
         $ns = $this->convert_to_relative_path($controller->path, $project_path);
         $action->path = preg_replace("#(\w+)action$#i","$1", $action->name)."Action";
@@ -50,7 +50,7 @@ class createAction extends \zinux\zg\operators\baseOperator
             throw new \zinux\kernel\exceptions\invalideOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
         if(!method_exists(new $class, $action->path))
         {
-            $n = new \zinux\zg\vendor\reflections\ReflectionClass($class);
+            $n = new \zinux\zg\vendors\reflections\ReflectionClass($class);
             $n->AddMethod($mbc);
         }
         

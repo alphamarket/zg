@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\creators;
+namespace zinux\zg\vendors\creators;
 /**
  * Description of createView
  *
@@ -7,7 +7,7 @@ namespace zinux\zg\vendor\creators;
  */
 class createHelper extends \zinux\zg\baseZg
 {
-    public function __construct(\zinux\zg\vendor\item $module, \zinux\zg\vendor\item $helper, $project_path = ".")
+    public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $helper, $project_path = ".")
     {
         $helper->name = preg_replace("#(\w+)helper$#i","$1", $helper->name)."Helper";
         $ns = $this->convert_to_relative_path($helper->path, $project_path);;

@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\PHPGit;
+namespace zinux\zg\vendors\PHPGit;
 /**
  * Include the command class
  */
@@ -39,7 +39,7 @@ class Repository
     protected $options;
 
     protected static $defaultOptions = array(
-        'command_class'   => '\zinux\zg\vendor\PHPGit\Command', // class used to create a command
+        'command_class'   => '\zinux\zg\vendors\PHPGit\Command', // class used to create a command
         'git_executable'  => '/usr/bin/git'       // path of the executable on the server
     );
 

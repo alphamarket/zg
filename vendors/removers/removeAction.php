@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\removers;
+namespace zinux\zg\vendors\removers;
 /**
  * Description of removemoduleBootstrap
  *
@@ -13,7 +13,7 @@ class removeAction extends \zinux\zg\operators\baseOperator
     const LAST_PUBLIC = 2;
     const LAST_FUNC = 3;
     const LAST_CMNT = 4;
-    public function __construct(\zinux\zg\vendor\item $action, $project_path = ".")
+    public function __construct(\zinux\zg\vendors\item $action, $project_path = ".")
     {
         $controller = $action->parent;
         $ns = $this->convert_to_relative_path($controller->path, $project_path);
@@ -53,8 +53,8 @@ class removeAction extends \zinux\zg\operators\baseOperator
         if(!method_exists(new $class, $action->path))
            throw new \zinux\kernel\exceptions\invalideOperationException("'$class' does not contain method '{$action->path}'...");
         
-        $cr = new \zinux\zg\vendor\reflections\ReflectionClass($class);
-        $cr->RemoveMethod(new \zinux\zg\vendor\reflections\ReflectionMethod($class, $action->name));
+        $cr = new \zinux\zg\vendors\reflections\ReflectionClass($class);
+        $cr->RemoveMethod(new \zinux\zg\vendors\reflections\ReflectionMethod($class, $action->name));
         
         
         $action->parent = $controller;

@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendors;
 /**
  * A container for containing zinux items
  */
@@ -24,7 +24,7 @@ class item extends \zinux\zg\baseZg
      * ctor a new item
      * @param string $name item's name
      * @param string $path item's path
-     * @param \zinux\zg\vendor\item $parent item's parent item
+     * @param \zinux\zg\vendors\item $parent item's parent item
      */
     public function __construct($name, $path, item &$parent = NULL)
     {

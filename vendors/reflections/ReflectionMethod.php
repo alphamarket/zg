@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\reflections;
+namespace zinux\zg\vendors\reflections;
 
 /**
  * Description of ReflectionMethod

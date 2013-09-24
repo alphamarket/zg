@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\creators;
+namespace zinux\zg\vendors\creators;
 /**
  * Description of createView
  *
@@ -7,7 +7,7 @@ namespace zinux\zg\vendor\creators;
  */
 class createModel extends \zinux\zg\baseZg
 {
-    public function __construct(\zinux\zg\vendor\item $module, \zinux\zg\vendor\item $model, $project_path = ".")
+    public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $model, $project_path = ".")
     {
         # no naming convention in models
         # $model->name = preg_replace("#(\w+)model$#i","$1", $model->name)."Model";

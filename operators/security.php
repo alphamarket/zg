@@ -16,7 +16,7 @@ class security extends baseOperator
             mkdir($crypt_cache_path, 0755);
         $s = $this->GetStatus();
         if(!isset($s->project->cryption->meta ))
-            $s->project->cryption->meta = new \zinux\zg\vendor\item("cryption", realpath($crypt_cache_path)."/", $s->project);
+            $s->project->cryption->meta = new \zinux\zg\vendors\item("cryption", realpath($crypt_cache_path)."/", $s->project);
         $this->SaveStatus($s);
     }
     /**
@@ -191,7 +191,7 @@ class security extends baseOperator
             $this->cout($file, 0, self::defColor, 0);
             # add metadata about current decryption cache file 
             # to status object
-            $s->project->cryption->cache[] = new \zinux\zg\vendor\item($file, realpath($p));
+            $s->project->cryption->cache[] = new \zinux\zg\vendors\item($file, realpath($p));
             # foreach encryption iter#
             for($i = 0;$i<$iter;$i++)
             {

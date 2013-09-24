@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\builder;
+namespace zinux\zg\vendors\builder;
 
 /**
  * base class for \zinux\zg\operators\build class
@@ -28,9 +28,9 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
         if(!($project_path = \zinux\kernel\utilities\fileSystem::resolve_path($project_path, 1)))
             throw new \zinux\kernel\exceptions\notFoundException("The project path didn't found...");
         $this->step_show();
-        $s = new \zinux\zg\vendor\status;
-        $parent = new \zinux\zg\vendor\item(dirname($project_path), dirname($project_path));
-        $s->project = new \zinux\zg\vendor\item("project", $project_path ,$parent);
+        $s = new \zinux\zg\vendors\status;
+        $parent = new \zinux\zg\vendors\item(dirname($project_path), dirname($project_path));
+        $s->project = new \zinux\zg\vendors\item("project", $project_path ,$parent);
         $this->step_show();
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
         $this->step_show();
@@ -42,7 +42,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
         if(!($this->app = \zinux\kernel\utilities\fileSystem::resolve_path($this->app)))
         {
             $this->step_show(1, "x", self::hiRed);
-            $this->log[] = new \zinux\zg\vendor\item("Application directory not found","Skipping processing application directory.");
+            $this->log[] = new \zinux\zg\vendors\item("Application directory not found","Skipping processing application directory.");
             return;
         }
         $this->step_show();
@@ -52,7 +52,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             $name = basename($file, ".php");
             $sp = preg_split("/((?<=[a-z])(?=[A-Z])|(?=[A-Z][a-z]))/",$name);
             $type = strtolower(array_pop($sp));
-            $app = new \zinux\zg\vendor\item($name, $file, $this->s->project);
+            $app = new \zinux\zg\vendors\item($name, $file, $this->s->project);
             $this->s->project->{$type}[strtolower($name)] = $app;
             $this->processed[] = $app;
             $this->step_show();
@@ -69,12 +69,12 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             {
                 $this->step_show();
                 $name = basename($module);
-                $module = new \zinux\zg\vendor\item("{$name}", "{$this->s->modules->meta->path}/{$name}", $this->s->modules->meta);
+                $module = new \zinux\zg\vendors\item("{$name}", "{$this->s->modules->meta->path}/{$name}", $this->s->modules->meta);
                 $this->s->modules->collection[strtolower($module->name)] = $module;
                 $bs = preg_replace("#module$#i","Bootstrap.php", $name);
                 if(($bootstrap = \zinux\kernel\utilities\fileSystem::resolve_path($module->path.DIRECTORY_SEPARATOR.$bs)))
                 {
-                    $moduleBootstrap = new \zinux\zg\vendor\item(basename($bs, ".php"), $bootstrap, $module);
+                    $moduleBootstrap = new \zinux\zg\vendors\item(basename($bs, ".php"), $bootstrap, $module);
                     $this->s->modules->collection[strtolower($module->name)]->bootstrap = $moduleBootstrap;
                     $this->processed[] = $moduleBootstrap;
                     $this->step_show();
@@ -85,7 +85,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             else
             {
                 $this->step_show(1, "x", self::hiRed);
-                $this->log[] = new \zinux\zg\vendor\item("Folder '$module' skipped", "Didn't match with standrad module folder pattern.");
+                $this->log[] = new \zinux\zg\vendors\item("Folder '$module' skipped", "Didn't match with standrad module folder pattern.");
             }
         }
         $this->step_show();
@@ -98,7 +98,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             if(!($cp = \zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/controllers")))
             {
                 $this->step_show(1, "x", self::hiRed);
-                $this->log[] = new \zinux\zg\vendor\item("Controllers folder not found at '{$module->path}'", "");
+                $this->log[] = new \zinux\zg\vendors\item("Controllers folder not found at '{$module->path}'", "");
                 continue;
             }
             $this->step_show();
@@ -113,23 +113,23 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                     if(class_exists($class))
                     {
                         # $this->step_show(1, "x", self::hiRed);
-                        # $this->log[] = new \zinux\zg\vendor\item("Skipped requiring '$file'", "The class '$class' already defined!");
+                        # $this->log[] = new \zinux\zg\vendors\item("Skipped requiring '$file'", "The class '$class' already defined!");
                     }
                     elseif(!is_readable($file) || !(require_once $file))
                     {  
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                        $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped", "Couldn't open the file.");
                         continue;
                     }
                     $this->step_show();
                     if(!class_exists($class))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("Controller '$file' found, but relative class '$class' not found","");  
+                        $this->log[] = new \zinux\zg\vendors\item("Controller '$file' found, but relative class '$class' not found","");  
                         continue;
                     }
                     $this->step_show(); 
-                    $controller = new \zinux\zg\vendor\Item($name, $file, $module);
+                    $controller = new \zinux\zg\vendors\Item($name, $file, $module);
                     $this->s->modules->collection[strtolower($module->name)]->controller[strtolower($controller->name)] = $controller;
                     $this->processed[] = $controller;
                     $this->step_show();
@@ -137,7 +137,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                 elseif(is_file($file))
                 {
                     $this->step_show(1, "x", self::hiRed);
-                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
+                    $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped","Didn't match with standard controller file pattern.");
                 }
             }
             $this->step_show();
@@ -152,7 +152,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             if(!isset($module->controller))
             {
                 $this->step_show(1, "x", self::hiRed);
-                $this->log[] = new \zinux\zg\vendor\item("No controller found in {$module->name}", "");
+                $this->log[] = new \zinux\zg\vendors\item("No controller found in {$module->name}", "");
                 continue;
             }
             $this->step_show();
@@ -173,9 +173,9 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                         if(!is_callable(array($class, $method)))
                         {
                             $this->step_show(1, "x", self::hiRed);
-                            $this->log[] = new \zinux\zg\vendor\item("Method '$method' is not callable", "In class '$class' method '$method' is not callable!");
+                            $this->log[] = new \zinux\zg\vendors\item("Method '$method' is not callable", "In class '$class' method '$method' is not callable!");
                         }
-                        $action = new \zinux\zg\vendor\item($method, $method, $controller);
+                        $action = new \zinux\zg\vendors\item($method, $method, $controller);
                         $this->s->modules->
                             collection[strtolower($module->name)]->
                             controller[strtolower($controller->name)]->
@@ -199,7 +199,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/models")))
             {
                 $this->step_show(1, "x", self::hiRed);
-                $this->log[] = new \zinux\zg\vendor\item("Models folder not found at '{$module->path}'", "");
+                $this->log[] = new \zinux\zg\vendors\item("Models folder not found at '{$module->path}'", "");
                 continue;
             }
             $this->step_show();
@@ -215,23 +215,23 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                     if(class_exists($class))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("Skipped requiring '$file'", "The class '$class' already defined!");
+                        $this->log[] = new \zinux\zg\vendors\item("Skipped requiring '$file'", "The class '$class' already defined!");
                     }
                     elseif(!is_readable($file) || !(require_once $file))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                        $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped", "Couldn't open the file.");
                         continue;
                     }
                     $this->step_show();
                     if(!class_exists($class))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("Model '$file' found, but relative class '$class' not found","");  
+                        $this->log[] = new \zinux\zg\vendors\item("Model '$file' found, but relative class '$class' not found","");  
                         continue;
                     }
                     $this->step_show();
-                    $model = new \zinux\zg\vendor\Item($name, $file, $module);
+                    $model = new \zinux\zg\vendors\Item($name, $file, $module);
                     $this->s->modules->collection[strtolower($module->name)]->model[strtolower($model->name)] = $model;
                     $this->processed[] = $model;
                     $this->step_show();
@@ -239,7 +239,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                 elseif(is_file($file))
                 {
                     $this->step_show(1, "x", self::hiRed);
-                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
+                    $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped","Didn't match with standard controller file pattern.");
                 }
                 $this->step_show();
             }
@@ -256,7 +256,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/helper")))
             {
                 $this->step_show(1, "x", self::hiRed);
-                $this->log[] = new \zinux\zg\vendor\item("Helpers folder not found at '{$module->path}/views/helper'", "");
+                $this->log[] = new \zinux\zg\vendors\item("Helpers folder not found at '{$module->path}/views/helper'", "");
                 continue;
             }
             $this->step_show();
@@ -272,16 +272,16 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                     if(class_exists($class))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("Skipped requiring '$file'", "The class '$class' already defined!");
+                        $this->log[] = new \zinux\zg\vendors\item("Skipped requiring '$file'", "The class '$class' already defined!");
                     }
                     elseif(!is_readable($file) || !(require_once $file))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                        $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped", "Couldn't open the file.");
                         continue;
                     }
                     $this->step_show();
-                    $helper = new \zinux\zg\vendor\Item($name, $file, $module);
+                    $helper = new \zinux\zg\vendors\Item($name, $file, $module);
                     $this->s->modules->collection[strtolower($module->name)]->helper[strtolower($helper->name)] = $helper;
                     $this->processed[] = $helper;
                     $this->step_show();
@@ -289,7 +289,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                 elseif(is_file($file))
                 {
                     $this->step_show(1, "x", self::hiRed);
-                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard controller file pattern.");
+                    $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped","Didn't match with standard controller file pattern.");
                 }
                 $this->step_show();
             }
@@ -306,7 +306,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/layout")))
             {
                 $this->step_show(1, "x", self::hiRed);
-                $this->log[] = new \zinux\zg\vendor\item("Layouts folder not found at '{$module->path}/views/layout'", "");
+                $this->log[] = new \zinux\zg\vendors\item("Layouts folder not found at '{$module->path}/views/layout'", "");
                 continue;
             }
             $this->step_show();
@@ -321,11 +321,11 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                     if(!is_readable($file))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                        $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped", "Couldn't open the file.");
                         continue;
                     }   
                     $this->step_show();
-                    $layout = new \zinux\zg\vendor\Item($name, $file, $module);
+                    $layout = new \zinux\zg\vendors\Item($name, $file, $module);
                     $this->s->modules->collection[strtolower($module->name)]->layout[strtolower($layout->name)] = $layout;
                     $this->processed[] = $layout;
                     $this->step_show();
@@ -333,7 +333,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                 elseif(is_file($file))
                 {
                     $this->step_show(1, "x", self::hiRed);
-                    $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard layout file pattern.");
+                    $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped","Didn't match with standard layout file pattern.");
                 }
                 $this->step_show();
             }
@@ -348,7 +348,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             if(!isset($module->controller))
             {
                 $this->step_show(1, "x", self::hiRed);
-                $this->log[] = new \zinux\zg\vendor\item("No controller found in {$module->name}", "");
+                $this->log[] = new \zinux\zg\vendors\item("No controller found in {$module->name}", "");
                 continue;
             }
             foreach($module->controller  as $cname => $controller)
@@ -358,7 +358,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                 if(!($vp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/view/$name")))
                 {
                     $this->step_show(1, "x", self::hiRed);
-                    $this->log[] = new \zinux\zg\vendor\item("Views folder not found at '{$module->path}/views/view/$name'", "");
+                    $this->log[] = new \zinux\zg\vendors\item("Views folder not found at '{$module->path}/views/view/$name'", "");
                     continue;
                 }
                 $this->step_show();
@@ -373,11 +373,11 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                         if(!is_readable($file))
                         {
                             $this->step_show(1, "x", self::hiRed);
-                            $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped", "Couldn't open the file.");
+                            $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped", "Couldn't open the file.");
                             continue;
                         }
                         $this->step_show();
-                        $view = new \zinux\zg\vendor\Item($name, $file, $controller);
+                        $view = new \zinux\zg\vendors\Item($name, $file, $controller);
                         $this->s->modules->collection[strtolower($module->name)]->controller[strtolower($controller->name)]->view[strtolower($view->name)] = $view;
                         $this->processed[] = $view;
                         $this->step_show();
@@ -385,7 +385,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                     elseif(is_file($file))
                     {
                         $this->step_show(1, "x", self::hiRed);
-                        $this->log[] = new \zinux\zg\vendor\item("File '$file' skipped","Didn't match with standard view file pattern.");
+                        $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped","Didn't match with standard view file pattern.");
                     }
                     $this->step_show();
                 }

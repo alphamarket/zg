@@ -95,7 +95,7 @@ class update extends baseOperator
         try
         {
             # opening repo
-            $repo = new \zinux\zg\vendor\PHPGit\Repository($repo_path, $debug_git, array('git_executable' => 'git'));
+            $repo = new \zinux\zg\vendors\PHPGit\Repository($repo_path, $debug_git, array('git_executable' => 'git'));
             # if repo manifest does not exists
             if(!\zinux\kernel\utilities\fileSystem::resolve_path($repo_man) && ($man_failed = 1))
                 # make a mess!
@@ -112,7 +112,7 @@ class update extends baseOperator
                 exec("rm -fr $repo_path");
                 exec("cd ".dirname($repo_path)." && git clone '$clone_uri' '$name' 1>/dev/null 2>&1 ");
                 # open up the cloned repo
-                $repo = new \zinux\zg\vendor\PHPGit\Repository($repo_path, $debug_git, array('git_executable' => 'git'));
+                $repo = new \zinux\zg\vendors\PHPGit\Repository($repo_path, $debug_git, array('git_executable' => 'git'));
                 # if yet repo's manifest does not exist
                 if(!\zinux\kernel\utilities\fileSystem::resolve_path($repo_man))
                 {
