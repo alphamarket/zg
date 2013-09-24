@@ -45,11 +45,11 @@ class config extends baseOperator
             {
                 case "-show-parents":
                     unset($s->configs->show_parents);
-                    $m[] = new \zinux\zg\vendor\item("Parents will not show in 'zg status'.", 1);
+                    $m[] = new \zinux\zg\vendors\item("Parents will not show in 'zg status'.", 1);
                     break;
                 case "+show-parents":
                     $s->configs->show_parents = 1;
-                    $m[] = new \zinux\zg\vendor\item("Parents will show in 'zg status'.", 1);
+                    $m[] = new \zinux\zg\vendors\item("Parents will show in 'zg status'.", 1);
                     break;
                 # if no case this is an invalid arg
                 default:

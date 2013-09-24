@@ -27,7 +27,7 @@ class _new extends baseOperator
         # get an initial status object
         $s = $this->GetStatus($pName);
         # create a meta object about project
-        $s->modules->meta = new \zinux\zg\vendor\Item("modules", $s->project->path."/modules", $s->project);
+        $s->modules->meta = new \zinux\zg\vendors\Item("modules", $s->project->path."/modules", $s->project);
         # save the status file
         $this->SaveStatus($s);
         /**
@@ -71,7 +71,7 @@ class _new extends baseOperator
             return;
         }
         # invoke an item creator
-        $c = new \zinux\zg\vendor\creator;
+        $c = new \zinux\zg\vendors\creator;
         # create a module name default
         $module = $c->createModule("default", $pName);
         # create a controller name index
@@ -114,7 +114,7 @@ class _new extends baseOperator
         if(isset($s->modules->collection[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator 
-        $c = new \zinux\zg\vendor\creator;
+        $c = new \zinux\zg\vendors\creator;
         # create a module based on passed arg
         $module = $c->createModule($args[0]);
         # create an index controller in created module
@@ -153,7 +153,7 @@ class _new extends baseOperator
         if(isset($s->modules->collection[strtolower($args[1])]->controller[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Controller '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator
-        $c = new \zinux\zg\vendor\creator;
+        $c = new \zinux\zg\vendors\creator;
         # create a new controller 
         # it also manually creates an index action
         $controller = $c->createController($args[0], $s->modules->collection[strtolower($args[1])]);
@@ -195,7 +195,7 @@ class _new extends baseOperator
         if(isset($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->action[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Action '{$args[2]}/{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator
-        $c = new \zinux\zg\vendor\creator;
+        $c = new \zinux\zg\vendors\creator;
         # create an action for passed module and controller
         $c->createAction($args[0], $s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]);
         # normalize the action name for creating a view
@@ -238,7 +238,7 @@ class _new extends baseOperator
         if(isset($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->view[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("View '{$args[2]}/{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator
-        $c = new \zinux\zg\vendor\creator;
+        $c = new \zinux\zg\vendors\creator;
         # create a new view for passed args
         $c->createView($args[0], $s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]);
     }
@@ -270,7 +270,7 @@ class _new extends baseOperator
         if(isset($s->modules->collection[strtolower($args[1])]->layout[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Layout  '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator
-        $c = new \zinux\zg\vendor\creator;
+        $c = new \zinux\zg\vendors\creator;
         # create a layout with passed args
         $c->createLayout($args[0], $s->modules->collection[strtolower($args[1])]);
     }
@@ -302,7 +302,7 @@ class _new extends baseOperator
         if(isset($s->modules->collection[strtolower($args[1])]->helper[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Helper '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator
-        $c = new \zinux\zg\vendor\creator;
+        $c = new \zinux\zg\vendors\creator;
         # create a helper with passed args
         $c->createHelper($args[0], $s->modules->collection[strtolower($args[1])]);
     }
@@ -335,7 +335,7 @@ class _new extends baseOperator
         if(isset($s->modules->collection[strtolower($args[1])]->model[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Model '{$args[1]}/{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator
-        $c = new \zinux\zg\vendor\creator;
+        $c = new \zinux\zg\vendors\creator;
         # create a model with passed args
         $c->createModel($args[0], $s->modules->collection[strtolower($args[1])]);
     }
@@ -357,7 +357,7 @@ class _new extends baseOperator
         if(isset($s->project->bootstrap[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Application bootstrap '{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator
-        $c = new \zinux\zg\vendor\creator();
+        $c = new \zinux\zg\vendors\creator();
         # create an application bootstrap
         $c->createAppBootstrap($args[0]);
     }
@@ -379,7 +379,7 @@ class _new extends baseOperator
         if(isset($s->project->routes[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Application routes '{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
         # invoke a creator
-        $c = new \zinux\zg\vendor\creator();
+        $c = new \zinux\zg\vendors\creator();
         # create an application routes
         $c->createAppRoutes($args[0]);
     }

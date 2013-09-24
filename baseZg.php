@@ -23,6 +23,11 @@ if(!defined("ZG_ROOT"))
 
     //defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
     
+    if(RUNNING_ENV != "PRODUCTION")
+    {
+        error_reporting(E_STRICT);
+    }
+    
     $cwd  = getcwd();
     /**
      * Trying to locate a zinux project either under CWD
@@ -136,14 +141,14 @@ abstract class baseZg extends \zinux\baseZinux
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name".PRG_CONF_PATH))
             mkdir("./$project_name".PRG_CONF_PATH);
         
-        $s = new \zinux\zg\vendor\status;
-        $parent = new vendor\item(basename(realpath(".")), realpath("."));
-        $s->project = new vendor\Item("project", realpath("./$project_name/"),$parent);
+        $s = new \zinux\zg\vendors\status;
+        $parent = new vendors\item(basename(realpath(".")), realpath("."));
+        $s->project = new vendors\Item("project", realpath("./$project_name/"),$parent);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
         return file_put_contents("./$project_name".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
     }
     
-    public function SaveStatus(\zinux\zg\vendor\status $s)
+    public function SaveStatus(\zinux\zg\vendors\status $s)
     {
         unset($s->hs);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
@@ -259,7 +264,7 @@ abstract class baseZg extends \zinux\baseZinux
             $ar["\\$delimiter"] = $delimiter;
         return strtr($str, $ar);
     }
-    public function convert_to_relative_path($path, $project_dir = ".", \zinux\zg\vendor\status $s = null)
+    public function convert_to_relative_path($path, $project_dir = ".", \zinux\zg\vendors\status $s = null)
     {
         if(!$s)
             $s = $this->GetStatus($project_dir);

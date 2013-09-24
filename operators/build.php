@@ -3,7 +3,7 @@ namespace zinux\zg\operators;
 /**
  * zg build * handler
  */
-class build extends \zinux\zg\vendor\builder\baseBuilder
+class build extends \zinux\zg\vendors\builder\baseBuilder
 {    
     /**
      * check if build should be verbose!?
@@ -65,7 +65,7 @@ class build extends \zinux\zg\vendor\builder\baseBuilder
         # create an virtual status object in ram
         $this->s = $this->creatVirtualStatusFile($this->root);
         # first define module pass to status object
-        $this->s->modules->meta = new \zinux\zg\vendor\Item("modules", $this->modules, $this->s->project);
+        $this->s->modules->meta = new \zinux\zg\vendors\Item("modules", $this->modules, $this->s->project);
         # init module collection
         $this->s->modules->collection = array();
         # fetch app dir's items

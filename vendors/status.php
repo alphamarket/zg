@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor;
+namespace zinux\zg\vendors;
 /**
  * A zg status container
  */

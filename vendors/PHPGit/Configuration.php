@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\PHPGit;
+namespace zinux\zg\vendors\PHPGit;
 /**
  * Simple PHP wrapper for Git configuration
  *

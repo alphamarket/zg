@@ -1,5 +1,5 @@
 <?php
-namespace zinux\zg\vendor\creators;
+namespace zinux\zg\vendors\creators;
 /**
  * Description of createView
  *
@@ -7,7 +7,7 @@ namespace zinux\zg\vendor\creators;
  */
 class createView extends \zinux\zg\baseZg
 {
-    public function __construct(\zinux\zg\vendor\item $controller, \zinux\zg\vendor\item $view, $project_path = ".")
+    public function __construct(\zinux\zg\vendors\item $controller, \zinux\zg\vendors\item $view, $project_path = ".")
     {
         $view->name = preg_replace("#(\w+)view$#i","$1", $view->name)."View";
         $ns = $this->convert_to_relative_path($view->path, $project_path);;

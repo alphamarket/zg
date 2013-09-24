@@ -27,7 +27,7 @@ class remove extends baseOperator
         if(!isset($s->modules->collection[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Module '{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove it from file system
         $c->removeFS($s->modules->collection[strtolower($args[0])]);
     }
@@ -59,11 +59,11 @@ class remove extends baseOperator
         if(!isset($s->modules->collection[strtolower($args[1])]->controller[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Controller '{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove it from file system
         $c->removeFS($s->modules->collection[strtolower($args[1])]->controller[strtolower($args[0])], 0);
         # also remove it views from file system
-        $c->removeFS(new \zinux\zg\vendor\item("views",\zinux\kernel\utilities\fileSystem::resolve_path($s->modules->collection[strtolower($args[1])]->path."/views/view/".$raw)));
+        $c->removeFS(new \zinux\zg\vendors\item("views",\zinux\kernel\utilities\fileSystem::resolve_path($s->modules->collection[strtolower($args[1])]->path."/views/view/".$raw)));
     }
     /**
      * zg remove action handler
@@ -103,7 +103,7 @@ class remove extends baseOperator
         if(!isset($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->action[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Action '{$args[2]}/{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove the action
         $c->removeAction($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->action[strtolower($args[0])]);
         # fetch target action's raw name
@@ -145,7 +145,7 @@ class remove extends baseOperator
         if(!isset($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->view[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("View '{$args[2]}/{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove target view from file system
         $c->removeFS($s->modules->collection[strtolower($args[2])]->controller[strtolower($args[1])]->view[strtolower($args[0])]);
     }
@@ -176,7 +176,7 @@ class remove extends baseOperator
         if(!isset($s->modules->collection[strtolower($args[1])]->layout[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Layout  '{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove the target layout from file system
         $c->removeFS($s->modules->collection[strtolower($args[1])]->layout[strtolower($args[0])]);
     }
@@ -207,7 +207,7 @@ class remove extends baseOperator
         if(!isset($s->modules->collection[strtolower($args[1])]->helper[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Helper '{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove target helper from file system
         $c->removeFS($s->modules->collection[strtolower($args[1])]->helper[strtolower($args[0])]);
     }
@@ -239,7 +239,7 @@ class remove extends baseOperator
         if(!isset($s->modules->collection[strtolower($args[1])]->model[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Model '{$args[1]}/{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove target model from file system
         $c->removeFS($s->modules->collection[strtolower($args[1])]->model[strtolower($args[0])]);
     }
@@ -261,7 +261,7 @@ class remove extends baseOperator
         if(!isset($s->project->bootstrap[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Application bootstrap '{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove the target bootstrap from file system
         $c->removeFS($s->project->bootstrap[strtolower($args[0])]);
     }
@@ -283,7 +283,7 @@ class remove extends baseOperator
         if(!isset($s->project->routes[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\notFoundException("Application routes '{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
         # invoke a remover
-        $c = new \zinux\zg\vendor\remover;
+        $c = new \zinux\zg\vendors\remover;
         # remove the target routes from file system
         $c->removeFS($s->project->routes[strtolower($args[0])]);
     }
