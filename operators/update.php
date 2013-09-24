@@ -103,8 +103,8 @@ class update extends baseOperator
         }
         catch(\Exception $e)
         {
-            $this->cout("- The git repository/manifest not found in '$repo_path'.", $indent,self::red);
-            $this->cout("+ Trying to download a new '".self::yellow.$name.self::green."' repository...", $indent, self::green);
+            $this->cout("- The git repository/manifest not found in '$repo_path'.", $indent-0.5,self::red);
+            $this->cout("+ Trying to download a new '".self::yellow.$name.self::green."' repository...", $indent-0.5, self::green);
             # if not simulation and repo's manifest exists
             if(!isset($this->simulate) && !($man_failed = 0))
             {
