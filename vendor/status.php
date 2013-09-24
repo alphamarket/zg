@@ -1,11 +1,6 @@
 <?php
 namespace zinux\zg\vendor;
-
 /**
- * Description of status
- *
- * @author dariush
+ * A zg status container
  */
-class status extends \zinux\zg\baseZg
-{
-}
+class status extends \zinux\zg\baseZg{ }
