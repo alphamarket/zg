@@ -20,10 +20,8 @@ if(!defined("ZG_ROOT"))
     defined("PRG_CONF_NAME") || define("PRG_CONF_NAME",".cfg");
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
-    # defines ZG templates root
-    defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","1.4.29");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.4.30");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
@@ -68,6 +66,8 @@ __ZG:
     defined("PRG_CACHE_PATH") || define("PRG_CACHE_PATH", WORK_ROOT.PRG_CONF_PATH."cache");
 }
 require_once dirname(__FILE__)."/../baseZinux.php";
+# defines ZG templates root
+defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
 /**
  * baseZg class 
  *      All ZG classes with inherit from this
