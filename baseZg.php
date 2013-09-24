@@ -1,33 +1,40 @@
 <?php
 namespace zinux\zg;
 
+/** 
+ * Some definitions here
+ */
 if(!defined("ZG_ROOT"))
 {
+    # turning on output buffering
     ini_set('output_buffering','on');
-        
+    # defines zinux's root dir
     defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
-
+    # defines zinux cache dir
     defined("Z_CACHE_ROOT") ||  define("Z_CACHE_ROOT", dirname(dirname(ZG_ROOT))."/zinux");
-
+    # defines client APP conf's dir name
     defined("PRG_CONF_DIRNAME") || define("PRG_CONF_DIRNAME",".zg");
-
+    # defines client APP conf path
     defined("PRG_CONF_PATH") || define("PRG_CONF_PATH","/".PRG_CONF_DIRNAME."/");
-
+    # defines client APP conf name
     defined("PRG_CONF_NAME") || define("PRG_CONF_NAME",".cfg");
-
-    defined("ZG_VERSION") || define("ZG_VERSION","1.4.28");
-
-    defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
-    
+    # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
-
+    # defines ZG templates root
+    defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
+    # defines ZG's version
+    defined("ZG_VERSION") || define("ZG_VERSION","1.4.28");
+    # defines running environment
+    defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
+    # an other alternative running environment definition
     //defined("RUNNING_ENV") || define("RUNNING_ENV","DEVELOPMENT");
-    
-    if(RUNNING_ENV != "PRODUCTION")
+    # if we are in production mode
+    if(RUNNING_ENV == "PRODUCTION")
     {
+        # turn off the error display
         ini_set('display_errors','off');
     }
-    
+    # get CWDs
     $cwd  = getcwd();
     /**
      * Trying to locate a zinux project either under CWD
@@ -55,56 +62,62 @@ __LAUNCH:
     }
     unset($d);
 __ZG:
+    # defines ultimate CWD
     defined("WORK_ROOT") || define("WORK_ROOT", getcwd()."/");
-    
+    # defined client APP cache dir
     defined("PRG_CACHE_PATH") || define("PRG_CACHE_PATH", WORK_ROOT.PRG_CONF_PATH."cache");
 }
 require_once dirname(__FILE__)."/../baseZinux.php";
-
-defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
 /**
- * Description of baseZg
- *
- * @author dariush
+ * baseZg class 
+ *      All ZG classes with inherit from this
  */
 abstract class baseZg extends \zinux\baseZinux
 {
+    # default colot
     const defColor = "\033[m";
-    // blacks
+    # blacks
     const black = "\033[30m";
     const hiBlack = "\033[1;30m";
     const bgBlack = "\033[40m";
-    // reds
+    # reds
     const red = "\033[31m";
     const hiRed = "\033[1;31m";
     const bgRed = "\033[41m";
-    // greens
+    # greens
     const green = "\033[32m";
     const hiGreen = "\033[1;32m";
     const bgGreen = "\033[42m";
-    // yellows
+    # yellows
     const yellow = "\033[33m";
     const hiYellow = "\033[1;33m";
     const bgYellow = "\033[43m";
-    // blues
+    # blues
     const blue = "\033[34m";
     const hiBlue = "\033[1;34m";
     const bgBlue = "\033[44m";
-    // magentas
+    # magentas
     const magenta = "\033[35m";
     const hiMagenta = "\033[1;35m";
     const bgMagenta = "\033[45m";
-    // cyans
+    # cyans
     const cyan = "\033[36m";
     const hiCyan = "\033[1;36m";
     const bgCyan = "\033[46m";
-    // whites
+    # whites
     const white = "\033[37m";
     const hiWhite = "\033[1;37m";
     const bgWhite = "\033[47m";
             
     public function Initiate(){}
-    
+    /**
+     * std cout function
+     * @param string $content target text to be printed
+     * @param float $tap_index tab count before outputing the content
+     * @param string $color the text color some CONST defined in 'self::' you can use it
+     * @param boolean $auto_break if should auto break line after couting
+     * @return \zinux\zg\baseZg $this
+     */
     public function cout($content = "<br />", $tap_index = 0, $color = self::defColor, $auto_break = 1)
     {
         ob_start();
@@ -118,11 +131,17 @@ abstract class baseZg extends \zinux\baseZinux
         ob_flush();
         return $this;
     }
-    public function GetStatus($path = ".")
+    /**
+     * gets status object from status file
+     * @param string $project_path project directory
+     * @return vendors\status target saved status object
+     * @throws \zinux\kernel\exceptions\invalideArgumentException if status object's hash-sum mis-matched
+     */
+    public function GetStatus($project_path = ".")
     {
         $s = NULL;
-        if(file_exists("$path".PRG_CONF_PATH.PRG_CONF_NAME))
-            $s =  unserialize(file_get_contents("$path".PRG_CONF_PATH.PRG_CONF_NAME));
+        if(file_exists("$project_path".PRG_CONF_PATH.PRG_CONF_NAME))
+            $s =  unserialize(file_get_contents("$project_path".PRG_CONF_PATH.PRG_CONF_NAME));
         if(!$s)
             return $s;
         if(!isset($s->hs))
@@ -133,7 +152,11 @@ abstract class baseZg extends \zinux\baseZinux
             throw new \zinux\kernel\exceptions\invalideArgumentException("Hash-sum mis-matched ....");
         return $s;
     }
-    
+    /**
+     * creates new status file 
+     * it also creates project directory if not exists
+     * @param string $project_name project name
+     */
     public function CreateStatusFile($project_name)
     {
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name"))
@@ -145,18 +168,28 @@ abstract class baseZg extends \zinux\baseZinux
         $parent = new vendors\item(basename(realpath(".")), realpath("."));
         $s->project = new vendors\Item("project", realpath("./$project_name/"),$parent);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
-        return file_put_contents("./$project_name".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
+        file_put_contents("./$project_name".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
     }
-    
+    /**
+     * saves status object into config file
+     * @param \zinux\zg\vendors\status $s the status object
+     */
     public function SaveStatus(\zinux\zg\vendors\status $s)
     {
         unset($s->hs);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
-        return file_put_contents("{$s->project->path}/".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
+        file_put_contents("{$s->project->path}/".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
     }
-    public function CheckZG($path = ".", $throw_exception = 0)
+    /**
+     * checks if zg config file exists in given project path
+     * @param string $project_path target project directory
+     * @param boolean $throw_exception in case of non-existance config file, should it throw an exception or return a FALSE
+     * @return boolean TRUE if config file exists otherwise FALSE
+     * @throws \zinux\kernel\exceptions\invalideOperationException if $throw_exception enabled and config file does not exist
+     */
+    public function CheckZG($project_path = ".", $throw_exception = 0)
     {
-        if(!$this->GetStatus($path))
+        if(!$this->GetStatus($project_path))
         {
             if($throw_exception)
                 throw new \zinux\kernel\exceptions\invalideOperationException("No project have found ...");
@@ -170,6 +203,13 @@ abstract class baseZg extends \zinux\baseZinux
         }
         return true;
     }
+    /**
+     * but an restriction on a given array
+     * @param array $args the target array
+     * @param int $max maximun count of array's items
+     * @param int $min minimum count of array's items
+     * @throws \zinux\kernel\exceptions\invalideArgumentException if restriction not satisfied throws an exception
+     */
     public function restrictArgCount($args, $max = 100000, $min = -1)
     {
         if(count($args) > $max)
@@ -178,27 +218,45 @@ abstract class baseZg extends \zinux\baseZinux
         if(($min<0 && !count($args)) || (!(count($args) >= $min)))
             throw new \zinux\kernel\exceptions\invalideArgumentException("Empty argument passed ...");  
     }
+    /**
+     * checks if an given item is an iterable instance
+     * @param mixed $var target item to check
+     * @return boolean TRUE if its is iterable instance otherwise FALSE
+     */
     public function is_iterable($var) 
     {
         return (is_array($var) || $var instanceof \Traversable || $var instanceof \stdClass);
     }  
-    public function remove_arg(&$args, $value)
+    /**
+     * removed an value from an iterable item
+     * @param mixed $args target item to search into
+     * @param string $value target value to delete
+     * @param boolean $remove_all should remove all matching items or only the first
+     * @return boolean returns true if any item removed otherwise returns false
+     */
+    public function remove_arg(&$args, $value, $remove_all = 0)
     {
         if(!$this->is_iterable($args))
             return false;
-        
+        $found = 0;
         foreach($args as $index => $_value)
         {
-            if(strtolower($_value) == strtolower($value))
+            if(($found = (strtolower($_value) == strtolower($value))))
             {
                 unset($args[$index]);
                 \zinux\kernel\utilities\_array::array_normalize($args);
-                return true;
+                if($remove_all)
+                    return true;
             }
         }
-        return false;
-        
+        return $found;
     }
+    /**
+     * checks if an value exists in an iterable item
+     * @param mixed $args target item 
+     * @param string $value target value string
+     * @return boolean TRUE if $args has the $value otherwise FALSE
+     */
     public function has_arg($args, $value)
     {
         if(!$this->is_iterable($args))
@@ -212,6 +270,13 @@ abstract class baseZg extends \zinux\baseZinux
         
         return false;
     }
+    /**
+     * gets pair value of an key-value item
+     * @param mixed $args an iterable item
+     * @param string $target_arg target key-value
+     * @param boolean $auto_remove should auto-remove the item if they exist
+     * @return string the key-value's value
+     */
     public function get_pair_arg_value(&$args, $target_arg, $auto_remove = 0)
     {
         if(!$this->is_iterable($args))
@@ -236,6 +301,12 @@ abstract class baseZg extends \zinux\baseZinux
         }
         return NULL;
     }
+    /**
+     * inverse the preg_quote()'s effects in a string
+     * @param string $str target string
+     * @param string $delimiter the delimiter user in string 
+     * @return string inversed string
+     */
     public function inverse_preg_quote($str, $delimiter = NULL)
     {
         $ar = array(
@@ -264,6 +335,11 @@ abstract class baseZg extends \zinux\baseZinux
             $ar["\\$delimiter"] = $delimiter;
         return strtr($str, $ar);
     }
+    /**
+     * create a relative directory based namespace string 
+     * from a given path and in perspective of a project directory
+     * @return string 
+     */
     public function convert_to_relative_path($path, $project_dir = ".", \zinux\zg\vendors\status $s = null)
     {
         if(!$s)
@@ -279,7 +355,12 @@ abstract class baseZg extends \zinux\baseZinux
         );
         return $path;
     }
-    
+    /**
+     * check syntax  of a php file
+     * @param string $file_name target file name
+     * @param boolean $throw_exception_on_error
+     * @return TRUE if no syntax error happened, otherwise FALSE
+     */
     public function check_php_syntax($file_name, $throw_exception_on_error = 1)
     {
         $_file_name = $file_name;
@@ -302,7 +383,12 @@ abstract class baseZg extends \zinux\baseZinux
         }
         return true;
     }
-    
+    /**
+     * safe file requirement
+     * @param string $file_name target file name
+     * @param boolean $silent check if should file's output printed or not
+     * @param boolean $once check if it should use 'require_once' instead of 'require'
+     */
     public function require_file($file_name, $silent = 1, $once = 1)
     {
         ob_start();

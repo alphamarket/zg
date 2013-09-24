@@ -2,9 +2,7 @@
 namespace zinux\zg;    
 require_once 'baseZg.php';
 /**
- * Description of zg
- *
- * @author dariush
+ * The Zinux Generator Main-Gate
  */
 class zg extends \zinux\zg\baseZg
 {
@@ -13,7 +11,10 @@ class zg extends \zinux\zg\baseZg
      * @var array()
      */
     protected $args;
-    
+    /**
+     * Executes the zinux generator 
+     * @param array $argv argument passed to
+     */
     public static function Execute($argv)
     {
         system('clear');
@@ -43,7 +44,10 @@ class zg extends \zinux\zg\baseZg
         ob_end_clean();
         echo $console_cont;
     }
-    
+    /**
+     * ctor a new zinux generator
+     * @param array $argv the zg's arguments
+     */
     public function __construct($argv)
     {
         if(count($argv) && $argv[0] == $_SERVER['SCRIPT_NAME'])
@@ -51,7 +55,9 @@ class zg extends \zinux\zg\baseZg
         
         $this->args = $argv;
     }
-    
+    /**
+     * Runs the zinux generator
+     */
     public function  Run()
     {
         # create a parser instance
@@ -59,7 +65,9 @@ class zg extends \zinux\zg\baseZg
         # run the parser instance
         $parser->Run();
     }
-    
+    /**
+     * Cleans up everything
+     */
     public function __destruct()
     {
         if(!$this->GetStatus())
@@ -67,5 +75,7 @@ class zg extends \zinux\zg\baseZg
     }
 }
 
-
+/**
+ * Execute the Zinux Generator
+ */
 zg::Execute($argv);
