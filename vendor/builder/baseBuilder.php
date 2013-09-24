@@ -1,6 +1,9 @@
 <?php
 namespace zinux\zg\vendor\builder;
 
+/**
+ * base class for \zinux\zg\operators\build class
+ */
 abstract class baseBuilder extends \zinux\zg\operators\baseOperator
 {
     /**
