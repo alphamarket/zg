@@ -1,10 +1,7 @@
 <?php
 namespace zinux\zg\vendors\reflections;
-
 /**
- * Description of ReflectionMethod
- *
- * @author dariush
+ * An inhanced ReflectionMethod
  */
 class ReflectionMethod extends \ReflectionMethod
 {
@@ -49,7 +46,12 @@ class ReflectionMethod extends \ReflectionMethod
         $this->file_content = explode(PHP_EOL, file_get_contents($this->target_class->getFileName()));
         $this->_getEndLine($this->_getStartLine($this->file_content), $this->file_content);
     }
-    
+    /**
+     * gets accurate end line of method from an start point in a class content
+     * @param int $start_index method's start point
+     * @param string|array $class_file_content either the class file's content in string or tokenized in lines
+     * @return int the end line of method
+     */
     protected function _getEndLine($start_index, $class_file_content)
     {
         if(is_string($class_file_content))
@@ -83,7 +85,11 @@ class ReflectionMethod extends \ReflectionMethod
         # make it one-based #
         return ++$this->end_line;
     }
-    
+    /**
+     * gets accurate start line of method from an start point in a class content
+     * @param string|array $class_file_content either the class file's content in string or tokenized in lines
+     * @return int the start line of method
+     */
     protected function _getStartLine($class_file_content)
     {
         if(is_string($class_file_content))
@@ -142,19 +148,32 @@ __END:
         # make it one-based #
         return ++$this->start_line;
     }
+    /**
+     * gets accurate start line of method
+     * @return int the start line of method
+     */
     public function getStartLine()
     {
         return $this->start_line;
     }
+    /**
+     * gets accurate end line of method
+     * @return int the start line of method
+     */
     public function getEndLine()
     {
         return $this->end_line;
     }
+    /**
+     * gets accuratemethod texts
+     * @return string methods text
+     */
     public function getMethodText()
     {
         return $this->method_txt;
     }
     /**
+     * remove the method from its parent class content
      * @return string The class content with function removed!
      */
     public function Remove()

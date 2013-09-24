@@ -1,18 +1,17 @@
 <?php
 namespace zinux\zg\vendors\removers;
 /**
- * Description of removemoduleBootstrap
- *
- * @author dariush
+ * action remover
  */
-
 class removeAction extends \zinux\zg\operators\baseOperator
 {
-    const LAST_FINAL = 0;
-    const LAST_ABSTRACT = 1;
-    const LAST_PUBLIC = 2;
-    const LAST_FUNC = 3;
-    const LAST_CMNT = 4;
+    /**
+     * ctor a new action remover
+     * @param \zinux\zg\vendors\item $action target action to remove
+     * @param string $project_path project directory
+     * @throws \zinux\kernel\exceptions\notFoundException if action's parent controller/class not found
+     * @throws \zinux\kernel\exceptions\invalideOperationException if target controller is not subclass of baseController or target method not found
+     */
     public function __construct(\zinux\zg\vendors\item $action, $project_path = ".")
     {
         $controller = $action->parent;
