@@ -53,7 +53,7 @@ class creator extends \zinux\zg\operators\baseOperator
                 "chmod 775 -R {$module->path}"    
         ));
         # add a new bootstrap to module
-        new \zinux\zg\vendors\creators\moduleBootstrap($module, new \zinux\zg\vendors\Item("{$bs_name}", $module->path."/{$bs_name}.php"), $projectDir);
+        new \zinux\zg\vendors\creators\createModuleBootstrap($module, new \zinux\zg\vendors\Item("{$bs_name}", $module->path."/{$bs_name}.php"), $projectDir);
         # return created module
         return $module;
     } 
@@ -115,7 +115,7 @@ class creator extends \zinux\zg\operators\baseOperator
         # create the bs object
         $appbs = new \zinux\zg\vendors\Item($name, $s->project->path."/application/{$name}.php");
         # create the bs
-        new \zinux\zg\vendors\creators\appBootstrap($s->project, $appbs, $projectDir);
+        new \zinux\zg\vendors\creators\createAppBootstrap($s->project, $appbs, $projectDir);
         # return the created bs
         return $appbs;
     }
@@ -136,7 +136,7 @@ class creator extends \zinux\zg\operators\baseOperator
         # create routes object
         $appr = new \zinux\zg\vendors\Item($name, $s->project->path."/application/{$name}.php");
         # create the routes
-        new \zinux\zg\vendors\creators\appRoutes($s->project, $appr, $projectDir);
+        new \zinux\zg\vendors\creators\createAppRoutes($s->project, $appr, $projectDir);
         # return the created routes
         return $appr;
     }

@@ -1,12 +1,16 @@
 <?php
 namespace zinux\zg\vendors\creators;
 /**
- * Description of createmoduleBootstrap
- *
- * @author dariush
+ * module bootstrap creator
  */
-class moduleBootstrap extends \zinux\zg\baseZg
+class createModuleBootstrap extends \zinux\zg\baseZg
 {
+    /**
+     * ctor a new module bootstrap
+     * @param \zinux\zg\vendors\item $module target module item
+     * @param \zinux\zg\vendors\item $moduleBootstrap target module bootstrap item
+     * @param string $project_path project directory
+     */
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $moduleBootstrap, $project_path = ".")
     {
         $moduleBootstrap->name = preg_replace("#bootstrap$#i","", $moduleBootstrap->name)."Bootstrap";

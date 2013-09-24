@@ -1,12 +1,16 @@
 <?php
 namespace zinux\zg\vendors\creators;
 /**
- * Description of createView
- *
- * @author dariush
+ * layout creator
  */
 class createLayout extends \zinux\zg\baseZg
 {
+    /**
+     * ctor a new layout
+     * @param \zinux\zg\vendors\item $module target module item
+     * @param \zinux\zg\vendors\item $layout target layout item
+     * @param string $project_path project directory
+     */
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $layout, $project_path = ".")
     {
         $layout->name = preg_replace("#(\w+)layout$#i","$1", $layout->name)."Layout";

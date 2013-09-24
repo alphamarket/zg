@@ -1,12 +1,16 @@
 <?php
 namespace zinux\zg\vendors\creators;
 /**
- * Description of createView
- *
- * @author dariush
+ * model creator
  */
 class createModel extends \zinux\zg\baseZg
 {
+    /**
+     * ctor a new model
+     * @param \zinux\zg\vendors\item $module target module item
+     * @param \zinux\zg\vendors\item $model target model item
+     * @param type $project_path
+     */
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $model, $project_path = ".")
     {
         # no naming convention in models

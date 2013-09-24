@@ -1,12 +1,16 @@
 <?php
 namespace zinux\zg\vendors\creators;
 /**
- * Description of createView
- *
- * @author dariush
+ * helper creator
  */
 class createHelper extends \zinux\zg\baseZg
 {
+    /**
+     * ctor a new helper
+     * @param \zinux\zg\vendors\item $module target module item
+     * @param \zinux\zg\vendors\item $helper target helper item
+     * @param string $project_path project directory
+     */
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $helper, $project_path = ".")
     {
         $helper->name = preg_replace("#(\w+)helper$#i","$1", $helper->name)."Helper";

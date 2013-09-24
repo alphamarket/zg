@@ -1,12 +1,16 @@
 <?php
 namespace zinux\zg\vendors\creators;
 /**
- * Description of createView
- *
- * @author dariush
+ * view creator
  */
 class createView extends \zinux\zg\baseZg
 {
+    /**
+     * ctor a new view
+     * @param \zinux\zg\vendors\item $controller target controller item
+     * @param \zinux\zg\vendors\item $view target view item
+     * @param string $project_path project directory
+     */
     public function __construct(\zinux\zg\vendors\item $controller, \zinux\zg\vendors\item $view, $project_path = ".")
     {
         $view->name = preg_replace("#(\w+)view$#i","$1", $view->name)."View";

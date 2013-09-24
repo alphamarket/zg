@@ -1,13 +1,18 @@
 <?php
 namespace zinux\zg\vendors\creators;
 /**
- * Description of createmoduleBootstrap
- *
- * @author dariush
+ * action creator
  */
-
 class createAction extends \zinux\zg\operators\baseOperator
 {
+    /**
+     * ctor a new action
+     * @param \zinux\zg\vendors\item $controller target controller item
+     * @param \zinux\zg\vendors\item $action target action item
+     * @param string $project_path project directory
+     * @throws \zinux\kernel\exceptions\notFoundException if controller not found or class does not exist
+     * @throws \zinux\kernel\exceptions\invalideOperationException if controller is not sub class of baseController
+     */
     public function __construct(\zinux\zg\vendors\item $controller, \zinux\zg\vendors\item $action, $project_path = ".")
     {
         $ns = $this->convert_to_relative_path($controller->path, $project_path);

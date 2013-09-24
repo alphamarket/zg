@@ -81,7 +81,7 @@ class security extends baseOperator
             $this->cout("> ", 0.5, self::green, 0);
             $this->cout($file, 0, self::defColor, 0);
             # invoke an encryption
-            $e = new \zinux\kernel\security\encryption;
+            $e = new \zinux\kernel\security\cryption;
             # get file's content
             $file_cont = file_get_contents($file);
             # foreach encryption iter#
@@ -182,7 +182,7 @@ class security extends baseOperator
             # append crypt extention to decryption cache file 
             $p.=".crypt";
             # invoke a new encryptor
-            $e = new \zinux\kernel\security\encryption;
+            $e = new \zinux\kernel\security\cryption;
             # get files content
             $file_cont = file_get_contents($file);
             # store the encrypted file into cache file

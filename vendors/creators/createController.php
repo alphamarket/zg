@@ -1,13 +1,16 @@
 <?php
 namespace zinux\zg\vendors\creators;
 /**
- * Description of createmoduleBootstrap
- *
- * @author dariush
+ * Controller creator
  */
-
 class createController extends \zinux\zg\operators\baseOperator
 {
+    /**
+     * ctor a new controller
+     * @param \zinux\zg\vendors\item $module target module item
+     * @param \zinux\zg\vendors\item $controller target controller item
+     * @param string $project_path project directory
+     */
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $controller, $project_path = ".")
     {
         $controller->name = preg_replace("#controller$#i","", $controller->name)."Controller";

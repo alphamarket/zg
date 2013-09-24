@@ -1,12 +1,16 @@
 <?php
 namespace zinux\zg\vendors\creators;
 /**
- * Description of appRoutes
- *
- * @author dariush
+ * app routes creator
  */
-class appRoutes extends \zinux\zg\baseZg
+class createAppRoutes extends \zinux\zg\baseZg
 {
+    /**
+     * ctor a new routes 
+     * @param \zinux\zg\vendors\item $application target application item
+     * @param \zinux\zg\vendors\item $appRoutes target routes item
+     * @param type $project_path
+     */
     public function __construct(\zinux\zg\vendors\item $application, \zinux\zg\vendors\item $appRoutes, $project_path = ".")
     {
         $appRoutes->name = preg_replace("#(\w+)routes$#i","$1", $appRoutes->name)."Routes";
