@@ -111,24 +111,24 @@ class update extends baseOperator
                 # try to re-cloning the repo
                 exec("rm -fr $repo_path");
                 exec("cd ".dirname($repo_path)." && git clone '$clone_uri' '$name' 1>/dev/null 2>&1 ");
-                # open up the cloned repo
-                $repo = new \zinux\zg\vendors\PHPGit\Repository($repo_path, $debug_git, array('git_executable' => 'git'));
-                # if yet repo's manifest does not exist
-                if(!\zinux\kernel\utilities\fileSystem::resolve_path($repo_man))
-                {
-                    # indicate it
-                    $this ->cout(self::red."Notice: ".self::defColor.
-                                        "The ".self::yellow.$name.self::defColor." git repository updated. but still manifest file '".
-                                        self::yellow."manifest.json".self::defColor."'", $indent)
-                            ->cout("not found at '".self::yellow.$repo_path.self::defColor."'!", $indent+0.5)
-                            ->cout("No recursive updating will happen for repo ".self::yellow.$name.self::defColor." at '".self::yellow.$repo_path.self::defColor."'", $indent+0.5);
-                    # flag repo's manifest as failed
-                    $man_failed = 1;
-                }
-                else
-                    # flag repo's manifest as success
-                    $man_failed = 0;
             }
+            # open up the cloned repo
+            $repo = new \zinux\zg\vendors\PHPGit\Repository($repo_path, $debug_git, array('git_executable' => 'git'));
+            # if yet repo's manifest does not exist
+            if(!\zinux\kernel\utilities\fileSystem::resolve_path($repo_man))
+            {
+                # indicate it
+                $this ->cout(self::red."Notice: ".self::defColor.
+                                    "The ".self::yellow.$name.self::defColor." git repository updated. but still manifest file '".
+                                    self::yellow."manifest.json".self::defColor."'", $indent)
+                        ->cout("not found at '".self::yellow.$repo_path.self::defColor."'!", $indent+0.5)
+                        ->cout("No recursive updating will happen for repo ".self::yellow.$name.self::defColor." at '".self::yellow.$repo_path.self::defColor."'", $indent+0.5);
+                # flag repo's manifest as failed
+                $man_failed = 1;
+            }
+            else
+                # flag repo's manifest as success
+                $man_failed = 0;
         }
         # if we're on a solo-branch updating mode
         # and target branch does not exists
