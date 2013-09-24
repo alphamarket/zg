@@ -14,7 +14,7 @@ class update extends baseOperator
     public function update($args)
     {
         # this opt is valid under project directories
-        if(!$this->CheckZG()) return;
+        if(!$this->has_arg($args, "--cache") && !$this->CheckZG()) return;
         # should support --cache to update cache files...!
         # this opt shoud atmost has 4 arg
         $this->restrictArgCount($args, 4, 0);
