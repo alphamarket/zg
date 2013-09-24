@@ -23,7 +23,7 @@ if(!defined("ZG_ROOT"))
     # defines ZG templates root
     defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","1.4.28");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.4.29");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
