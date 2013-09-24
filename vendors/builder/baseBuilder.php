@@ -180,7 +180,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                     # fetch the expected class name
                     $class = $this->convert_to_relative_path($file, $this->root, $this->s)."\\$name";
                     # if this is no readable or failed to require it
-                    if(!is_readable($file) || !(require_once $file))
+                    if(!is_readable($file) || !($this->require_file($file)))
                     {  
                         $this->step_show(1, "x", self::hiRed);
                         # flag it as error
@@ -254,7 +254,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                 $class = $this->convert_to_relative_path($controller->path, $this->root, $this->s)."\\$cname";
                 # this if should never reach TRUE, cause the 
                 if(!class_exists($class))
-                    require_once $controller->path;
+                    $this->require_file($controller->path);
                 # foreach class' method
                 /* @var $method string */
                 foreach(get_class_methods($class) as $method)
@@ -337,7 +337,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                     # fetch expected class name
                     $class = $this->convert_to_relative_path($file, $this->root, $this->s)."\\$name";
                     # if this is no readable or failed to require it
-                    if(!is_readable($file) || !(require_once $file))
+                    if(!is_readable($file) || !($this->require_file($file)))
                     {
                         $this->step_show(1, "x", self::hiRed);
                         # flag it as error
@@ -421,7 +421,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                     # check file's syntax
                     $this->check_php_syntax($file);
                     # if not readable and cannot require it 
-                    if(!is_readable($file) || !(require_once $file))
+                    if(!is_readable($file) || !($this->require_file($file)))
                     {
                         $this->step_show(1, "x", self::hiRed);
                         # flag it as error
@@ -456,125 +456,170 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
         # indicate a step
         $this->step_show();
     }
+    /**
+     * fetched layout files and add them into status object
+     */
     public function fetchLayouts()
     {
         # indicate a step
         $this->step_show();
+        # foreach founded modules 
         foreach($this->s->modules->collection as $name => $module)
         {
             # indicate a step
-        $this->step_show();
-            if(!($mp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/layout")))
+            $this->step_show();
+            # if not layout path exists
+            if(!($lp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/layout")))
             {
                 $this->step_show(1, "x", self::hiRed);
+                # flag it as error
                 $this->log[] = new \zinux\zg\vendors\item("Layouts folder not found at '{$module->path}/views/layout'", "");
+                # continue with others
                 continue;
             }
             # indicate a step
-        $this->step_show();
-            foreach(glob("$mp/*") as $file)
+            $this->step_show();
+            # foreach file in layout path
+            foreach(glob("$lp/*") as $file)
             {
                 # indicate a step
-        $this->step_show();
+                $this->step_show();
+                # fetch file's name
                 $name = basename($file, ".phtml");
+                # if it is a file and matches with std layout file's name
                 if(is_file($file) && preg_match("#\w+layout.phtml$#i", $file))
                 {
                     # indicate a step
-        $this->step_show();
+                    $this->step_show();
+                    # check for syntax error
                     $this->check_php_syntax($file);
+                    # if its is no readable
                     if(!is_readable($file))
                     {
                         $this->step_show(1, "x", self::hiRed);
+                        # flag it as error
                         $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped", "Couldn't open the file.");
+                        # continue with others
                         continue;
                     }   
                     # indicate a step
-        $this->step_show();
+                    $this->step_show();
+                    # create a layout item
                     $layout = new \zinux\zg\vendors\Item($name, $file, $module);
+                    # add it into module's laytout collection
                     $this->s->modules->collection[strtolower($module->name)]->layout[strtolower($layout->name)] = $layout;
+                    # flag it as processed
                     $this->processed[] = $layout;
                     # indicate a step
-        $this->step_show();
+                    $this->step_show();
                 }
+                # if it is a file and did not matched with std layout pattern
                 elseif(is_file($file))
                 {
                     $this->step_show(1, "x", self::hiRed);
+                    # flag it as error
                     $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped","Didn't match with standard layout file pattern.");
                 }
                 # indicate a step
-        $this->step_show();
+                $this->step_show();
             }
             # indicate a step
-        $this->step_show();
+            $this->step_show();
         }
     }
+    /**
+     * fetched views files and add them into status object
+     */
     protected function fetchViewes()
     {
         # indicate a step
         $this->step_show();
+        # foreach founded modules 
         foreach($this->s->modules->collection as $name => $module)
         {
+            # if not controller exists in current module
             if(!isset($module->controller))
             {
                 $this->step_show(1, "x", self::hiRed);
+                # flag it as error
                 $this->log[] = new \zinux\zg\vendors\item("No controller found in {$module->name}", "");
+                # continue with others
                 continue;
             }
+            # foreach founded controller in this module
             foreach($module->controller  as $cname => $controller)
             {
                 # indicate a step
-        $this->step_show();
+                $this->step_show();
+                # fetch controller raw-name
                 $name = preg_replace("#controller#i", "", $cname);
+                # if views' folder does not exist in current controller
                 if(!($vp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/view/$name")))
                 {
                     $this->step_show(1, "x", self::hiRed);
+                    # flag it as error
                     $this->log[] = new \zinux\zg\vendors\item("Views folder not found at '{$module->path}/views/view/$name'", "");
+                    # continue with others
                     continue;
                 }
                 # indicate a step
-        $this->step_show();
+                $this->step_show();
+                # foreach files in views' folder
                 foreach(glob("$vp/*") as $file)
                 {
                     # indicate a step
-        $this->step_show();
+                    $this->step_show();
+                    # fetch file's name
                     $name = basename($file, ".phtml");
+                    # if it is a file and matches with std view name
                     if(is_file($file) && preg_match("#\w+view.phtml$#i", $file))
                     {
                         # indicate a step
-        $this->step_show();
+                        $this->step_show();
+                        # check file's syntax
                         $this->check_php_syntax($file);
+                        # if not readble
                         if(!is_readable($file))
                         {
                             $this->step_show(1, "x", self::hiRed);
+                            # flag it as error
                             $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped", "Couldn't open the file.");
+                            # continue with others
                             continue;
                         }
                         # indicate a step
-        $this->step_show();
+                        $this->step_show();
+                        # create new view item
                         $view = new \zinux\zg\vendors\Item($name, $file, $controller);
+                        # add it into controller's view collection
                         $this->s->modules->collection[strtolower($module->name)]->controller[strtolower($controller->name)]->view[strtolower($view->name)] = $view;
+                        # flag it as processed
                         $this->processed[] = $view;
                         # indicate a step
-        $this->step_show();
+                        $this->step_show();
                     }
+                    # if it is a file and does not match with std view name
                     elseif(is_file($file))
                     {
                         $this->step_show(1, "x", self::hiRed);
+                        # flag it as error
                         $this->log[] = new \zinux\zg\vendors\item("File '$file' skipped","Didn't match with standard view file pattern.");
                     }
                     # indicate a step
-        $this->step_show();
+                    $this->step_show();
                 }
                 # indicate a step
-        $this->step_show();
+                $this->step_show();
             }
             # indicate a step
-        $this->step_show();
+            $this->step_show();
         }
         # indicate a step
         $this->step_show();
     }
-    
+    /**
+     * Saves logged and proccessed items into a cache file
+     */
     public function saveLogs()
     {
         for($index = 0; $index<count($this->log); $index++)
@@ -596,6 +641,9 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
                 ->cout()
                 ->cout("Use '".self::yellow."zg build log".self::defColor."' to print logged info.", 1);
     }
+    /**
+     * UI step show handler
+     */
     protected function step_show($step_cout = 1, $char = ".", $color = self::hiGreen)
     {
         static $count = 0;

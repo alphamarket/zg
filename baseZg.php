@@ -25,7 +25,7 @@ if(!defined("ZG_ROOT"))
     
     if(RUNNING_ENV != "PRODUCTION")
     {
-        error_reporting(E_STRICT);
+        ini_set('display_errors','off');
     }
     
     $cwd  = getcwd();
@@ -301,5 +301,18 @@ abstract class baseZg extends \zinux\baseZinux
             return false;
         }
         return true;
+    }
+    
+    public function require_file($file_name, $silent = 1, $once = 1)
+    {
+        ob_start();
+        if($once)
+            require_once $file_name;
+        else
+            require $file_name;
+        if($silent)
+            ob_end_clean();
+        else
+            ob_end_flush();
     }
 }

@@ -33,7 +33,7 @@ class createAction extends \zinux\zg\operators\baseOperator
         
         $this->check_php_syntax($controller->path);
         
-        require_once $controller->path;
+        $this->require_file($controller->path);
         
         
         $s = $this->GetStatus($project_path);
