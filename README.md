@@ -149,11 +149,11 @@ New Project
 <b>Title</b><br />
 Create new project.
 <b>Description</b><br />
-This command will creates new project and its initial files and directories such as:
+This command will creates new project and its initial files and directories are:
 * application
 	* appBootstrap.php
 	* appRoutes.php 
-* module/defaultModule
+* modules/defaultModule
 	* controller
 		* indexController.php
 	* views/layout
@@ -180,6 +180,10 @@ zg new $project_name (--empty)
 <b>Optionals</b><br />
 * <b>--empty</b> : By passing this option it will create an empty project without any modules or application directory.
 
+<hr />
+<b>Notes</b><br />
+> In entire <i>zg</i> commands [spectial characters](http://en.wikipedia.org/wiki/Special_characters) in arguments will converted to '`_`' character.
+
 <hr /> 
 <b>Examples</b><br />
 ```PHP
@@ -196,8 +200,8 @@ New Module
 Create new module for project.
 <hr />
 <b>Description</b><br />
-This command will creates new module and its initial files and directories such as:
-* module/MODULE_NAME
+This command will creates new module and its initial files and directories are:
+* modules/MODULE_NAME
 	* controller
 		* indexController.php
 	* views/layout
@@ -233,7 +237,63 @@ zg new module ssl
 zg n module ssl
 ```
 <hr />
+New Controller
+--
+<b>Title</b><br />
+Create new controller.
+<hr />
+<b>Description</b><br />
+Creates new controller in a module and its initial files and directories are:
+* modules/MODULE_NAME
+	* controller
+		* CONTROLLER_NAMEController.php
+	* views/view/CONTROLLER_NAME
+		* indexView.phtml
 
+<hr />
+<b>Command</b><br />
+```PHP
+zg new controller $controller_name ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n c $controller_name ($module_name)
+```
+
+<hr />
+<b>Optionals</b><br />
+* <b>$module_name</b> : The name of target module. that we want to create the contoller in it.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$module_name</b> : <i>defaultModule</i>
+	* If no module name supplied by default <i>defaultModule</i> will be targeted.
+
+<hr />
+
+<b>Notes</b><br />
+> The `Module` and `Controller` postfix is not needed at end of `$controller_name` and `$module_name` names.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# creates new contoller name 'auth' in 'defaultModule'
+zg new controller auth
+# or using aliases: 
+zg n c auth
+```
+```PHP
+# creates new contoller name 'comments' in 'userModule'
+zg new controller comments user
+# or more specific:
+zg new controller commentsController userModule 
+# or using aliases: 
+zg n c comment user
+```
+
+<hr />
 Remove
 --
 
