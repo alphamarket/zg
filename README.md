@@ -1177,8 +1177,121 @@ zg r app r ssl
 
 Build
 --
+<b>Title</b><br />
+Re-build <i>zg</i> config file. 
+<hr />
+<b>Description</b><br />
+Sometimes happen you manipulate your project entities manually instead of using <i>zg</i>, i.e you
+may add a controller named `fooController` manually in `defaultController` and next time you may want 
+to a new action named `barAction` to `fooController`, but since `fooController` created manually it 
+doesn't exist in <i>zg</i> manifest list, so it won't recognize `fooController` and an error will raise like:
+```
+# output result of : 
+# zg n a bar foo
+
+Zinux Generator(vX.X.X) by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013
+[ Error occured ]
+    Controller 'defaultModule/fooController' does not exist in zg manifest!
+    Try 'zg build' command!
+```
+In such cases <i>zg</i> provided a simple solution and that is `zg build` command.<br />
+It will build up <i>zg</i> manifest list from scratch to top, any [zinux entity](https://github.com/dariushha/zinux#mvc-entities)
+will be re-registered again, including in our example case `fooController` which made manually.<br />
+In our example case after `zg build` you are good to go with `zg n a bar foo`.
+
+> There is an other usecase of `zg build` options an is that when you have lost or corrupted your <i>zg</i>
+config files, this command will be useful. 
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg build ( -m ) ( -a ) ( -p )
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg b ( -m ) ( -a ) ( -p )
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h b
+```
+<hr />
+<b>Optionals</b><br />
+* <b>-m</b> : `-m /app/modules/path` 
+* <b>-a</b> : `-a /app/application/folder/path`
+* <b>-p</b> : `-p /app/project/path`
+
+
+<hr />
+<b>Default Values</b><br />
+* <b>-m</b> : <i>modules</i> 
+* <b>-a</b> : <i>application</i>
+* <b>-p</b> : <i>.</i>(Current Directory)
+
+<hr />
+<b>Notes</b><br />
+> In many normal cases you don't have to enter any of `zg build`'s options at all, as long as you lauch 
+`zg build` in any project's root folder it will built up the <i>zg</i> manifest file.  
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# builds a zg manifest under current folder
+# note : we are in /path/to/PROJECT-ROOT when we are doing this
+zg build
+# or using aliases: 
+zg b
+```
+```PHP
+# builds a zg manifest for an application
+zg build -p "/path/to/target/app" -m "/relative/path/from/app/root/to/modules/" -a "/relative/path/to/application"  
+# or using aliases: 
+zg b -p "/path/to/target/app" -m "/relative/path/from/app/root/to/modules/" -a "/relative/path/to/application"
+```
+<hr />
+
 Config
 --
+<b>Title</b><br />
+Configure zinux generator.
+<hr />
+<b>Description</b><br />
+Configure zinux generator for current project with given options.
+<hr />
+<b>Command</b><br />
+```PHP
+zg config $options
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg c $options
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h c
+```
+<hr />
+<b>Notes</b><br />
+As i am wrting this document, there are only 2 options available for configuration:
+* <b>-show-parents</b> : Skip parent property in 'zg status' command.
+* <b>+show-parents</b> : Do not skip parent property in 'zg status' command.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+zg config +show-parents
+# or using aliases: 
+zg c -show-parents
+```
+<hr />
 Security
 --
 Status
