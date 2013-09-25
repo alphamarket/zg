@@ -85,6 +85,11 @@ Show both Zinux's and Zinux Generator's versions.
 zg --version
 ```
 <hr />
+<b>Help</b><br />
+```PHP
+zg -h --version
+```
+<hr />
 
 Help
 --
@@ -105,6 +110,11 @@ zg -h ($command) (--heads)
 <b>Alias</b><br />
 ```PHP
 zg -h ($command_alias) (--heads)
+```
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h -h
 ```
 <hr />
 <b>Optionals</b><br />
@@ -177,6 +187,11 @@ zg new project $project_name (--empty)
 zg new $project_name (--empty)
 ```
 <hr />
+<b>Help</b><br />
+```PHP
+zg -h n p
+```
+<hr />
 <b>Optionals</b><br />
 * <b>--empty</b> : By passing this option it will create an empty project without any modules or application directory.
 
@@ -223,6 +238,11 @@ zg n module $module_name
 ```
 
 <hr />
+<b>Help</b><br />
+```PHP
+zg -h n module
+```
+<hr />
 <b>Examples</b><br />
 ```PHP
 # creates new module name 'admin'
@@ -263,8 +283,13 @@ zg n c $controller_name ($module_name)
 ```
 
 <hr />
+<b>Help</b><br />
+```PHP
+zg -h n c
+```
+<hr />
 <b>Optionals</b><br />
-* <b>$module_name</b> : The name of target module. that we want to create the contoller in it.
+* <b>$module_name</b> : The name of target module that we want to create the contoller in it.
 
 <hr />
 <b>Default Values</b><br />
@@ -274,13 +299,15 @@ zg n c $controller_name ($module_name)
 <hr />
 
 <b>Notes</b><br />
-> The `Module` and `Controller` postfix is not needed at end of `$controller_name` and `$module_name` names.
+> The `Module` and `Controller` postfixes is not needed at end of `$module_name` and `$controller_name` names.
 
 <hr />
 <b>Examples</b><br />
 ```PHP
 # creates new contoller name 'auth' in 'defaultModule'
 zg new controller auth
+# or more specific:
+zg new controller authController defaultModule 
 # or using aliases: 
 zg n c auth
 ```
@@ -291,6 +318,60 @@ zg new controller comments user
 zg new controller commentsController userModule 
 # or using aliases: 
 zg n c comment user
+```
+
+<hr />
+New Action
+--
+<b>Title</b><br />
+Create new action function.
+<hr />
+<b>Description</b><br />
+Creates new action function in any desired, controller and module.
+<hr />
+<b>Command</b><br />
+```PHP
+zg new action $action_name ($controller_name) ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n a $action_name ($controller_name) ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h n a
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$controller_name</b> : The name of target controller that we want to create the action in it.
+* <b>$module_name</b>     : The name of target module that contains `$controller_name`.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$controller_name</b> : <i>indexController</i>
+* <b>$module_name</b>     : <i>defaultModule</i>
+
+<hr />
+<b>Notes</b><br />
+> The `Module`,`Controller`,`Action` postfixes is not needed at end of `$module_name`, `$controller_name` and `$action_name` names.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# creates new action name 'help' in 'indexController', 'defaultModule'
+zg new action help
+# or using aliases: 
+zg n a help
+```
+```PHP
+# creates new action name 'login' in 'authController', 'sslModule'
+zg new action login auth ssl
+# or using aliases: 
+zg n a login auth ssl
 ```
 
 <hr />
