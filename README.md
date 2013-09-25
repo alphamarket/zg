@@ -6,6 +6,7 @@ zg
 This is a tool designed to create, manipulate <i>[zinux](https://github.com/dariushha/zinux)</i> projects. <i>Zinux generator tool</i> is an efficient appliction designed to make use of <i>zinux</i>
 project even easier than it is, and also makes you develop more, in a short time.<br />
 
+> From now on we will refer to <b><i>Zinux Generator Tool</i></b> by <b><i>zg</i></b>. 
 
 Topics
 --
@@ -13,15 +14,26 @@ Topics
 * [Installation](#installation)
   * [Windows Users](#windows-users) 
 * [Commands Types](#command-types)
-	* [<b><i>Version</i></b>)(#version)
-	* [<b><i>Help</i></b>)(#help)
-	* [<b><i>New</i></b>)(#new)
-	* [<b><i>Remove</i></b>)(#remove)
-	* [<b><i>Build</i></b>)(#build)
-	* [<b><i>Config</i></b>)(#config)
-	* [<b><i>Security</i></b>)(#security)
-	* [<b><i>Status</i></b>)(#status)
-	* [<b><i>Update</i></b>)(#update)
+	* [<b><i>Version</i></b>](#version)
+	* [<b><i>Help</i></b>](#help)
+	* [<b><i>New</i></b>](#new)
+		* [New Project](#new-project)
+		* [New Module](#new-module)
+		* [New Controller](#new-controller)
+		* [New Action](#new-action)
+		* [New View](#new-view)
+		* [New Layout](#new-layout)
+		* [New Model](#new-model)
+		* [New Helper](#new-helper)
+		* [New Application](#new-application)
+			* [New Appliction Bootstrap](#new-application-bootstrap)
+			* [New Appliction Routes](#new-application-routes)
+	* [<b><i>Remove</i></b>](#remove)
+	* [<b><i>Build</i></b>](#build)
+	* [<b><i>Config</i></b>](#config)
+	* [<b><i>Security</i></b>](#security)
+	* [<b><i>Status</i></b>](#status)
+	* [<b><i>Update</i></b>](#update)
 
 Requirements
 --
@@ -54,3 +66,133 @@ so before you use [zinux installer](https://raw.github.com/dariushha/zinux/maste
 [zinux generator tool](https://github.com/dariushha/zg) make sure your Windows supports shell scripts, i.e if 
 `ls -l` command lists your directories, you are OK! 
 
+Command Types
+==
+The <i>zg</i> uses very simple and flexible command lines. Except [Security](#security) command line which is an 
+sensitive command all other commands has aliases which is the short form of original command. A list of available 
+commands and their details is as follow:<br />
+
+Version
+--
+<b>Title</b><br />
+Shows Version.
+<hr />
+<b>Description</b><br />
+Show both Zinux's and Zinux Generator's versions.
+<hr />
+<b>Command</b><br />
+```PHP
+zg --version
+```
+<hr />
+
+Help
+--
+<b>Title</b><br />
+Prints help content.
+<hr />
+<b>Description</b><br />
+Prints help content.
+* It can be general help, which will print all commands help content.
+* It can be specific, which will print only the help content of target command.
+
+<hr /> 
+<b>Command</b><br />
+```PHP
+zg -h ($command) (--heads)
+```
+<hr />
+<b>Alias</b><br />
+```PHP
+zg -h ($command-alias) (--heads)
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$command</b> : print a specific command's help content.
+* <b>--heads</b>  : if you pass this argument it will only print valid command lines under `$command` command line.
+<hr />
+<b>Default Values</b><br />
+* <b>$command</b> : If you don't pass `$command` it will print all commands' help content. 
+<hr />
+<b>Notes</b><br />
+* `$command` should be a valid command in `zg` command list.
+<hr />
+<b>Examples</b><br />
+```PHP
+# prints all commands' help content
+zg
+# OR using aliases :
+zg -h
+```
+```PHP
+# prints 'zg new'command's help content
+zg -h new 
+# OR using aliases :
+zg -h n
+```
+<b>Or you can be more specific, like:</b>
+```PHP
+# prints 'zg new action' command's help content
+zg -h new action
+# OR using aliases :
+zg -h n a
+```
+<hr />
+New
+--
+New Project
+--
+<b>Title</b><br />
+Creat new project.
+<b>Description</b><br />
+This command will creates new project and its initial files and directories such as:
+* application
+	* appBootstrap.php
+	* appRoutes.php 
+* module/defaultModule
+	* controller
+		* indexController.php
+	* views/layout
+		* defaultLayout.phtml
+	* views/view/index
+		* indexView.phtml
+	* defaultBootstrap.php	
+* public_html
+	* index.php
+	* .htaccess
+* [zinux](https://github.com/dariushha/zinux) framework
+<hr />
+<b>Command</b><br />
+```PHP
+zg new project $project_name (--empty)
+```
+<hr />
+<b>Alias</b><br />
+```PHP
+zg new $project_name (--empty)
+```
+<hr />
+<b>Optionals</b><br />
+* <b>--empty</b> : By passing this option it will create an empty project without any modules or application directory.
+<hr /> 
+<b>Examples</b><br />
+```PHP
+# creates new project direcroty named 'test
+zg new project test
+# or using aliases: 
+zg n test
+```
+<hr />
+
+Remove
+--
+Build
+--
+Config
+--
+Security
+--
+Status
+--
+Update
+--
