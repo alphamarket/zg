@@ -29,6 +29,16 @@ Topics
 			* [New Application Bootstrap](#new-application-bootstrap)
 			* [New Application Routes](#new-application-routes)
 	* [<b><i>Remove</i></b>](#remove)
+		* [Remove Module](#remove-module)
+		* [Remove Controller](#remove-controller)
+		* [Remove Action](#remove-action)
+		* [Remove View](#remove-view)
+		* [Remove Layout](#remove-layout)
+		* [Remove Model](#remove-model)
+		* [Remove Helper](#remove-helper)
+		* [Remove Application](#remove-application)
+			* [Remove Application Bootstrap](#remove-application-bootstrap)
+			* [Remove Application Routes](#remove-application-routes)
 	* [<b><i>Build</i></b>](#build)
 	* [<b><i>Config</i></b>](#config)
 	* [<b><i>Security</i></b>](#security)
@@ -212,10 +222,10 @@ zg n test
 New Module
 --
 <b>Title</b><br />
-Create new module for project.
+Create new module.
 <hr />
 <b>Description</b><br />
-This command will creates new module and its initial files and directories are:
+This command will creates new module for project and its initial files and directories are:
 * modules/MODULE_NAME
 	* controller
 		* indexController.php
@@ -528,7 +538,7 @@ zg -h n m
 <b>Notes</b><br />
 > For free uses of models there is no naming convention in models, i.e in layouts when you
 execute the `zg new layout dark` it will create a layout named <b>darkLayout</b> with a <b>Layout</b>
-post-append name.<br />
+post-appended name.<br />
 In models there is no such post-appending in names, so for example if you execute the `zg new model user` it will create a model in `defaultModule` named exactly as you type i.e <b>user</b> and if you execute `zg new model userModel` it will exactly creates a model named <b>userModel</b>, etc.
 <hr />
 > The `Module` postfix is not needed at end of `$module_name`.
@@ -691,9 +701,479 @@ zg new application routes ssl
 zg n app r ssl
 ```
 <hr />
-<hr />
 Remove
 --
+Remove Module
+--
+<b>Title</b><br />
+Removes an existed module.
+<hr />
+<b>Description</b><br />
+This command will Remove an existed module from project.
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove module $module_name
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r module $module_name
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r module
+```
+<hr />
+
+<b>Notes</b><br />
+> The `Module` postfix is not needed at end of `$module_name`.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# removes an existed module named 'admin'
+zg remove module admin
+# or using aliases: 
+zg r module admin
+```
+```PHP
+# removes an existed module named 'ssl'
+zg remove module ssl
+# or using aliases: 
+zg r module ssl
+```
+<hr />
+Remove Controller
+--
+<b>Title</b><br />
+Removes an existed controller.
+<hr />
+<b>Description</b><br />
+Removes an existed controller from module.
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove controller $controller_name ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r c $controller_name ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r c
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$module_name</b> : The name of target module that we want to remove the contoller from it.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$module_name</b> : <i>defaultModule</i>
+	* If no module name supplied by default <i>defaultModule</i> will be targeted.
+
+<hr />
+
+<b>Notes</b><br />
+> The `Module` and `Controller` postfixes are not needed at end of `$module_name` and `$controller_name` names.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# removes an existed contoller named 'auth' from 'defaultModule'
+zg remove controller auth
+# or more specific:
+zg remove controller authController defaultModule 
+# or using aliases: 
+zg r c auth
+```
+```PHP
+# removes an existed contoller named 'comments' from 'userModule'
+zg remove controller comments user
+# or more specific:
+zg remove controller commentsController userModule 
+# or using aliases: 
+zg r c comment user
+```
+
+<hr />
+Remove Action
+--
+<b>Title</b><br />
+Removes an existed action function.
+<hr />
+<b>Description</b><br />
+Removes an existed action function from any desired, controller and module.
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove action $action_name ($controller_name) ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r a $action_name ($controller_name) ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r a
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$controller_name</b> : The name of target controller that we want to remove the action from it.
+* <b>$module_name</b>     : The name of target module that contains `$controller_name`.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$controller_name</b> : <i>indexController</i>
+* <b>$module_name</b>     : <i>defaultModule</i>
+
+<hr />
+<b>Notes</b><br />
+> The `Module`,`Controller`,`Action` postfixes are not needed at end of `$module_name`, `$controller_name` and `$action_name` names.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# removes an existed action named 'help' from 'indexController', 'defaultModule'
+zg remove action help
+# or using aliases: 
+zg r a help
+```
+```PHP
+# removes an existed action named 'login' from 'authController', 'sslModule'
+zg remove action login auth ssl
+# or using aliases: 
+zg r a login auth ssl
+```
+
+<hr />
+Remove View
+--
+<b>Title</b><br />
+Removes an existed view.
+<hr />
+<b>Description</b><br />
+Removes an existed view related to a controller from any desired module.
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove view $view_name ($controller_name) ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r a $view_name ($controller_name) ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r v
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$controller_name</b> : The name of target controller that we want to relate the view with it.
+* <b>$module_name</b>     : The name of target module that contains `$controller_name`.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$controller_name</b> : <i>indexController</i>
+* <b>$module_name</b>     : <i>defaultModule</i>
+
+<hr />
+<b>Notes</b><br />
+> The `Module`,`Controller`,`View` postfixes are not needed at end of `$module_name`, `$controller_name` and `$view_name` names.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# removes an existed view named 'help2' from 'indexController', 'defaultModule'
+zg remove view help2
+# or using aliases: 
+zg r v help2
+```
+```PHP
+# removes an existed view named 'login2' from 'authController', 'sslModule'
+zg remove view login2 auth ssl
+# or using aliases: 
+zg r v login2 auth ssl
+```
+
+<hr />
+Remove Layout
+--
+<b>Title</b><br />
+Removes an existed layout.
+<hr />
+<b>Description</b><br />
+Removes an existed layout from module.
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove layout $layout_name ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r l $layout_name ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r l
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$module_name</b> : The name of target module that we want to remove the contoller from it.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$module_name</b> : <i>defaultModule</i>
+	* If no module name supplied by default <i>defaultModule</i> will be targeted.
+
+<hr />
+
+<b>Notes</b><br />
+> The `Module` and `Layout` postfixes are not needed at end of `$module_name` and `$layout_name` names.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# removes an existed layout named 'print' from 'defaultModule'
+zg remove layout print 
+# or using aliases: 
+zg r l print
+```
+```PHP
+# removes an existed layout named 'dark' from 'userModule'
+zg remove layout dark user 
+# or using aliases: 
+zg r l dark user
+```
+
+<hr />
+Remove Model
+--
+<b>Title</b><br />
+Removes an existed model.
+<hr />
+<b>Description</b><br />
+Removes an existed model from a module.
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove model $model_name ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r m $model_name ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r m
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$module_name</b> : The name of target module that we want to remove the contoller from it.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$module_name</b> : <i>defaultModule</i>
+	* If no module name supplied by default <i>defaultModule</i> will be targeted.
+
+<hr />
+
+<b>Notes</b><br />
+> For free uses of models there is no naming convention in models, i.e in layouts when you
+execute the `zg remove layout dark` it will remove a layout named <b>darkLayout</b> with a <b>Layout</b>
+post-appended name.<br />
+In models there is no such post-appending in names, so for example if you execute the `zg remove model user` 
+it will remove a model in `defaultModule` named exactly as you type i.e <b>user</b> and if you execute 
+`zg remove model userModel` it will exactly remove a model named <b>userModel</b>, etc.
+<hr />
+> The `Module` postfix is not needed at end of `$module_name`.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# removes an existed model named 'user' from 'defaultModule'
+zg remove model user
+# or using aliases: 
+zg r m user
+```
+```PHP
+# removes an existed model named 'adminModel' from 'userModule'
+zg remove model adminModel user
+# or using aliases: 
+zg r m adminModel user
+```
+
+<hr />
+Remove Helper
+--
+<b>Title</b><br />
+Removes an existed heler.
+<hr />
+<b>Description</b><br />
+Removes an existed helper from a module.
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove helper $helper_name ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r h $helper_name ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r h
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$module_name</b> : The name of target module that we want to remove the contoller from it.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$module_name</b> : <i>defaultModule</i>
+	* If no module name supplied by default <i>defaultModule</i> will be targeted.
+
+<hr />
+
+<b>Notes</b><br />
+> The `Module` and `Helper` postfixes are not needed at end of `$module_name` and `$helper_name`.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# removes an existed helper named 'generics' from 'defaultModule'
+zg remove helper generics
+# or using aliases: 
+zg r h generics
+```
+```PHP
+# removes an existed helper named 'validators' from 'userModule'
+zg remove helper validators user
+# or using aliases: 
+zg r h validators user
+```
+Remove Application
+--
+Remove Application Bootstrap
+--
+<b>Title</b><br />
+Removes an existed application bootstrap for project.
+<hr />
+<b>Description</b><br />
+This command will Removes an existed application bootstrap from `PROJECT-ROOT/application` directory. 
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove application boostrap $bootstrap_name
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r app b $bootstrap_name
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r app b
+```
+<hr />
+
+<b>Notes</b><br />
+> The `Bootstrap` postfix is not needed at end of `$bootstrap_name`.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# removes an existed application bootstrap named 'db'
+zg remove application bootstrap db
+# or using aliases: 
+zg r app b db
+```
+```PHP
+# removes an existed application bootstrap named 'ssl'
+zg remove application bootstrap ssl
+# or using aliases: 
+zg r app b ssl
+```
+<hr />
+Remove Application Routes
+--
+<b>Title</b><br />
+Removes an existed application routes for project.
+<hr />
+<b>Description</b><br />
+This command will Removes an existed application routes from `PROJECT-ROOT/application` directory. 
+<hr />
+<b>Command</b><br />
+```PHP
+zg remove application routes $routes_name
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg r app r $routes_name
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h r app r
+```
+<hr />
+
+<b>Notes</b><br />
+> The `Routes` postfix is not needed at end of `$routes_name`.
+
+<b>Examples</b><br />
+```PHP
+# removes an existed application routes named 'comment'
+zg remove application routes comment
+# or using aliases: 
+zg r app r comments
+```
+```PHP
+# removes an existed application routes named 'ssl'
+zg remove application routes ssl
+# or using aliases: 
+zg r app r ssl
+```
+<hr />
 
 Build
 --
