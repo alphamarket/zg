@@ -20,7 +20,7 @@
         "options":
         {
             "+d":"The depth # that recursion should proceed to.",
-            "+p":"Show items parent detail in structure tree",
-            "$section_name":"Narrow down your explore items by passing its path from root to target section name.<br />e.g 'zg status modules collection defaultmodule':.<br />Will show the details about defaultmodule!"
+            "+p":"Show items parent detail in structure tree.",
+            "$section_name":"Narrow down your explore items by passing its path from root to target section name.<br />e.g 'zg status modules collection defaultmodule'.<br />Will show the details about defaultmodule!"
         }
 }

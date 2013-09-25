@@ -22,7 +22,7 @@
         },
         "notes":
         [
-            "When you encrypt your project, you cannot lost your '.zg' folder and its content.<br />The project without its '.zg' will be un-retrieval!",
+            "When you encrypt your project, you cannot lost your '.zg' folder and its content.<br />The project without its '.zg' will be too risky to encrypt!",
             "Be careful with command if you make mistake it is possible to blow up your project.",
             "This command will encrypt your entire project except the 'zinux' folder.<br />Which obviously is a public project!",
             "If you ever forger your $encryption_key, your project will be lost for good.<br />So make sure you pass a easy to remember but hard to guess crypt key.",
