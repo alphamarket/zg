@@ -49,6 +49,7 @@ class _new extends baseOperator
         $opt = array(
                 "cp ".ZG_TEMPLE_ROOT."/* $pName/ -R",
                 "cp -rf ".Z_CACHE_ROOT." $pName",
+                "cd $pName/zinux && rm -fr test zg",
                 "echo '# add this to apache vhost.conf files
 <VirtualHost *:80>
 	ServerAdmin webmaster@localhost
@@ -64,6 +65,12 @@ class _new extends baseOperator
         );
         # run the above command
         $this->Run($opt);
+        # modifying project's zinux manifest
+        $zmanifest = json_decode(file_get_contents("$pName/zinux/manifest.json"));
+        # remove the zg module from target project
+        unset($zmanifest->modules->zg);
+        # re-write the manifest 
+        file_put_contents("$pName/zinux/manifest.json", json_encode($zmanifest));
         # if the client wants an empty project
         if($empty)
         {
