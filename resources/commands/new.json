@@ -165,7 +165,7 @@
         "help":
         {
             "command":"zg new helper $helper_name ($module_name)",
-            "alias": "zg n h $layout_name ($module_name)",
+            "alias": "zg n h $helper_name ($module_name)",
             "detail":"Creates a new helper for a module."
         },
         "defaults":
