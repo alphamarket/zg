@@ -429,6 +429,61 @@ zg n v login2 auth ssl
 ```
 
 <hr />
+New Layout
+--
+<b>Title</b><br />
+Create new layout.
+<hr />
+<b>Description</b><br />
+Creates new layout in a module.
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg new layout $layout_name ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n l $layout_name ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h n l
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$module_name</b> : The name of target module that we want to create the contoller in it.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$module_name</b> : <i>defaultModule</i>
+	* If no module name supplied by default <i>defaultModule</i> will be targeted.
+
+<hr />
+
+<b>Notes</b><br />
+> The `Module` and `Layout` postfixes are not needed at end of `$module_name` and `$layout_name` names.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# creates new layout name 'print' in 'defaultModule'
+zg new layout print 
+# or using aliases: 
+zg n l print
+```
+```PHP
+# creates new layout name 'dark' in 'userModule'
+zg new layout dark user 
+# or using aliases: 
+zg n l dark user
+```
+
+<hr />
 Remove
 --
 
