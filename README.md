@@ -179,6 +179,7 @@ zg new $project_name (--empty)
 <hr />
 <b>Optionals</b><br />
 * <b>--empty</b> : By passing this option it will create an empty project without any modules or application directory.
+
 <hr /> 
 <b>Examples</b><br />
 ```PHP
@@ -187,6 +188,7 @@ zg new project test
 # or using aliases: 
 zg n test
 ```
+
 <hr />
 
 Remove
