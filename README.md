@@ -147,7 +147,7 @@ New
 New Project
 --
 <b>Title</b><br />
-Creat new project.
+Create new project.
 <b>Description</b><br />
 This command will creates new project and its initial files and directories such as:
 * application
@@ -190,9 +190,53 @@ zg n test
 ```
 
 <hr />
+New Module
+--
+<b>Title</b><br />
+Create new module for project.
+<hr />
+<b>Description</b><br />
+This command will creates new module and its initial files and directories such as:
+* module/MODULE_NAME
+	* controller
+		* indexController.php
+	* views/layout
+		* MODULE_NAMELayout.phtml
+	* views/view/index
+		* indexView.phtml
+	* defaultBootstrap.php	
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg new module $module_name
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n module $module_name
+```
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# creates new module name 'admin'
+zg new module admin
+# or using aliases: 
+zg n module admin
+```
+```PHP
+# creates new module name 'ssl'
+zg new module ssl
+# or using aliases: 
+zg n module ssl
+```
+<hr />
 
 Remove
 --
+
 Build
 --
 Config
