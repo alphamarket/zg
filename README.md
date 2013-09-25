@@ -111,6 +111,7 @@ zg -h ($command_alias) (--heads)
 * <b>$command</b> : print a specific command's help content.
 * <b>--heads</b>  : if you pass this argument it will only print valid command lines under `$command` command line.
 
+
 <hr />
 <b>Default Values</b><br />
 * <b>$command</b> : If you don't pass `$command` it will print all commands' help content. 
