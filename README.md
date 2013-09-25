@@ -484,6 +484,66 @@ zg n l dark user
 ```
 
 <hr />
+New Model
+--
+<b>Title</b><br />
+Create new model.
+<hr />
+<b>Description</b><br />
+Creates new model in a module.
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg new model $model_name ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n m $model_name ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h n m
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$module_name</b> : The name of target module that we want to create the contoller in it.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$module_name</b> : <i>defaultModule</i>
+	* If no module name supplied by default <i>defaultModule</i> will be targeted.
+
+<hr />
+
+<b>Notes</b><br />
+> For free uses of models there is no naming convention in models, i.e in layouts when you
+execute the `zg new layout dark` it will create a layout <b>darkLayout</b> with a <b>Layout</b>
+post-append name, so the is no such thing in `zg new model`, so for example if you execute the
+`zg new model user` it will create a model in `defaultModule` named exactly as you type i.e <b>user</b> and if you execute `zg new model userModel` it will exactly creates a model named <b>userModel</b>, etc.   
+<hr />
+> The `Module` postfix is not needed at end of `$module_name`.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# creates new model name 'user' in 'defaultModule'
+zg new model user
+# or using aliases: 
+zg n m user
+```
+```PHP
+# creates new model name 'adminModel' in 'userModule'
+zg new model adminModel user
+# or using aliases: 
+zg n m adminModel user
+```
+
+<hr />
 Remove
 --
 
