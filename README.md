@@ -95,6 +95,10 @@ Prints help content.
 Prints help content.
 * It can be general help, which will print all commands help content.
 * It can be specific, which will print only the help content of target command.
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 <hr /> 
 <b>Command</b><br />
 ```PHP
