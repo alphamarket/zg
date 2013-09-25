@@ -90,12 +90,12 @@ Shows Version.
 <b>Description</b><br />
 Show both Zinux's and Zinux Generator's versions.
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg --version
 ```
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h --version
 ```
@@ -112,17 +112,17 @@ Prints help content.
 * It can be specific, which will print only the help content of target command.
 
 <hr /> 
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg -h ($command) (--heads)
 ```
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg -h ($command_alias) (--heads)
 ```
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h -h
 ```
@@ -141,7 +141,7 @@ zg -h -h
 * `$command` should be a valid command in `zg` command list.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # prints all commands' help content
 zg
@@ -187,17 +187,15 @@ This command will creates new project and its initial files and directories are:
 * [zinux](https://github.com/dariushha/zinux) framework
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new project $project_name (--empty)
 ```
-<hr />
-<b>Alias</b><br />
+<b>Alias</b>
 ```PHP
 zg new $project_name (--empty)
 ```
-<hr />
-<b>Help</b><br />
+<b>Help</b>
 ```PHP
 zg -h n p
 ```
@@ -210,7 +208,7 @@ zg -h n p
 > In entire <i>zg</i> commands [spectial characters](http://en.wikipedia.org/wiki/Special_characters) in arguments will converted to '`_`' character.
 
 <hr /> 
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new project direcroty named 'test
 zg new project test
@@ -236,19 +234,15 @@ This command will creates new module for project and its initial files and direc
 	* defaultBootstrap.php	
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new module $module_name
 ```
-
-<hr />
-<b>Alias</b><br />
+<b>Alias</b>
 ```PHP
 zg n module $module_name
 ```
-
-<hr />
-<b>Help</b><br />
+<b>Help</b>
 ```PHP
 zg -h n module
 ```
@@ -258,7 +252,7 @@ zg -h n module
 > The `Module` postfix is not needed at end of `$module_name`.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new module named 'admin'
 zg new module admin
@@ -286,19 +280,19 @@ Creates new controller in a module and its initial files and directories are:
 		* indexView.phtml
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new controller $controller_name ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg n c $controller_name ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h n c
 ```
@@ -317,7 +311,7 @@ zg -h n c
 > The `Module` and `Controller` postfixes are not needed at end of `$module_name` and `$controller_name` names.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new contoller named 'auth' in 'defaultModule'
 zg new controller auth
@@ -344,19 +338,19 @@ Create new action function.
 <b>Description</b><br />
 Creates new action function in any desired, controller and module.
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new action $action_name ($controller_name) ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg n a $action_name ($controller_name) ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h n a
 ```
@@ -375,7 +369,7 @@ zg -h n a
 > The `Module`,`Controller`,`Action` postfixes are not needed at end of `$module_name`, `$controller_name` and `$action_name` names.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new action named 'help' in 'indexController', 'defaultModule'
 zg new action help
@@ -398,19 +392,19 @@ Create new view.
 <b>Description</b><br />
 Creates new view related to a controller in any desired module.
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new view $view_name ($controller_name) ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg n a $view_name ($controller_name) ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h n v
 ```
@@ -429,7 +423,7 @@ zg -h n v
 > The `Module`,`Controller`,`View` postfixes are not needed at end of `$module_name`, `$controller_name` and `$view_name` names.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new view named 'help2' in 'indexController', 'defaultModule'
 zg new view help2
@@ -453,19 +447,19 @@ Create new layout.
 Creates new layout in a module.
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new layout $layout_name ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg n l $layout_name ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h n l
 ```
@@ -484,7 +478,7 @@ zg -h n l
 > The `Module` and `Layout` postfixes are not needed at end of `$module_name` and `$layout_name` names.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new layout named 'print' in 'defaultModule'
 zg new layout print 
@@ -508,19 +502,19 @@ Create new model.
 Creates new model in a module.
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new model $model_name ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg n m $model_name ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h n m
 ```
@@ -544,7 +538,7 @@ In models there is no such post-appending in names, so for example if you execut
 > The `Module` postfix is not needed at end of `$module_name`.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new model named 'user' in 'defaultModule'
 zg new model user
@@ -568,19 +562,19 @@ Create new heler.
 Creates new helper in a module.
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new helper $helper_name ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg n h $helper_name ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h n h
 ```
@@ -599,7 +593,7 @@ zg -h n h
 > The `Module` and `Helper` postfixes are not needed at end of `$module_name` and `$helper_name`.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new helper named 'generics' in 'defaultModule'
 zg new helper generics
@@ -622,19 +616,19 @@ Create new application bootstrap for project.
 <b>Description</b><br />
 This command will creates new application bootstrap under `PROJECT-ROOT/application` directory. 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new application boostrap $bootstrap_name
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg n app b $bootstrap_name
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h n app b
 ```
@@ -644,7 +638,7 @@ zg -h n app b
 > The `Bootstrap` postfix is not needed at end of `$bootstrap_name`.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new application bootstrap named 'db'
 zg new application bootstrap db
@@ -666,19 +660,19 @@ Create new application routes for project.
 <b>Description</b><br />
 This command will creates new application routes under `PROJECT-ROOT/application` directory. 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg new application routes $routes_name
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg n app r $routes_name
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h n app r
 ```
@@ -687,7 +681,7 @@ zg -h n app r
 <b>Notes</b><br />
 > The `Routes` postfix is not needed at end of `$routes_name`.
 
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # creates new application routes named 'comment'
 zg new application routes comment
@@ -712,19 +706,19 @@ Removes an existed module.
 This command will Remove an existed module from project.
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove module $module_name
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r module $module_name
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r module
 ```
@@ -734,7 +728,7 @@ zg -h r module
 > The `Module` postfix is not needed at end of `$module_name`.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed module named 'admin'
 zg remove module admin
@@ -757,19 +751,19 @@ Removes an existed controller.
 Removes an existed controller from module.
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove controller $controller_name ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r c $controller_name ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r c
 ```
@@ -788,7 +782,7 @@ zg -h r c
 > The `Module` and `Controller` postfixes are not needed at end of `$module_name` and `$controller_name` names.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed contoller named 'auth' from 'defaultModule'
 zg remove controller auth
@@ -815,19 +809,19 @@ Removes an existed action function.
 <b>Description</b><br />
 Removes an existed action function from any desired, controller and module.
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove action $action_name ($controller_name) ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r a $action_name ($controller_name) ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r a
 ```
@@ -846,7 +840,7 @@ zg -h r a
 > The `Module`,`Controller`,`Action` postfixes are not needed at end of `$module_name`, `$controller_name` and `$action_name` names.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed action named 'help' from 'indexController', 'defaultModule'
 zg remove action help
@@ -869,19 +863,19 @@ Removes an existed view.
 <b>Description</b><br />
 Removes an existed view related to a controller from any desired module.
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove view $view_name ($controller_name) ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r a $view_name ($controller_name) ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r v
 ```
@@ -900,7 +894,7 @@ zg -h r v
 > The `Module`,`Controller`,`View` postfixes are not needed at end of `$module_name`, `$controller_name` and `$view_name` names.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed view named 'help2' from 'indexController', 'defaultModule'
 zg remove view help2
@@ -924,19 +918,19 @@ Removes an existed layout.
 Removes an existed layout from module.
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove layout $layout_name ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r l $layout_name ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r l
 ```
@@ -955,7 +949,7 @@ zg -h r l
 > The `Module` and `Layout` postfixes are not needed at end of `$module_name` and `$layout_name` names.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed layout named 'print' from 'defaultModule'
 zg remove layout print 
@@ -979,19 +973,19 @@ Removes an existed model.
 Removes an existed model from a module.
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove model $model_name ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r m $model_name ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r m
 ```
@@ -1017,7 +1011,7 @@ it will remove a model in `defaultModule` named exactly as you type i.e <b>user<
 > The `Module` postfix is not needed at end of `$module_name`.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed model named 'user' from 'defaultModule'
 zg remove model user
@@ -1041,19 +1035,19 @@ Removes an existed heler.
 Removes an existed helper from a module.
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove helper $helper_name ($module_name)
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r h $helper_name ($module_name)
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r h
 ```
@@ -1072,7 +1066,7 @@ zg -h r h
 > The `Module` and `Helper` postfixes are not needed at end of `$module_name` and `$helper_name`.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed helper named 'generics' from 'defaultModule'
 zg remove helper generics
@@ -1095,19 +1089,19 @@ Removes an existed application bootstrap for project.
 <b>Description</b><br />
 This command will Removes an existed application bootstrap from `PROJECT-ROOT/application` directory. 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove application boostrap $bootstrap_name
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r app b $bootstrap_name
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r app b
 ```
@@ -1117,7 +1111,7 @@ zg -h r app b
 > The `Bootstrap` postfix is not needed at end of `$bootstrap_name`.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed application bootstrap named 'db'
 zg remove application bootstrap db
@@ -1139,19 +1133,19 @@ Removes an existed application routes for project.
 <b>Description</b><br />
 This command will Removes an existed application routes from `PROJECT-ROOT/application` directory. 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg remove application routes $routes_name
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg r app r $routes_name
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h r app r
 ```
@@ -1160,7 +1154,7 @@ zg -h r app r
 <b>Notes</b><br />
 > The `Routes` postfix is not needed at end of `$routes_name`.
 
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # removes an existed application routes named 'comment'
 zg remove application routes comment
@@ -1203,19 +1197,19 @@ In our example case after `zg build` you are good to go with `zg n a bar foo`.
 config files, this command will be useful. 
 
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg build ( -m ) ( -a ) ( -p )
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg b ( -m ) ( -a ) ( -p )
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h b
 ```
@@ -1238,7 +1232,7 @@ zg -h b
 `zg build` in any project's root folder it will built up the <i>zg</i> manifest file.  
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 # builds a zg manifest under current folder
 # note : we are in /path/to/PROJECT-ROOT when we are doing this
@@ -1262,19 +1256,19 @@ Configure zinux generator.
 <b>Description</b><br />
 Configure zinux generator for current project with given options.
 <hr />
-<b>Command</b><br />
+<b>Command</b>
 ```PHP
 zg config $options
 ```
 
-<hr />
-<b>Alias</b><br />
+
+<b>Alias</b>
 ```PHP
 zg c $options
 ```
 
-<hr />
-<b>Help</b><br />
+
+<b>Help</b>
 ```PHP
 zg -h c
 ```
@@ -1285,7 +1279,7 @@ As i am wrting this document, there are only 2 options available for configurati
 * <b>+show-parents</b> : Do not skip parent property in 'zg status' command.
 
 <hr />
-<b>Examples</b><br />
+<b>Examples</b>
 ```PHP
 zg config +show-parents
 # or using aliases: 
