@@ -17,7 +17,8 @@ class _new extends baseOperator
         # check if client wants an empty project
         $empty = $this->remove_arg($args, "--empty");
         # create a proper project file name
-        $pName = implode("-", $args);
+        $pName = implode(" ", $args);
+        $this->NormalizeName($pName);
         # validate project name with currently existed directories
         if(file_exists($pName))
             throw new \zinux\kernel\exceptions\invalideArgumentException("A folder named '$pName' already exists...");
@@ -90,8 +91,6 @@ class _new extends baseOperator
         $b = new build(1, 0);
         # build new configuration file based on created items
         $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
-        # remove the un-wanted cache direcroty in CWD
-        $this->Run(array("rm -fr ./".PRG_CONF_DIRNAME));
     }
     /**
      * zg new module handler
@@ -109,7 +108,7 @@ class _new extends baseOperator
                 ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
         # normalize the arg
-        $args[0] = preg_replace("#(\w+)module$#i", "$1", $args[0])."Module";
+        $this->NormalizeName($args[0], "module");
         # if module does not exist
         if(isset($s->modules->collection[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$args[0]}' does not exist in zg manifest!<br />Try 'zg build' command!");
@@ -142,8 +141,8 @@ class _new extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 2,2);
         # normalize module and controller names
-        $args[0] = preg_replace("#(\w+)controller$#i", "$1", $args[0])."Controller";
-        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $this->NormalizeName($args[0], "controller");
+        $this->NormalizeName($args[1], "module");
         # get status object
         $s = $this->GetStatus();
         # if module does not exist
@@ -180,9 +179,9 @@ class _new extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 3,1);
         # normalize the args
-        $args[0] = preg_replace("#(\w+)action#i", "$1", $args[0])."Action";
-        $args[1] = preg_replace("#(\w+)controller$#i", "$1", $args[1])."Controller";
-        $args[2] = preg_replace("#(\w+)module$#i", "$1", $args[2])."Module";
+        $this->NormalizeName($args[0], "action");
+        $this->NormalizeName($args[1], "controller");
+        $this->NormalizeName($args[2], "module");
         # get status object
         $s = $this->GetStatus();
         # if module does not exist
@@ -223,9 +222,9 @@ class _new extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 3,1);
         # normalize the args
-        $args[0] = preg_replace("#(\w+)view#i", "$1", $args[0])."View";
-        $args[1] = preg_replace("#(\w+)controller$#i", "$1", $args[1])."Controller";
-        $args[2] = preg_replace("#(\w+)module$#i", "$1", $args[2])."Module";
+        $this->NormalizeName($args[0], "view");
+        $this->NormalizeName($args[1], "controller");
+        $this->NormalizeName($args[2], "module");
         # get status object
         $s = $this->GetStatus();
         # if module does not exist
@@ -259,8 +258,8 @@ class _new extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 2,2);
         # normalize the args
-        $args[0] = preg_replace("#(\w+)layout$#i", "$1", $args[0])."Layout";
-        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $this->NormalizeName($args[0], "layout");
+        $this->NormalizeName($args[1], "module");
         # get status object
         $s = $this->GetStatus();
         # if module does not exist
@@ -291,8 +290,8 @@ class _new extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 2,2);
         # normalize the args        
-        $args[0] = preg_replace("#(\w+)helper$#i", "$1", $args[0])."Helper";
-        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $this->NormalizeName($args[0], "helper");
+        $this->NormalizeName($args[1], "module");
         # get status object
         $s = $this->GetStatus();
         # if module does not exist
@@ -325,7 +324,8 @@ class _new extends baseOperator
         # normalize the args        
         # we don't modify model's name in order to have free uses
         #$args[0] = preg_replace("#(\w+)model$#i", "$1", $args[0])."Model";
-        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $this->NormalizeName($args[0]);
+        $this->NormalizeName($args[1], "module");
         # get status object
         $s = $this->GetStatus();
         # if module does not exist
@@ -352,7 +352,7 @@ class _new extends baseOperator
         # get status object
         $s = $this->GetStatus();
         # normalize the args
-        $args[0] = preg_replace("#(\w+)bootstrap$#i","$1", $args[0])."Bootstrap";
+        $this->NormalizeName($args[0], "bootstrap");
         # if bootstrap already exists
         if(isset($s->project->bootstrap[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Application bootstrap '{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");
@@ -374,7 +374,7 @@ class _new extends baseOperator
         # get status object
         $s = $this->GetStatus();
         # normalize the args
-        $args[0] = preg_replace("#(\w+)routes$#i","$1", $args[0])."Routes";
+        $this->NormalizeName($args[0], "routes");
         # if routes already exists
         if(isset($s->project->routes[strtolower($args[0])]))
             throw new \zinux\kernel\exceptions\invalideOperationException("Application routes '{$args[0]}' already exists in zg manifest!<br />Try 'zg build' command!");

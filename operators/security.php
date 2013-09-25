@@ -11,7 +11,7 @@ class security extends baseOperator
     public function __construct($suppress_header_text = 0)
     {
         parent::__construct($suppress_header_text);
-        $crypt_cache_path = ".".PRG_CONF_PATH.".last_crypts/";
+        $crypt_cache_path = ".".PRG_CONF_PATH."/.last_crypts/";
         if(!file_exists($crypt_cache_path))
             mkdir($crypt_cache_path, 0755);
         $s = $this->GetStatus();
@@ -59,6 +59,23 @@ class security extends baseOperator
         list($iter, $iter_sum, $key, $hash_sum) = $this->enc_head_op($args);
         # get status object
         $s = $this->GetStatus();
+        # if the project is not encrypted or no files stored in encryption collection
+        if(isset($s->project->cryption) && isset($s->project->cryption->meta->is_encrypted))
+        {
+            # indicate the warning
+            $this->cout("[ DANGER CLOSE ]", 0, self::red)
+                    ->cout("The project already flaged as encrypted!", 0.5, self::yellow)
+                    ->cout();
+            while(true)
+            {
+                # check if user wants to continue or not
+                $txt = strtolower(readline(self::green."  Do you really want to encrypt it again?".self::defColor." [y/N] "));
+                if($txt == "n")
+                    return;
+                if($txt != "y") continue;
+                break;
+            }
+        }
         # init a new cryption key (project->cryption has already init in ctor)
         $s->project->cryption->meta->key_check_sum = $hash_sum;
         $s->project->cryption->meta->iter_check_sum = $iter_sum;

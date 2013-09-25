@@ -16,21 +16,21 @@ class creator extends \zinux\zg\operators\baseOperator
     /**
      * Handlers module creatation
      * @param string $name the module's name
-     * @param string $projectDir project directory to create
+     * @param string $project_path project directory to create
      * @return \zinux\zg\vendors\item the created module
      * @throws \zinux\kernel\exceptions\invalideOperationException in case of module's folder already exists
      */
-    public function createModule($name ,$projectDir = ".")
+    public function createModule($name ,$project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # get status object
-        $s = $this->GetStatus($projectDir);
+        $s = $this->GetStatus($project_path);
         # check if module folder does not exist
         if(!file_exists($s->modules->meta->path))
             mkdir($s->modules->meta->path, 0775);
         # normalizing the args
-        $name = preg_replace("#(\w+)module$#i","$1", $name)."Module";
+        $this->NormalizeName($name, "module");
         $bs_name = preg_replace("#(\w+)module$#i","$1", $name)."Bootstrap";
         # in case of module folder already exist
         if(\zinux\kernel\utilities\fileSystem::resolve_path("{$s->modules->meta->path}/{$name}"))
@@ -53,7 +53,7 @@ class creator extends \zinux\zg\operators\baseOperator
                 "chmod 775 -R {$module->path}"    
         ));
         # add a new bootstrap to module
-        new \zinux\zg\vendors\creators\createModuleBootstrap($module, new \zinux\zg\vendors\Item("{$bs_name}", $module->path."/{$bs_name}.php"), $projectDir);
+        new \zinux\zg\vendors\creators\createModuleBootstrap($module, new \zinux\zg\vendors\Item("{$bs_name}", $module->path."/{$bs_name}.php"), $project_path);
         # return created module
         return $module;
     } 
@@ -61,19 +61,19 @@ class creator extends \zinux\zg\operators\baseOperator
      * creates new controller
      * @param string $name controller's name 
      * @param \zinux\zg\vendors\Item $module parent module object
-     * @param string $projectDir project direcroty
+     * @param string $project_path project direcroty
      * @return \zinux\zg\vendors\Item created controller
      */
-    public function createController($name, Item $module ,$projectDir = ".")
+    public function createController($name, Item $module ,$project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # normalizing the arg
-        $name = preg_replace("#(\w+)controller$#i","$1", $name)."Controller";
+        $this->NormalizeName($name, "controller");
         # create new controller object
         $controller = new \zinux\zg\vendors\Item($name, $module->path."/controllers/{$name}.php");
         # create the controller
-        new \zinux\zg\vendors\creators\createController($module, $controller, $projectDir);
+        new \zinux\zg\vendors\creators\createController($module, $controller, $project_path);
         # return created controller
         return $controller;
     }
@@ -81,15 +81,15 @@ class creator extends \zinux\zg\operators\baseOperator
      * creates new action
      * @param string $name action's name
      * @param \zinux\zg\vendors\item $controller parent controller object
-     * @param string $projectDir project directory
+     * @param string $project_path project directory
      * @return \zinux\zg\vendors\Item created action
      */
-    public function createAction($name, item $controller,$projectDir = ".")
+    public function createAction($name, item $controller,$project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # normalizing the arg
-        $name = preg_replace("#(\w+)action$#i","$1", $name)."Action";
+        $this->NormalizeName($name, "action");
         # create the action object
         $action =  new \zinux\zg\vendors\item($name, $name);
         # create the action
@@ -101,42 +101,42 @@ class creator extends \zinux\zg\operators\baseOperator
     /**
      * creates new application bootstrap
      * @param string $name bootstrap's name
-     * @param string $projectDir project directory
+     * @param string $project_path project directory
      * @return \zinux\zg\vendors\Item created bootstrap
      */
-    public function createAppBootstrap($name, $projectDir = ".")
+    public function createAppBootstrap($name, $project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # get status object
-        $s = $this->GetStatus($projectDir);
+        $s = $this->GetStatus($project_path);
         # normalizing the arg
-        $name = preg_replace("#(\w+)bootstrap$#i","$1", $name)."Bootstrap";
+        $this->NormalizeName($name, "bootstrap");
         # create the bs object
         $appbs = new \zinux\zg\vendors\Item($name, $s->project->path."/application/{$name}.php");
         # create the bs
-        new \zinux\zg\vendors\creators\createAppBootstrap($s->project, $appbs, $projectDir);
+        new \zinux\zg\vendors\creators\createAppBootstrap($s->project, $appbs, $project_path);
         # return the created bs
         return $appbs;
     }
     /**
      * creates new application routes
      * @param string $name routes' name
-     * @param string $projectDir project directory
+     * @param string $project_path project directory
      * @return \zinux\zg\vendors\Item
      */
-    public function createAppRoutes($name, $projectDir = ".")
+    public function createAppRoutes($name, $project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # get status object
-        $s = $this->GetStatus($projectDir);
+        $s = $this->GetStatus($project_path);
         # normalizing the arg
-        $name = preg_replace("#(\w+)routes$#i","$1", $name)."Routes";
+        $this->NormalizeName($name, "routes");
         # create routes object
         $appr = new \zinux\zg\vendors\Item($name, $s->project->path."/application/{$name}.php");
         # create the routes
-        new \zinux\zg\vendors\creators\createAppRoutes($s->project, $appr, $projectDir);
+        new \zinux\zg\vendors\creators\createAppRoutes($s->project, $appr, $project_path);
         # return the created routes
         return $appr;
     }
@@ -144,20 +144,20 @@ class creator extends \zinux\zg\operators\baseOperator
      * creates new view 
      * @param string $name view's name
      * @param \zinux\zg\vendors\item $controller parent controller
-     * @param string $projectDir project directory
+     * @param string $project_path project directory
      * @return \zinux\zg\vendors\Item created view
      */
-    public function createView($name, item $controller, $projectDir = ".")
+    public function createView($name, item $controller, $project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # normalizing the arg
-        $name = preg_replace("#(\w+)view$#i","$1", $name)."View";
+        $this->NormalizeName($name, "view");
         # create view object
         $view = new \zinux\zg\vendors\Item($name, 
             $controller->parent->path."/views/view/".preg_replace("#(\w+)controller$#i","$1", basename($controller->path, ".php"))."/{$name}.phtml");
         # create the view
-        new \zinux\zg\vendors\creators\createView($controller, $view, $projectDir);
+        new \zinux\zg\vendors\creators\createView($controller, $view, $project_path);
         # return the created view
         return $view;
     }
@@ -165,19 +165,19 @@ class creator extends \zinux\zg\operators\baseOperator
      * creates new layout
      * @param string $name layout's name
      * @param \zinux\zg\vendors\Item $module parent module
-     * @param string $projectDir project directory
+     * @param string $project_path project directory
      * @return \zinux\zg\vendors\Item created layout
      */
-    public function createLayout($name, Item $module ,$projectDir = ".")
+    public function createLayout($name, Item $module ,$project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # normalizing the arg
-        $name = preg_replace("#(\w+)layout$#i","$1", $name)."Layout";
+        $this->NormalizeName($name, "layout");
         # create new layout object
         $layout = new \zinux\zg\vendors\Item($name, $module->path."/views/layout/{$name}.phtml");
         # create the layout
-        new \zinux\zg\vendors\creators\createLayout($module, $layout, $projectDir);
+        new \zinux\zg\vendors\creators\createLayout($module, $layout, $project_path);
         # return created layout
         return $layout;
     }
@@ -185,19 +185,19 @@ class creator extends \zinux\zg\operators\baseOperator
      * creates new helper
      * @param string $name helper's name
      * @param \zinux\zg\vendors\Item $module parent module
-     * @param string $projectDir project directory
+     * @param string $project_path project directory
      * @return \zinux\zg\vendors\Item created helper
      */
-    public function createHelper($name, Item $module ,$projectDir = ".")
+    public function createHelper($name, Item $module ,$project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # normalizing the arg
-        $name = preg_replace("#(\w+)helper$#i","$1", $name)."Helper";
+        $this->NormalizeName($name, "helper");
         # create helper object
         $helper = new \zinux\zg\vendors\Item($name, $module->path."/views/helper/{$name}.php");
         # create the helper
-        new \zinux\zg\vendors\creators\createHelper($module, $helper, $projectDir);
+        new \zinux\zg\vendors\creators\createHelper($module, $helper, $project_path);
         # return created helper
         return $helper;
     }
@@ -205,20 +205,21 @@ class creator extends \zinux\zg\operators\baseOperator
      * creates new model
      * @param string $name model's name
      * @param \zinux\zg\vendors\Item $module parent module
-     * @param string $projectDir project directory
+     * @param string $project_path project directory
      * @return \zinux\zg\vendors\Item created model
      */
-    public function createModel($name, Item $module ,$projectDir = ".")
+    public function createModel($name, Item $module ,$project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # normalizing the arg
         # no naming convention for models
         # $name = preg_replace("#(\w+)helper$#i","$1", $name)."Helper";
+        $this->NormalizeName($name);
         # create model object
         $model = new \zinux\zg\vendors\Item($name, $module->path."/models/{$name}.php");
         # create the model
-        new \zinux\zg\vendors\creators\createModel($module, $model, $projectDir);
+        new \zinux\zg\vendors\creators\createModel($module, $model, $project_path);
         # return created model
         return $model;
     }

@@ -13,7 +13,6 @@ class createAppRoutes extends \zinux\zg\baseZg
      */
     public function __construct(\zinux\zg\vendors\item $application, \zinux\zg\vendors\item $appRoutes, $project_path = ".")
     {
-        $appRoutes->name = preg_replace("#(\w+)routes$#i","$1", $appRoutes->name)."Routes";
         $ns = $this->convert_to_relative_path($appRoutes->path, $project_path);
         $this ->cout("Creating new application routes '", 0.5,  self::defColor, 0)
                 ->cout($appRoutes->name, 0, self::yellow, 0)

@@ -13,7 +13,6 @@ class createAppBootstrap extends \zinux\zg\baseZg
      */
     public function __construct(\zinux\zg\vendors\item $application, \zinux\zg\vendors\item $appBootstrap, $project_path = ".")
     {
-        $appBootstrap->name = preg_replace("#(\w+)bootstrap$#i","$1", $appBootstrap->name)."Bootstrap";
         $ns = $this->convert_to_relative_path($appBootstrap->path, $project_path);
         $this ->cout("Creating new application bootstrap '", 0.5,  self::defColor, 0)
                 ->cout($appBootstrap->name, 0, self::yellow, 0)

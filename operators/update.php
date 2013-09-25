@@ -96,7 +96,7 @@ class update extends baseOperator
         {
             # opening repo
             $repo = new \zinux\zg\vendors\PHPGit\Repository($repo_path, $debug_git, array('git_executable' => 'git'));
-            # if repo manifest does not exists
+            # if repo manifest does not exist
             if(!\zinux\kernel\utilities\fileSystem::resolve_path($repo_man) && ($man_failed = 1))
                 # make a mess!
                 throw new \zinux\kernel\exceptions\notFoundException();
@@ -131,7 +131,7 @@ class update extends baseOperator
                 $man_failed = 0;
         }
         # if we're on a solo-branch updating mode
-        # and target branch does not exists
+        # and target branch does not exist
         if(!isset($this->all_branches) && !$this->has_arg($repo->getBranches(), $this->branch_name[0]))
         {
             # indicate it
