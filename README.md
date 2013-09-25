@@ -26,8 +26,8 @@ Topics
 		* [New Model](#new-model)
 		* [New Helper](#new-helper)
 		* [New Application](#new-application)
-			* [New Appliction Bootstrap](#new-application-bootstrap)
-			* [New Appliction Routes](#new-application-routes)
+			* [New Application Bootstrap](#new-application-bootstrap)
+			* [New Application Routes](#new-application-routes)
 	* [<b><i>Remove</i></b>](#remove)
 	* [<b><i>Build</i></b>](#build)
 	* [<b><i>Config</i></b>](#config)
@@ -243,15 +243,20 @@ zg n module $module_name
 zg -h n module
 ```
 <hr />
+
+<b>Notes</b><br />
+> The `Module` postfix is not needed at end of `$module_name`.
+
+<hr />
 <b>Examples</b><br />
 ```PHP
-# creates new module name 'admin'
+# creates new module named 'admin'
 zg new module admin
 # or using aliases: 
 zg n module admin
 ```
 ```PHP
-# creates new module name 'ssl'
+# creates new module named 'ssl'
 zg new module ssl
 # or using aliases: 
 zg n module ssl
@@ -304,7 +309,7 @@ zg -h n c
 <hr />
 <b>Examples</b><br />
 ```PHP
-# creates new contoller name 'auth' in 'defaultModule'
+# creates new contoller named 'auth' in 'defaultModule'
 zg new controller auth
 # or more specific:
 zg new controller authController defaultModule 
@@ -312,7 +317,7 @@ zg new controller authController defaultModule
 zg n c auth
 ```
 ```PHP
-# creates new contoller name 'comments' in 'userModule'
+# creates new contoller named 'comments' in 'userModule'
 zg new controller comments user
 # or more specific:
 zg new controller commentsController userModule 
@@ -362,13 +367,13 @@ zg -h n a
 <hr />
 <b>Examples</b><br />
 ```PHP
-# creates new action name 'help' in 'indexController', 'defaultModule'
+# creates new action named 'help' in 'indexController', 'defaultModule'
 zg new action help
 # or using aliases: 
 zg n a help
 ```
 ```PHP
-# creates new action name 'login' in 'authController', 'sslModule'
+# creates new action named 'login' in 'authController', 'sslModule'
 zg new action login auth ssl
 # or using aliases: 
 zg n a login auth ssl
@@ -416,13 +421,13 @@ zg -h n v
 <hr />
 <b>Examples</b><br />
 ```PHP
-# creates new view name 'help2' in 'indexController', 'defaultModule'
+# creates new view named 'help2' in 'indexController', 'defaultModule'
 zg new view help2
 # or using aliases: 
 zg n v help2
 ```
 ```PHP
-# creates new view name 'login2' in 'authController', 'sslModule'
+# creates new view named 'login2' in 'authController', 'sslModule'
 zg new view login2 auth ssl
 # or using aliases: 
 zg n v login2 auth ssl
@@ -471,13 +476,13 @@ zg -h n l
 <hr />
 <b>Examples</b><br />
 ```PHP
-# creates new layout name 'print' in 'defaultModule'
+# creates new layout named 'print' in 'defaultModule'
 zg new layout print 
 # or using aliases: 
 zg n l print
 ```
 ```PHP
-# creates new layout name 'dark' in 'userModule'
+# creates new layout named 'dark' in 'userModule'
 zg new layout dark user 
 # or using aliases: 
 zg n l dark user
@@ -531,18 +536,161 @@ In models there is no such post-appending in names, so for example if you execut
 <hr />
 <b>Examples</b><br />
 ```PHP
-# creates new model name 'user' in 'defaultModule'
+# creates new model named 'user' in 'defaultModule'
 zg new model user
 # or using aliases: 
 zg n m user
 ```
 ```PHP
-# creates new model name 'adminModel' in 'userModule'
+# creates new model named 'adminModel' in 'userModule'
 zg new model adminModel user
 # or using aliases: 
 zg n m adminModel user
 ```
 
+<hr />
+New Helper
+--
+<b>Title</b><br />
+Create new heler.
+<hr />
+<b>Description</b><br />
+Creates new helper in a module.
+
+<hr />
+<b>Command</b><br />
+```PHP
+zg new helper $helper_name ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n h $helper_name ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h n h
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$module_name</b> : The name of target module that we want to create the contoller in it.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$module_name</b> : <i>defaultModule</i>
+	* If no module name supplied by default <i>defaultModule</i> will be targeted.
+
+<hr />
+
+<b>Notes</b><br />
+> The `Module` and `Helper` postfixes are not needed at end of `$module_name` and `$helper_name`.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# creates new helper named 'generics' in 'defaultModule'
+zg new helper generics
+# or using aliases: 
+zg n h generics
+```
+```PHP
+# creates new helper named 'validators' in 'userModule'
+zg new helper validators user
+# or using aliases: 
+zg n h validators user
+```
+New Application
+--
+New Application Bootstrap
+--
+<b>Title</b><br />
+Create new application bootstrap for project.
+<hr />
+<b>Description</b><br />
+This command will creates new application bootstrap under `PROJECT-ROOT/application` directory. 
+<hr />
+<b>Command</b><br />
+```PHP
+zg new application boostrap $bootstrap_name
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n app b $bootstrap_name
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h n app b
+```
+<hr />
+
+<b>Notes</b><br />
+> The `Bootstrap` postfix is not needed at end of `$bootstrap_name`.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# creates new application bootstrap named 'db'
+zg new application bootstrap db
+# or using aliases: 
+zg n app b db
+```
+```PHP
+# creates new application bootstrap named 'ssl'
+zg new application bootstrap ssl
+# or using aliases: 
+zg n app b ssl
+```
+<hr />
+New Application Routes
+--
+<b>Title</b><br />
+Create new application routes for project.
+<hr />
+<b>Description</b><br />
+This command will creates new application routes under `PROJECT-ROOT/application` directory. 
+<hr />
+<b>Command</b><br />
+```PHP
+zg new application routes $routes_name
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n app r $routes_name
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h n app r
+```
+<hr />
+
+<b>Notes</b><br />
+> The `Routes` postfix is not needed at end of `$routes_name`.
+
+<b>Examples</b><br />
+```PHP
+# creates new application routes named 'comment'
+zg new application routes comment
+# or using aliases: 
+zg n app r comments
+```
+```PHP
+# creates new application routes named 'ssl'
+zg new application routes ssl
+# or using aliases: 
+zg n app r ssl
+```
+<hr />
 <hr />
 Remove
 --
