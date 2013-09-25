@@ -1,17 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>The Zinux Generator</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<meta name="description" content="Zinux Generator Tool, A generator for Zinux project">
 	<meta name="keywords" content="Zinux Generator, Generator, PHP,MVC,Zinux,Convention Over Configuration,Design Pattern,Autoloading,Namespace Convention,PHP Bootstrap,Bootstrap,Project,Source Code,Action,Module,Controller,Layout,View,Helper,Database binding,Configuration">
 	<meta name="author" content="Dariush Hasanpoor">
+    <title>The Zinux Generator</title>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -28,22 +27,26 @@
 
 	  ga('create', 'UA-44064575-1', 'dariushha.github.io');
 	  ga('send', 'pageview');
-
 	</script>
   </head>
-  
-  <body>
-      <div id="header">
-        <nav style="max-width: 900px!important">
-          <li class="fork"><a href="https://github.com/dariushha/zg">View On GitHub</a></li>
-          <li class="fork" style="margin-left:10px;"><a href="/zinux">Zinux Project</a></li>
-          <li class="downloads"><a href="https://github.com/dariushha/zinux/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/dariushha/zinux/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper" style="max-width: 900px!important">
+  <body >
 
-      <section style="max-width: 900px!important">
-	  
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner" style="max-width: 900px!important">
+          <a id="forkme_banner" href="https://github.com/dariushha/zg">View on GitHub</a>
+
+          <h1 id="project_title">Zg</h1>
+          <h2 id="project_tagline">Zinux Generator Tool</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/dariushha/zg/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/dariushha/zg/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner" style="max-width: 900px!important">
