@@ -1,79 +1,1461 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Zg : Zinux Generator" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Zg by dariushha</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Zg</title>
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/dariushha/zg">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/dariushha/zg/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/dariushha/zg/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/dariushha/zg">View on GitHub</a>
+    <div class="wrapper">
 
-          <h1 id="project_title">Zg</h1>
-          <h2 id="project_tagline">Zinux Generator</h2>
+      <section>
+        <div id="title">
+          <h1>Zg</h1>
+          <p>Zinux Generator Tool</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/dariushha">dariushha</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/dariushha/zg/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/dariushha/zg/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+        <p>This is a tool designed to create, manipulate <i><a href="https://github.com/dariushha/zinux">zinux</a></i> projects. <i>Zinux generator tool</i> is an efficient appliction designed to make use of <i>zinux</i>
+project even easier than it is, and also makes you develop more, in a short time.<br></p>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<blockquote>
+<p>From now on we will refer to <b><i>Zinux Generator Tool</i></b> by <b><i>zg</i></b>. </p>
+</blockquote>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h2>
+<a name="topics" class="anchor" href="#topics"><span class="octicon octicon-link"></span></a>Topics</h2>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li>
+<a href="#installation">Installation</a>
+
+<ul>
+<li>
+<a href="#windows-users">Windows Users</a> </li>
+</ul>
+</li>
+<li>
+<a href="#command-types">Commands Types</a>
+
+<ul>
+<li><a href="#version"><b><i>Version</i></b></a></li>
+<li><a href="#help"><b><i>Help</i></b></a></li>
+<li>
+<a href="#new"><b><i>New</i></b></a>
+
+<ul>
+<li><a href="#new-project">New Project</a></li>
+<li><a href="#new-module">New Module</a></li>
+<li><a href="#new-controller">New Controller</a></li>
+<li><a href="#new-action">New Action</a></li>
+<li><a href="#new-view">New View</a></li>
+<li><a href="#new-layout">New Layout</a></li>
+<li><a href="#new-model">New Model</a></li>
+<li><a href="#new-helper">New Helper</a></li>
+<li>
+<a href="#new-application">New Application</a>
+
+<ul>
+<li><a href="#new-application-bootstrap">New Application Bootstrap</a></li>
+<li><a href="#new-application-routes">New Application Routes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#remove"><b><i>Remove</i></b></a>
+
+<ul>
+<li><a href="#remove-module">Remove Module</a></li>
+<li><a href="#remove-controller">Remove Controller</a></li>
+<li><a href="#remove-action">Remove Action</a></li>
+<li><a href="#remove-view">Remove View</a></li>
+<li><a href="#remove-layout">Remove Layout</a></li>
+<li><a href="#remove-model">Remove Model</a></li>
+<li><a href="#remove-helper">Remove Helper</a></li>
+<li>
+<a href="#remove-application">Remove Application</a>
+
+<ul>
+<li><a href="#remove-application-bootstrap">Remove Application Bootstrap</a></li>
+<li><a href="#remove-application-routes">Remove Application Routes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#build"><b><i>Build</i></b></a></li>
+<li><a href="#config"><b><i>Config</i></b></a></li>
+<li><a href="#security"><b><i>Security</i></b></a></li>
+<li><a href="#status"><b><i>Status</i></b></a></li>
+<li><a href="#update"><b><i>Update</i></b></a></li>
+</ul>
+</li>
+</ul><h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>PHP version 5.3.10 or greater</li>
+<li>
+<a href="https://github.com/dariushha/zinux">Zinux</a> Project 3.0.0</li>
+</ul><h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>There is a <a href="https://raw.github.com/dariushha/zinux/master/zinux-installer">zinux installer</a> shell script, it will 
+automatically download and configure your system to use <i>zinux</i> project freely in your system.<br>
+It also installs <a href="https://github.com/dariushha/zg">zinux generator tool</a> which is an handy tool to create, manipulate
+and provides solid security for your <i>zinux</i> project, for more information see
+<a href="#zinux-generator-tool">Zinux Generator Tool</a>.</p>
+
+<blockquote>
+<p>You will need to have <a href="http://git-scm.com/">Git</a> installed before using
+<a href="https://raw.github.com/dariushha/zinux/master/zinux-installer">zinux installer</a>. </p>
+</blockquote>
+
+<p>For installation just download the <a href="https://raw.github.com/dariushha/zinux/master/zinux-installer">zinux installer</a> 
+and save it at anywhere, and run the following command <code>bash /path/to/your/zinux/installer</code> it will do the reset. </p>
+
+<h2>
+<a name="windows-users" class="anchor" href="#windows-users"><span class="octicon octicon-link"></span></a>Windows Users</h2>
+
+<p>For running shell scripts in Windows you need a third-party application installed in your system 
+to enable using shell scripts in Windows, such as:</p>
+
+<ul>
+<li><a href="http://gnuwin32.sourceforge.net/">GnuWin32</a></li>
+<li><a href="http://unxutils.sourceforge.net/">UnxUtils</a></li>
+</ul><blockquote>
+<p><b>Note:</b> <a href="https://github.com/dariushha/zg">zinux generator tool</a> also uses shell scripts to run faster, 
+so before you use <a href="https://raw.github.com/dariushha/zinux/master/zinux-installer">zinux installer</a> or start using
+<a href="https://github.com/dariushha/zg">zinux generator tool</a> make sure your Windows supports shell scripts, i.e if 
+<code>ls -l</code> command lists your directories, you are OK! </p>
+</blockquote>
+
+<h1>
+<a name="command-types" class="anchor" href="#command-types"><span class="octicon octicon-link"></span></a>Command Types</h1>
+
+<p>The <i>zg</i> uses very simple and flexible command lines. Except <a href="#security">Security</a> command line which is an 
+sensitive command all other commands has aliases which is the short form of original command. A list of available 
+commands and their details is as follow:<br></p>
+
+<h2>
+<a name="version" class="anchor" href="#version"><span class="octicon octicon-link"></span></a>Version</h2>
+
+<p><b>Title</b><br>
+Shows Version.</p>
+
+<hr><p><b>Description</b><br>
+Show both Zinux's and Zinux Generator's versions.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="o">--</span><span class="nx">version</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="o">--</span><span class="nx">version</span>
+</pre></div>
+
+<hr><h2>
+<a name="help" class="anchor" href="#help"><span class="octicon octicon-link"></span></a>Help</h2>
+
+<p><b>Title</b><br>
+Prints help content.</p>
+
+<hr><p><b>Description</b><br>
+Prints help content.</p>
+
+<ul>
+<li>It can be general help, which will print all commands help content.</li>
+<li>It can be specific, which will print only the help content of target command.</li>
+</ul><hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="p">(</span><span class="nv">$command</span><span class="p">)</span> <span class="p">(</span><span class="o">--</span><span class="nx">heads</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="p">(</span><span class="nv">$command_alias</span><span class="p">)</span> <span class="p">(</span><span class="o">--</span><span class="nx">heads</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="o">-</span><span class="nx">h</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$command</b> : print a specific command's help content.</li>
+<li>
+<b>--heads</b>  : if you pass this argument it will only print valid command lines under <code>$command</code> command line.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$command</b> : If you don't pass <code>$command</code> it will print all commands' help content. </li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<ul>
+<li>
+<code>$command</code> should be a valid command in <code>zg</code> command list.</li>
+</ul><hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># prints all commands' help content</span>
+<span class="nx">zg</span>
+<span class="c1"># OR using aliases :</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># prints 'zg new'command's help content</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="k">new</span> 
+<span class="c1"># OR using aliases :</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span>
+</pre></div>
+
+<p><b>Or you can be more specific, like:</b></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># prints 'zg new action' command's help content</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="k">new</span> <span class="nx">action</span>
+<span class="c1"># OR using aliases :</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">a</span>
+</pre></div>
+
+<hr><h2>
+<a name="new" class="anchor" href="#new"><span class="octicon octicon-link"></span></a>New</h2>
+
+<h2>
+<a name="new-project" class="anchor" href="#new-project"><span class="octicon octicon-link"></span></a>New Project</h2>
+
+<p><b>Title</b><br>
+Create new project.
+<b>Description</b><br>
+This command will creates new project and its initial files and directories are:</p>
+
+<ul>
+<li>application
+
+<ul>
+<li>appBootstrap.php</li>
+<li>appRoutes.php </li>
+</ul>
+</li>
+<li>modules/defaultModule
+
+<ul>
+<li>controller
+
+<ul>
+<li>indexController.php</li>
+</ul>
+</li>
+<li>views/layout
+
+<ul>
+<li>defaultLayout.phtml</li>
+</ul>
+</li>
+<li>views/view/index
+
+<ul>
+<li>indexView.phtml</li>
+</ul>
+</li>
+<li>defaultBootstrap.php<br>
+</li>
+</ul>
+</li>
+<li>public_html
+
+<ul>
+<li>index.php</li>
+<li>.htaccess</li>
+</ul>
+</li>
+<li>
+<a href="https://github.com/dariushha/zinux">zinux</a> framework</li>
+</ul><hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">project</span> <span class="nv">$project_name</span> <span class="p">(</span><span class="o">--</span><span class="k">empty</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nv">$project_name</span> <span class="p">(</span><span class="o">--</span><span class="k">empty</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">p</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>--empty</b> : By passing this option it will create an empty project without any modules or application directory.</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>In entire <i>zg</i> commands <a href="http://en.wikipedia.org/wiki/Special_characters">spectial characters</a> in arguments will converted to '<code>_</code>' character.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new project direcroty named 'test</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">project</span> <span class="nx">test</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">test</span>
+</pre></div>
+
+<hr><h2>
+<a name="new-module" class="anchor" href="#new-module"><span class="octicon octicon-link"></span></a>New Module</h2>
+
+<p><b>Title</b><br>
+Create new module.</p>
+
+<hr><p><b>Description</b><br>
+This command will creates new module for project and its initial files and directories are:</p>
+
+<ul>
+<li>modules/MODULE_NAME
+
+<ul>
+<li>controller
+
+<ul>
+<li>indexController.php</li>
+</ul>
+</li>
+<li>views/layout
+
+<ul>
+<li>MODULE_NAMELayout.phtml</li>
+</ul>
+</li>
+<li>views/view/index
+
+<ul>
+<li>indexView.phtml</li>
+</ul>
+</li>
+<li>defaultBootstrap.php<br>
+</li>
+</ul>
+</li>
+</ul><hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">module</span> <span class="nv">$module_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">module</span> <span class="nv">$module_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">module</span>
+</pre></div>
+
+<hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code> postfix is not needed at end of <code>$module_name</code>.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new module named 'admin'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">module</span> <span class="nx">admin</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">module</span> <span class="nx">admin</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new module named 'ssl'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">module</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">module</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="new-controller" class="anchor" href="#new-controller"><span class="octicon octicon-link"></span></a>New Controller</h2>
+
+<p><b>Title</b><br>
+Create new controller.</p>
+
+<hr><p><b>Description</b><br>
+Creates new controller in a module and its initial files and directories are:</p>
+
+<ul>
+<li>modules/MODULE_NAME
+
+<ul>
+<li>controller
+
+<ul>
+<li>CONTROLLER_NAMEController.php</li>
+</ul>
+</li>
+<li>views/view/CONTROLLER_NAME
+
+<ul>
+<li>indexView.phtml</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">controller</span> <span class="nv">$controller_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">c</span> <span class="nv">$controller_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">c</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : The name of target module that we want to create the contoller in it.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : <i>defaultModule</i>
+
+<ul>
+<li>If no module name supplied by default <i>defaultModule</i> will be targeted.</li>
+</ul>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code> and <code>Controller</code> postfixes are not needed at end of <code>$module_name</code> and <code>$controller_name</code> names.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new contoller named 'auth' in 'defaultModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">controller</span> <span class="nx">auth</span>
+<span class="c1"># or more specific:</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">controller</span> <span class="nx">authController</span> <span class="nx">defaultModule</span> 
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">c</span> <span class="nx">auth</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new contoller named 'comments' in 'userModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">controller</span> <span class="nx">comments</span> <span class="nx">user</span>
+<span class="c1"># or more specific:</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">controller</span> <span class="nx">commentsController</span> <span class="nx">userModule</span> 
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">c</span> <span class="nx">comment</span> <span class="nx">user</span>
+</pre></div>
+
+<hr><h2>
+<a name="new-action" class="anchor" href="#new-action"><span class="octicon octicon-link"></span></a>New Action</h2>
+
+<p><b>Title</b><br>
+Create new action function.</p>
+
+<hr><p><b>Description</b><br>
+Creates new action function in any desired, controller and module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">action</span> <span class="nv">$action_name</span> <span class="p">(</span><span class="nv">$controller_name</span><span class="p">)</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">a</span> <span class="nv">$action_name</span> <span class="p">(</span><span class="nv">$controller_name</span><span class="p">)</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">a</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$controller_name</b> : The name of target controller that we want to create the action in it.</li>
+<li>
+<b>$module_name</b>     : The name of target module that contains <code>$controller_name</code>.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$controller_name</b> : <i>indexController</i>
+</li>
+<li>
+<b>$module_name</b>     : <i>defaultModule</i>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code>,<code>Controller</code>,<code>Action</code> postfixes are not needed at end of <code>$module_name</code>, <code>$controller_name</code> and <code>$action_name</code> names.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new action named 'help' in 'indexController', 'defaultModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">action</span> <span class="nx">help</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">a</span> <span class="nx">help</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new action named 'login' in 'authController', 'sslModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">action</span> <span class="nx">login</span> <span class="nx">auth</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">a</span> <span class="nx">login</span> <span class="nx">auth</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="new-view" class="anchor" href="#new-view"><span class="octicon octicon-link"></span></a>New View</h2>
+
+<p><b>Title</b><br>
+Create new view.</p>
+
+<hr><p><b>Description</b><br>
+Creates new view related to a controller in any desired module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">view</span> <span class="nv">$view_name</span> <span class="p">(</span><span class="nv">$controller_name</span><span class="p">)</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">a</span> <span class="nv">$view_name</span> <span class="p">(</span><span class="nv">$controller_name</span><span class="p">)</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">v</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$controller_name</b> : The name of target controller that we want to relate the view with it.</li>
+<li>
+<b>$module_name</b>     : The name of target module that contains <code>$controller_name</code>.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$controller_name</b> : <i>indexController</i>
+</li>
+<li>
+<b>$module_name</b>     : <i>defaultModule</i>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code>,<code>Controller</code>,<code>View</code> postfixes are not needed at end of <code>$module_name</code>, <code>$controller_name</code> and <code>$view_name</code> names.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new view named 'help2' in 'indexController', 'defaultModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">view</span> <span class="nx">help2</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">v</span> <span class="nx">help2</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new view named 'login2' in 'authController', 'sslModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">view</span> <span class="nx">login2</span> <span class="nx">auth</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">v</span> <span class="nx">login2</span> <span class="nx">auth</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="new-layout" class="anchor" href="#new-layout"><span class="octicon octicon-link"></span></a>New Layout</h2>
+
+<p><b>Title</b><br>
+Create new layout.</p>
+
+<hr><p><b>Description</b><br>
+Creates new layout in a module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">layout</span> <span class="nv">$layout_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">l</span> <span class="nv">$layout_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">l</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : The name of target module that we want to create the contoller in it.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : <i>defaultModule</i>
+
+<ul>
+<li>If no module name supplied by default <i>defaultModule</i> will be targeted.</li>
+</ul>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code> and <code>Layout</code> postfixes are not needed at end of <code>$module_name</code> and <code>$layout_name</code> names.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new layout named 'print' in 'defaultModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">layout</span> <span class="k">print</span> 
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">l</span> <span class="k">print</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new layout named 'dark' in 'userModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">layout</span> <span class="nx">dark</span> <span class="nx">user</span> 
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">l</span> <span class="nx">dark</span> <span class="nx">user</span>
+</pre></div>
+
+<hr><h2>
+<a name="new-model" class="anchor" href="#new-model"><span class="octicon octicon-link"></span></a>New Model</h2>
+
+<p><b>Title</b><br>
+Create new model.</p>
+
+<hr><p><b>Description</b><br>
+Creates new model in a module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">model</span> <span class="nv">$model_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">m</span> <span class="nv">$model_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">m</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : The name of target module that we want to create the contoller in it.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : <i>defaultModule</i>
+
+<ul>
+<li>If no module name supplied by default <i>defaultModule</i> will be targeted.</li>
+</ul>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>For free uses of models there is no naming convention in models, i.e in layouts when you
+execute the <code>zg new layout dark</code> it will create a layout named <b>darkLayout</b> with a <b>Layout</b>
+post-appended name.<br>
+In models there is no such post-appending in names, so for example if you execute the <code>zg new model user</code> it will create a model in <code>defaultModule</code> named exactly as you type i.e <b>user</b> and if you execute <code>zg new model userModel</code> it will exactly creates a model named <b>userModel</b>, etc.</p>
+
+<hr>
+<p>The <code>Module</code> postfix is not needed at end of <code>$module_name</code>.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new model named 'user' in 'defaultModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">model</span> <span class="nx">user</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">m</span> <span class="nx">user</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new model named 'adminModel' in 'userModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">model</span> <span class="nx">adminModel</span> <span class="nx">user</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">m</span> <span class="nx">adminModel</span> <span class="nx">user</span>
+</pre></div>
+
+<hr><h2>
+<a name="new-helper" class="anchor" href="#new-helper"><span class="octicon octicon-link"></span></a>New Helper</h2>
+
+<p><b>Title</b><br>
+Create new heler.</p>
+
+<hr><p><b>Description</b><br>
+Creates new helper in a module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">helper</span> <span class="nv">$helper_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">h</span> <span class="nv">$helper_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">h</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : The name of target module that we want to create the contoller in it.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : <i>defaultModule</i>
+
+<ul>
+<li>If no module name supplied by default <i>defaultModule</i> will be targeted.</li>
+</ul>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code> and <code>Helper</code> postfixes are not needed at end of <code>$module_name</code> and <code>$helper_name</code>.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new helper named 'generics' in 'defaultModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">helper</span> <span class="nx">generics</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">h</span> <span class="nx">generics</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new helper named 'validators' in 'userModule'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">helper</span> <span class="nx">validators</span> <span class="nx">user</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">h</span> <span class="nx">validators</span> <span class="nx">user</span>
+</pre></div>
+
+<h2>
+<a name="new-application" class="anchor" href="#new-application"><span class="octicon octicon-link"></span></a>New Application</h2>
+
+<h2>
+<a name="new-application-bootstrap" class="anchor" href="#new-application-bootstrap"><span class="octicon octicon-link"></span></a>New Application Bootstrap</h2>
+
+<p><b>Title</b><br>
+Create new application bootstrap for project.</p>
+
+<hr><p><b>Description</b><br>
+This command will creates new application bootstrap under <code>PROJECT-ROOT/application</code> directory. </p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">application</span> <span class="nx">boostrap</span> <span class="nv">$bootstrap_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">app</span> <span class="nx">b</span> <span class="nv">$bootstrap_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">app</span> <span class="nx">b</span>
+</pre></div>
+
+<hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Bootstrap</code> postfix is not needed at end of <code>$bootstrap_name</code>.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new application bootstrap named 'db'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">application</span> <span class="nx">bootstrap</span> <span class="nx">db</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">app</span> <span class="nx">b</span> <span class="nx">db</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new application bootstrap named 'ssl'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">application</span> <span class="nx">bootstrap</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">app</span> <span class="nx">b</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="new-application-routes" class="anchor" href="#new-application-routes"><span class="octicon octicon-link"></span></a>New Application Routes</h2>
+
+<p><b>Title</b><br>
+Create new application routes for project.</p>
+
+<hr><p><b>Description</b><br>
+This command will creates new application routes under <code>PROJECT-ROOT/application</code> directory. </p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">application</span> <span class="nx">routes</span> <span class="nv">$routes_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">app</span> <span class="nx">r</span> <span class="nv">$routes_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">n</span> <span class="nx">app</span> <span class="nx">r</span>
+</pre></div>
+
+<hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Routes</code> postfix is not needed at end of <code>$routes_name</code>.</p>
+</blockquote>
+
+<p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new application routes named 'comment'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">application</span> <span class="nx">routes</span> <span class="nx">comment</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">app</span> <span class="nx">r</span> <span class="nx">comments</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># creates new application routes named 'ssl'</span>
+<span class="nx">zg</span> <span class="k">new</span> <span class="nx">application</span> <span class="nx">routes</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">n</span> <span class="nx">app</span> <span class="nx">r</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="remove" class="anchor" href="#remove"><span class="octicon octicon-link"></span></a>Remove</h2>
+
+<h2>
+<a name="remove-module" class="anchor" href="#remove-module"><span class="octicon octicon-link"></span></a>Remove Module</h2>
+
+<p><b>Title</b><br>
+Removes an existed module.</p>
+
+<hr><p><b>Description</b><br>
+This command will Remove an existed module from project.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">module</span> <span class="nv">$module_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">module</span> <span class="nv">$module_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">module</span>
+</pre></div>
+
+<hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code> postfix is not needed at end of <code>$module_name</code>.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed module named 'admin'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">module</span> <span class="nx">admin</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">module</span> <span class="nx">admin</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed module named 'ssl'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">module</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">module</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="remove-controller" class="anchor" href="#remove-controller"><span class="octicon octicon-link"></span></a>Remove Controller</h2>
+
+<p><b>Title</b><br>
+Removes an existed controller.</p>
+
+<hr><p><b>Description</b><br>
+Removes an existed controller from module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">controller</span> <span class="nv">$controller_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">c</span> <span class="nv">$controller_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">c</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : The name of target module that we want to remove the contoller from it.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : <i>defaultModule</i>
+
+<ul>
+<li>If no module name supplied by default <i>defaultModule</i> will be targeted.</li>
+</ul>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code> and <code>Controller</code> postfixes are not needed at end of <code>$module_name</code> and <code>$controller_name</code> names.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed contoller named 'auth' from 'defaultModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">controller</span> <span class="nx">auth</span>
+<span class="c1"># or more specific:</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">controller</span> <span class="nx">authController</span> <span class="nx">defaultModule</span> 
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">c</span> <span class="nx">auth</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed contoller named 'comments' from 'userModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">controller</span> <span class="nx">comments</span> <span class="nx">user</span>
+<span class="c1"># or more specific:</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">controller</span> <span class="nx">commentsController</span> <span class="nx">userModule</span> 
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">c</span> <span class="nx">comment</span> <span class="nx">user</span>
+</pre></div>
+
+<hr><h2>
+<a name="remove-action" class="anchor" href="#remove-action"><span class="octicon octicon-link"></span></a>Remove Action</h2>
+
+<p><b>Title</b><br>
+Removes an existed action function.</p>
+
+<hr><p><b>Description</b><br>
+Removes an existed action function from any desired, controller and module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">action</span> <span class="nv">$action_name</span> <span class="p">(</span><span class="nv">$controller_name</span><span class="p">)</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">a</span> <span class="nv">$action_name</span> <span class="p">(</span><span class="nv">$controller_name</span><span class="p">)</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">a</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$controller_name</b> : The name of target controller that we want to remove the action from it.</li>
+<li>
+<b>$module_name</b>     : The name of target module that contains <code>$controller_name</code>.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$controller_name</b> : <i>indexController</i>
+</li>
+<li>
+<b>$module_name</b>     : <i>defaultModule</i>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code>,<code>Controller</code>,<code>Action</code> postfixes are not needed at end of <code>$module_name</code>, <code>$controller_name</code> and <code>$action_name</code> names.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed action named 'help' from 'indexController', 'defaultModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">action</span> <span class="nx">help</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">a</span> <span class="nx">help</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed action named 'login' from 'authController', 'sslModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">action</span> <span class="nx">login</span> <span class="nx">auth</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">a</span> <span class="nx">login</span> <span class="nx">auth</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="remove-view" class="anchor" href="#remove-view"><span class="octicon octicon-link"></span></a>Remove View</h2>
+
+<p><b>Title</b><br>
+Removes an existed view.</p>
+
+<hr><p><b>Description</b><br>
+Removes an existed view related to a controller from any desired module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">view</span> <span class="nv">$view_name</span> <span class="p">(</span><span class="nv">$controller_name</span><span class="p">)</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">a</span> <span class="nv">$view_name</span> <span class="p">(</span><span class="nv">$controller_name</span><span class="p">)</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">v</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$controller_name</b> : The name of target controller that we want to relate the view with it.</li>
+<li>
+<b>$module_name</b>     : The name of target module that contains <code>$controller_name</code>.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$controller_name</b> : <i>indexController</i>
+</li>
+<li>
+<b>$module_name</b>     : <i>defaultModule</i>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code>,<code>Controller</code>,<code>View</code> postfixes are not needed at end of <code>$module_name</code>, <code>$controller_name</code> and <code>$view_name</code> names.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed view named 'help2' from 'indexController', 'defaultModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">view</span> <span class="nx">help2</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">v</span> <span class="nx">help2</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed view named 'login2' from 'authController', 'sslModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">view</span> <span class="nx">login2</span> <span class="nx">auth</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">v</span> <span class="nx">login2</span> <span class="nx">auth</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="remove-layout" class="anchor" href="#remove-layout"><span class="octicon octicon-link"></span></a>Remove Layout</h2>
+
+<p><b>Title</b><br>
+Removes an existed layout.</p>
+
+<hr><p><b>Description</b><br>
+Removes an existed layout from module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">layout</span> <span class="nv">$layout_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">l</span> <span class="nv">$layout_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">l</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : The name of target module that we want to remove the contoller from it.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : <i>defaultModule</i>
+
+<ul>
+<li>If no module name supplied by default <i>defaultModule</i> will be targeted.</li>
+</ul>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code> and <code>Layout</code> postfixes are not needed at end of <code>$module_name</code> and <code>$layout_name</code> names.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed layout named 'print' from 'defaultModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">layout</span> <span class="k">print</span> 
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">l</span> <span class="k">print</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed layout named 'dark' from 'userModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">layout</span> <span class="nx">dark</span> <span class="nx">user</span> 
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">l</span> <span class="nx">dark</span> <span class="nx">user</span>
+</pre></div>
+
+<hr><h2>
+<a name="remove-model" class="anchor" href="#remove-model"><span class="octicon octicon-link"></span></a>Remove Model</h2>
+
+<p><b>Title</b><br>
+Removes an existed model.</p>
+
+<hr><p><b>Description</b><br>
+Removes an existed model from a module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">model</span> <span class="nv">$model_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">m</span> <span class="nv">$model_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">m</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : The name of target module that we want to remove the contoller from it.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : <i>defaultModule</i>
+
+<ul>
+<li>If no module name supplied by default <i>defaultModule</i> will be targeted.</li>
+</ul>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>For free uses of models there is no naming convention in models, i.e in layouts when you
+execute the <code>zg remove layout dark</code> it will remove a layout named <b>darkLayout</b> with a <b>Layout</b>
+post-appended name.<br>
+In models there is no such post-appending in names, so for example if you execute the <code>zg remove model user</code> 
+it will remove a model in <code>defaultModule</code> named exactly as you type i.e <b>user</b> and if you execute 
+<code>zg remove model userModel</code> it will exactly remove a model named <b>userModel</b>, etc.</p>
+
+<hr>
+<p>The <code>Module</code> postfix is not needed at end of <code>$module_name</code>.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed model named 'user' from 'defaultModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">model</span> <span class="nx">user</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">m</span> <span class="nx">user</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed model named 'adminModel' from 'userModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">model</span> <span class="nx">adminModel</span> <span class="nx">user</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">m</span> <span class="nx">adminModel</span> <span class="nx">user</span>
+</pre></div>
+
+<hr><h2>
+<a name="remove-helper" class="anchor" href="#remove-helper"><span class="octicon octicon-link"></span></a>Remove Helper</h2>
+
+<p><b>Title</b><br>
+Removes an existed heler.</p>
+
+<hr><p><b>Description</b><br>
+Removes an existed helper from a module.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">helper</span> <span class="nv">$helper_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">h</span> <span class="nv">$helper_name</span> <span class="p">(</span><span class="nv">$module_name</span><span class="p">)</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">h</span>
+</pre></div>
+
+<hr><p><b>Optionals</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : The name of target module that we want to remove the contoller from it.</li>
+</ul><hr><p><b>Default Values</b><br></p>
+
+<ul>
+<li>
+<b>$module_name</b> : <i>defaultModule</i>
+
+<ul>
+<li>If no module name supplied by default <i>defaultModule</i> will be targeted.</li>
+</ul>
+</li>
+</ul><hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Module</code> and <code>Helper</code> postfixes are not needed at end of <code>$module_name</code> and <code>$helper_name</code>.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed helper named 'generics' from 'defaultModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">helper</span> <span class="nx">generics</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">h</span> <span class="nx">generics</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed helper named 'validators' from 'userModule'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">helper</span> <span class="nx">validators</span> <span class="nx">user</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">h</span> <span class="nx">validators</span> <span class="nx">user</span>
+</pre></div>
+
+<h2>
+<a name="remove-application" class="anchor" href="#remove-application"><span class="octicon octicon-link"></span></a>Remove Application</h2>
+
+<h2>
+<a name="remove-application-bootstrap" class="anchor" href="#remove-application-bootstrap"><span class="octicon octicon-link"></span></a>Remove Application Bootstrap</h2>
+
+<p><b>Title</b><br>
+Removes an existed application bootstrap for project.</p>
+
+<hr><p><b>Description</b><br>
+This command will Removes an existed application bootstrap from <code>PROJECT-ROOT/application</code> directory. </p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">application</span> <span class="nx">boostrap</span> <span class="nv">$bootstrap_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">app</span> <span class="nx">b</span> <span class="nv">$bootstrap_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">app</span> <span class="nx">b</span>
+</pre></div>
+
+<hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Bootstrap</code> postfix is not needed at end of <code>$bootstrap_name</code>.</p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed application bootstrap named 'db'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">application</span> <span class="nx">bootstrap</span> <span class="nx">db</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">app</span> <span class="nx">b</span> <span class="nx">db</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed application bootstrap named 'ssl'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">application</span> <span class="nx">bootstrap</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">app</span> <span class="nx">b</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="remove-application-routes" class="anchor" href="#remove-application-routes"><span class="octicon octicon-link"></span></a>Remove Application Routes</h2>
+
+<p><b>Title</b><br>
+Removes an existed application routes for project.</p>
+
+<hr><p><b>Description</b><br>
+This command will Removes an existed application routes from <code>PROJECT-ROOT/application</code> directory. </p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">application</span> <span class="nx">routes</span> <span class="nv">$routes_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">app</span> <span class="nx">r</span> <span class="nv">$routes_name</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">r</span> <span class="nx">app</span> <span class="nx">r</span>
+</pre></div>
+
+<hr><p><b>Notes</b><br></p>
+
+<blockquote>
+<p>The <code>Routes</code> postfix is not needed at end of <code>$routes_name</code>.</p>
+</blockquote>
+
+<p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed application routes named 'comment'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">application</span> <span class="nx">routes</span> <span class="nx">comment</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">app</span> <span class="nx">r</span> <span class="nx">comments</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># removes an existed application routes named 'ssl'</span>
+<span class="nx">zg</span> <span class="nx">remove</span> <span class="nx">application</span> <span class="nx">routes</span> <span class="nx">ssl</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">r</span> <span class="nx">app</span> <span class="nx">r</span> <span class="nx">ssl</span>
+</pre></div>
+
+<hr><h2>
+<a name="build" class="anchor" href="#build"><span class="octicon octicon-link"></span></a>Build</h2>
+
+<p><b>Title</b><br>
+Re-build <i>zg</i> config file. </p>
+
+<hr><p><b>Description</b><br>
+Sometimes happen you manipulate your project entities manually instead of using <i>zg</i>, i.e you
+may add a controller named <code>fooController</code> manually in <code>defaultController</code> and next time you may want 
+to a new action named <code>barAction</code> to <code>fooController</code>, but since <code>fooController</code> created manually it 
+doesn't exist in <i>zg</i> manifest list, so it won't recognize <code>fooController</code> and an error will raise like:</p>
+
+<pre><code># output result of : 
+# zg n a bar foo
+
+Zinux Generator(vX.X.X) by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013
+[ Error occured ]
+    Controller 'defaultModule/fooController' does not exist in zg manifest!
+    Try 'zg build' command!
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>In such cases <i>zg</i> provided a simple solution and that is <code>zg build</code> command.<br>
+It will build up <i>zg</i> manifest list from scratch to top, any <a href="https://github.com/dariushha/zinux#mvc-entities">zinux entity</a>
+will be re-registered again, including in our example case <code>fooController</code> which made manually.<br>
+In our example case after <code>zg build</code> you are good to go with <code>zg n a bar foo</code>.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<blockquote>
+<p>There is an other usecase of <code>zg build</code> options an is that when you have lost or corrupted your <i>zg</i>
+config files, this command will be useful. </p>
+</blockquote>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">build</span> <span class="p">(</span> <span class="o">-</span><span class="nx">m</span> <span class="p">)</span> <span class="p">(</span> <span class="o">-</span><span class="nx">a</span> <span class="p">)</span> <span class="p">(</span> <span class="o">-</span><span class="nx">p</span> <span class="p">)</span>
+</pre></div>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">b</span> <span class="p">(</span> <span class="o">-</span><span class="nx">m</span> <span class="p">)</span> <span class="p">(</span> <span class="o">-</span><span class="nx">a</span> <span class="p">)</span> <span class="p">(</span> <span class="o">-</span><span class="nx">p</span> <span class="p">)</span>
+</pre></div>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">b</span>
+</pre></div>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<hr><p><b>Optionals</b><br></p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<ul>
+<li>
+<b>-m</b> : <code>-m /app/modules/path</code> </li>
+<li>
+<b>-a</b> : <code>-a /app/application/folder/path</code>
+</li>
+<li>
+<b>-p</b> : <code>-p /app/project/path</code>
+</li>
+</ul><hr><p><b>Default Values</b><br></p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<ul>
+<li>
+<b>-m</b> : <i>modules</i> </li>
+<li>
+<b>-a</b> : <i>application</i>
+</li>
+<li>
+<b>-p</b> : <i>.</i>(Current Directory)</li>
+</ul><hr><p><b>Notes</b><br></p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<blockquote>
+<p>In many normal cases you don't have to enter any of <code>zg build</code>'s options at all, as long as you lauch 
+<code>zg build</code> in any project's root folder it will built up the <i>zg</i> manifest file.  </p>
+</blockquote>
+
+<hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># builds a zg manifest under current folder</span>
+<span class="c1"># note : we are in /path/to/PROJECT-ROOT when we are doing this</span>
+<span class="nx">zg</span> <span class="nx">build</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">b</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># builds a zg manifest for an application</span>
+<span class="nx">zg</span> <span class="nx">build</span> <span class="o">-</span><span class="nx">p</span> <span class="s2">"/path/to/target/app"</span> <span class="o">-</span><span class="nx">m</span> <span class="s2">"/relative/path/from/app/root/to/modules/"</span> <span class="o">-</span><span class="nx">a</span> <span class="s2">"/relative/path/to/application"</span>  
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">b</span> <span class="o">-</span><span class="nx">p</span> <span class="s2">"/path/to/target/app"</span> <span class="o">-</span><span class="nx">m</span> <span class="s2">"/relative/path/from/app/root/to/modules/"</span> <span class="o">-</span><span class="nx">a</span> <span class="s2">"/relative/path/to/application"</span>
+</pre></div>
+
+<hr><h2>
+<a name="config" class="anchor" href="#config"><span class="octicon octicon-link"></span></a>Config</h2>
+
+<p><b>Title</b><br>
+Configure zinux generator.</p>
+
+<hr><p><b>Description</b><br>
+Configure zinux generator for current project with given options.</p>
+
+<hr><div class="highlight highlight-PHP"><pre><span class="c1"># Command</span>
+<span class="nx">zg</span> <span class="nx">config</span> <span class="nv">$options</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Alias</span>
+<span class="nx">zg</span> <span class="nx">c</span> <span class="nv">$options</span>
+</pre></div>
+
+<div class="highlight highlight-PHP"><pre><span class="c1"># Help</span>
+<span class="nx">zg</span> <span class="o">-</span><span class="nx">h</span> <span class="nx">c</span>
+</pre></div>
+
+<hr><p><b>Notes</b><br>
+As i am wrting this document, there are only 2 options available for configuration:</p>
+
+<ul>
+<li>
+<b>-show-parents</b> : Skip parent property in 'zg status' command.</li>
+<li>
+<b>+show-parents</b> : Do not skip parent property in 'zg status' command.</li>
+</ul><hr><p><b>Examples</b><br></p>
+
+<div class="highlight highlight-PHP"><pre><span class="nx">zg</span> <span class="nx">config</span> <span class="o">+</span><span class="nx">show</span><span class="o">-</span><span class="nx">parents</span>
+<span class="c1"># or using aliases: </span>
+<span class="nx">zg</span> <span class="nx">c</span> <span class="o">-</span><span class="nx">show</span><span class="o">-</span><span class="nx">parents</span>
+</pre></div>
+
+<hr><h2>
+<a name="security" class="anchor" href="#security"><span class="octicon octicon-link"></span></a>Security</h2>
+
+<h2>
+<a name="status" class="anchor" href="#status"><span class="octicon octicon-link"></span></a>Status</h2>
+
+<h2>
+<a name="update" class="anchor" href="#update"><span class="octicon octicon-link"></span></a>Update</h2>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Zg maintained by <a href="https://github.com/dariushha">dariushha</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-
   </body>
 </html>
