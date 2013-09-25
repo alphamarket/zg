@@ -375,6 +375,60 @@ zg n a login auth ssl
 ```
 
 <hr />
+New View
+--
+<b>Title</b><br />
+Create new view.
+<hr />
+<b>Description</b><br />
+Creates new view related to a controller in any desired module.
+<hr />
+<b>Command</b><br />
+```PHP
+zg new view $view_name ($controller_name) ($module_name)
+```
+
+<hr />
+<b>Alias</b><br />
+```PHP
+zg n a $view_name ($controller_name) ($module_name)
+```
+
+<hr />
+<b>Help</b><br />
+```PHP
+zg -h n v
+```
+<hr />
+<b>Optionals</b><br />
+* <b>$controller_name</b> : The name of target controller that we want to relate the view with it.
+* <b>$module_name</b>     : The name of target module that contains `$controller_name`.
+
+<hr />
+<b>Default Values</b><br />
+* <b>$controller_name</b> : <i>indexController</i>
+* <b>$module_name</b>     : <i>defaultModule</i>
+
+<hr />
+<b>Notes</b><br />
+> The `Module`,`Controller`,`View` postfixes are not needed at end of `$module_name`, `$controller_name` and `$view_name` names.
+
+<hr />
+<b>Examples</b><br />
+```PHP
+# creates new view name 'help2' in 'indexController', 'defaultModule'
+zg new view help2
+# or using aliases: 
+zg n v help2
+```
+```PHP
+# creates new view name 'login2' in 'authController', 'sslModule'
+zg new view login2 auth ssl
+# or using aliases: 
+zg n v login2 auth ssl
+```
+
+<hr />
 Remove
 --
 
