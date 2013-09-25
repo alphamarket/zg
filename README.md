@@ -524,7 +524,8 @@ zg -h n m
 > For free uses of models there is no naming convention in models, i.e in layouts when you
 execute the `zg new layout dark` it will create a layout <b>darkLayout</b> with a <b>Layout</b>
 post-append name, so the is no such thing in `zg new model`, so for example if you execute the
-`zg new model user` it will create a model in `defaultModule` named exactly as you type i.e <b>user</b> and if you execute `zg new model userModel` it will exactly creates a model named <b>userModel</b>, etc.   
+`zg new model user` it will create a model in `defaultModule` named exactly as you type i.e <b>user</b> and if you execute `zg new model userModel` it will exactly creates a model named <b>userModel</b>, etc.
+
 <hr />
 > The `Module` postfix is not needed at end of `$module_name`.
 
