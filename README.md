@@ -164,6 +164,7 @@ This command will creates new project and its initial files and directories such
 	* index.php
 	* .htaccess
 * [zinux](https://github.com/dariushha/zinux) framework
+
 <hr />
 <b>Command</b><br />
 ```PHP
