@@ -75,37 +75,47 @@ commands and their details is as follow:<br />
 Version
 --
 <b>Title</b><br />
-Shows Version
+Shows Version.
+<hr />
 <b>Description</b><br />
 Show both Zinux's and Zinux Generator's versions.
+<hr />
 <b>Command</b><br />
 ```PHP
 zg --version
 ```
+<hr />
 
 Help
 --
 <b>Title</b><br />
-Prints help content
+Prints help content.
+<hr />
 <b>Description</b><br />
 Prints help content.
 * It can be general help, which will print all commands help content.
-* It can be specific, which will print only the help content of target command. 
+* It can be specific, which will print only the help content of target command.
+<hr /> 
 <b>Command</b><br />
 ```PHP
 zg -h ($command) (--heads)
 ```
+<hr />
 <b>Alias</b><br />
 ```PHP
 zg -h ($command-alias) (--heads)
 ```
+<hr />
 <b>Optionals</b><br />
 * <b>$command</b> : print a specific command's help content.
 * <b>--heads</b>  : if you pass this argument it will only print valid command lines under `$command` command line.
+<hr />
 <b>Default Values</b><br />
 * <b>$command</b> : If you don't pass `$command` it will print all commands' help content. 
+<hr />
 <b>Notes</b><br />
 * `$command` should be a valid command in `zg` command list.
+<hr />
 <b>Examples</b><br />
 ```PHP
 # prints all commands' help content
@@ -126,12 +136,13 @@ zg -h new action
 # OR using aliases :
 zg -h n a
 ```
+<hr />
 New
 --
 New Project
 --
 <b>Title</b><br />
-Creat new project
+Creat new project.
 <b>Description</b><br />
 This command will creates new project and its initial files and directories such as:
 * application
@@ -149,16 +160,20 @@ This command will creates new project and its initial files and directories such
 	* index.php
 	* .htaccess
 * [zinux](https://github.com/dariushha/zinux) framework
+<hr />
 <b>Command</b><br />
 ```PHP
 zg new project $project_name (--empty)
 ```
+<hr />
 <b>Alias</b><br />
 ```PHP
 zg new $project_name (--empty)
 ```
+<hr />
 <b>Optionals</b><br />
-* <b>--empty</b> : By passing this option it will create an empty project without any modules or application directory 
+* <b>--empty</b> : By passing this option it will create an empty project without any modules or application directory.
+<hr /> 
 <b>Examples</b><br />
 ```PHP
 # creates new project direcroty named 'test
@@ -166,6 +181,7 @@ zg new project test
 # or using aliases: 
 zg n test
 ```
+<hr />
 
 Remove
 --
