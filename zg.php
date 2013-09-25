@@ -1,6 +1,16 @@
 <?php
 namespace zinux\zg;    
 require_once 'baseZg.php';
+
+# a fail safe for old versions
+if(!defined("ZINUX_BUILD_VERSION"))
+    die("No zinux version has not defined, It is maybe an old version of zinux, Pleas update your zinux framework from https://github.com/dariushha/zinux");
+
+# check for zinux version
+if(version_compare(ZINUX_BUILD_VERSION, ZG_BUILD_ZINUX_VERSION, "<"))
+{
+    die("The minimal Zinux version required is '".ZG_BUILD_ZINUX_VERSION."'!".PHP_EOL."Your Zinux version is: ".ZINUX_BUILD_VERSION);
+}
 /**
  * The Zinux Generator Main-Gate
  */

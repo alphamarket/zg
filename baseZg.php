@@ -8,6 +8,8 @@ if(!defined("ZG_ROOT"))
 {
     # turning on output buffering
     ini_set('output_buffering','on');
+    # define zinux build version
+    defined("ZG_BUILD_ZINUX_VERSION") || define("ZG_BUILD_ZINUX_VERSION", "3.0.0");
     # defines zinux's root dir
     defined("ZG_ROOT") ||  define("ZG_ROOT", dirname(__FILE__));
     # defines zinux cache dir
@@ -21,7 +23,7 @@ if(!defined("ZG_ROOT"))
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","1.4.35");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.4.36");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
