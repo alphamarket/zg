@@ -16,14 +16,14 @@ class remover extends \zinux\zg\operators\baseOperator
      * removes items from file system
      * @param \zinux\zg\vendors\item $item target item to remove
      * @param boolean $rebuild should re-build the project after remotion
-     * @param string $projectDir project directory
+     * @param string $project_path project directory
      */
-    public function removeFS(item $item, $rebuild = 1,$projectDir = ".")
+    public function removeFS(item $item, $rebuild = 1,$project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # get status object
-        $s = $this->GetStatus($projectDir);
+        $s = $this->GetStatus($project_path);
         # remove the item from file system 
         exec("rm -fr '{$item->path}'");
         # indicate the success
@@ -33,18 +33,18 @@ class remover extends \zinux\zg\operators\baseOperator
         # invoke a rebuilder
         $b = new \zinux\zg\operators\build(1, 1);
         # rebuild the config file
-        $b->build(array('-p', $s->project->path, "-m", $s->items->meta->name));
+        $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
     } 
    /**
     * removes an action from its parent
     * @param \zinux\zg\vendors\item $action target action to remove
-    * @param string $projectDir project directory
+    * @param string $project_path project directory
     */
-    public function removeAction(item $action,$projectDir = ".")
+    public function removeAction(item $action,$project_path = ".")
     {
         # this opt is valid under project directories
-        $this->CheckZG($projectDir,1);
+        $this->CheckZG($project_path,1);
         # invoke an action remover
-        new \zinux\zg\vendors\removers\removeAction($action, $projectDir);
+        new \zinux\zg\vendors\removers\removeAction($action, $project_path);
     }
 }

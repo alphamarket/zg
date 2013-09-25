@@ -16,7 +16,7 @@ class baseCommandGenerator extends \zinux\zg\baseZg
     /**
      * Construct a command generator
      * @param string $path commands' folder address
-     * @throws \zinux\kernel\exceptions\notFoundException in case of command folder does not exists
+     * @throws \zinux\kernel\exceptions\notFoundException in case of command folder does not exist
      */
     public function __construct($path = COMMANDS_ROOT)
     {

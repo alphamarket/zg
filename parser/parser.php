@@ -49,7 +49,7 @@ class parser extends baseParser
         # validate opt's opt method 
         if(!method_exists($c, $current_parsing->instance->method) || !is_callable(array($c, $current_parsing->instance->method)))
             throw new \zinux\kernel\exceptions\invalideOperationException
-                ("Method '{$current_parsing->instance->method}' does not exists or not accessible in '{$current_parsing->instance->class}'");
+                ("Method '{$current_parsing->instance->method}' does not exist or not accessible in '{$current_parsing->instance->class}'");
         # execute the target operation's action
         $c->{$current_parsing->instance->method}($this->args);
     }

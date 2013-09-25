@@ -13,7 +13,6 @@ class createHelper extends \zinux\zg\baseZg
      */
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $helper, $project_path = ".")
     {
-        $helper->name = preg_replace("#(\w+)helper$#i","$1", $helper->name)."Helper";
         $ns = $this->convert_to_relative_path($helper->path, $project_path);;
         $this ->cout("Creating new helper '", 0.5,  self::defColor, 0)
                 ->cout($helper->name, 0, self::yellow, 0)

@@ -54,13 +54,13 @@ class build extends \zinux\zg\vendors\builder\baseBuilder
             $_module = "modules";
         # project root not exists
         if(!($this->root = \zinux\kernel\utilities\fileSystem::resolve_path($_root)))
-            throw new \zinux\kernel\exceptions\notFoundException("'$_root' does not exists...");
+            throw new \zinux\kernel\exceptions\notFoundException("'$_root' does not exist...");
         # if app route passed and not exists ( a project can have no app folder)
         if(isset($this->app_pased) && !($this->app = \zinux\kernel\utilities\fileSystem::resolve_path($_root.DIRECTORY_SEPARATOR.$this->app)))
-            throw new \zinux\kernel\exceptions\notFoundException("'".$_root.DIRECTORY_SEPARATOR.$_app."' does not exists...");
+            throw new \zinux\kernel\exceptions\notFoundException("'".$_root.DIRECTORY_SEPARATOR.$_app."' does not exist...");
         # if no module dir exists
         if(!($this->modules = \zinux\kernel\utilities\fileSystem::resolve_path($_root.DIRECTORY_SEPARATOR.$_module)))
-            throw new \zinux\kernel\exceptions\notFoundException("'".$_root.DIRECTORY_SEPARATOR.$_module."' does not exists...");
+            throw new \zinux\kernel\exceptions\notFoundException("'".$_root.DIRECTORY_SEPARATOR.$_module."' does not exist...");
         # now we have secured our $root && $module path
         # create an virtual status object in ram
         $this->s = $this->creatVirtualStatusFile($this->root);

@@ -395,7 +395,7 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
         {
             # indicate a step
             $this->step_show();
-            # if helpers folder does not exists
+            # if helpers folder does not exist
             if(!($hp = \zinux\kernel\utilities\fileSystem::resolve_path($module->path."/views/helper")))
             {
                 $this->step_show(1, "x", self::hiRed);

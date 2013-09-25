@@ -13,8 +13,6 @@ class createModel extends \zinux\zg\baseZg
      */
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $model, $project_path = ".")
     {
-        # no naming convention in models
-        # $model->name = preg_replace("#(\w+)model$#i","$1", $model->name)."Model";
         $ns = $this->convert_to_relative_path($model->path, $project_path);;
         $this ->cout("Creating new model '", 0.5,  self::defColor, 0)
                 ->cout($model->name, 0, self::yellow, 0)

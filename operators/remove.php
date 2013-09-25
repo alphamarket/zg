@@ -20,7 +20,7 @@ class remove extends baseOperator
                 ->cout("{$args[0]}Module", 0, self::yellow, 0)
                 ->cout("' ...");
         # normalizing args
-        $args[0] = preg_replace("#(\w+)module$#i", "$1", $args[0])."Module";
+        $this->NormalizeName($args[0], "module");
         # get status object
         $s = $this->GetStatus();
         # if module does not exist
@@ -47,9 +47,10 @@ class remove extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 2,2);
         # normalizing args
-        $raw = preg_replace("#(\w+)controller$#i", "$1", $args[0]);
+        $this->NormalizeName($args[0]);
+        $raw = $args[0];
         $args[0] = $raw."Controller";
-        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $this->NormalizeName($args[1], "module");
         # get status object
         $s = $this->GetStatus();
         # if no module exists
@@ -85,9 +86,9 @@ class remove extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 3,1);
         # normalizing args
-        $args[0] = preg_replace("#(\w+)action#i", "$1", $args[0])."Action";
-        $args[1] = preg_replace("#(\w+)controller$#i", "$1", $args[1])."Controller";
-        $args[2] = preg_replace("#(\w+)module$#i", "$1", $args[2])."Module";
+        $this->NormalizeName($args[0], "action");
+        $this->NormalizeName($args[1], "controller");
+        $this->NormalizeName($args[2], "module");
         # if client tries to remove index action 
         if(preg_match("#indexaction#i", $args[0]))
             throw new \zinux\kernel\exceptions\invalideOperationException("By zinux architecture structure, you cannot remove 'IndexAction'!");
@@ -130,9 +131,9 @@ class remove extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 3,1);
         # normalizing args
-        $args[0] = preg_replace("#(\w+)view#i", "$1", $args[0])."View";
-        $args[1] = preg_replace("#(\w+)controller$#i", "$1", $args[1])."Controller";
-        $args[2] = preg_replace("#(\w+)module$#i", "$1", $args[2])."Module";
+        $this->NormalizeName($args[0], "view");
+        $this->NormalizeName($args[1], "controller");
+        $this->NormalizeName($args[2], "module");
         # get status object
         $s = $this->GetStatus();
         # if no module exists
@@ -165,8 +166,8 @@ class remove extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 2, 2);
         # normalizing args
-        $args[0] = preg_replace("#(\w+)layout$#i", "$1", $args[0])."Layout";
-        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $this->NormalizeName($args[0], "layout");
+        $this->NormalizeName($args[1], "module");
         # get status object
         $s = $this->GetStatus();
         # if no module exists
@@ -196,8 +197,8 @@ class remove extends baseOperator
         # a fail safe for args
         $this->restrictArgCount($args, 2, 2);
         # normalizing args
-        $args[0] = preg_replace("#(\w+)helper$#i", "$1", $args[0])."Helper";
-        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $this->NormalizeName($args[0], "helper");
+        $this->NormalizeName($args[1], "module");
         # get status object
         $s = $this->GetStatus();
         # if no module found
@@ -229,7 +230,8 @@ class remove extends baseOperator
         # normalizing args
         # we don't modify model's name in order to have free uses
         #$args[0] = preg_replace("#(\w+)model$#i", "$1", $args[0])."Model";
-        $args[1] = preg_replace("#(\w+)module$#i", "$1", $args[1])."Module";
+        $this->NormalizeName($args[0]);
+        $this->NormalizeName($args[1], "module");
         # get status object
         $s = $this->GetStatus();
         # if no module found
@@ -254,7 +256,7 @@ class remove extends baseOperator
         # this opt shoud has absolutely 1 arg
         $this->restrictArgCount($args,1,1);
         # normalizing args
-        $args[0] = preg_replace("#(\w+)bootstrap$#i","$1", $args[0])."Bootstrap";
+        $this->NormalizeName($args[0], "bootstrap");
         # get status object
         $s = $this->GetStatus();
         # if no bootstrap found
@@ -276,7 +278,7 @@ class remove extends baseOperator
         # this opt shoud has absolutely 1 arg
         $this->restrictArgCount($args,1,1);
         # normalizing args
-        $args[0] = preg_replace("#(\w+)routes$#i","$1", $args[0])."Routes";
+        $this->NormalizeName($args[0], "routes");
         # get status object
         $s = $this->GetStatus();
         # if no routes found

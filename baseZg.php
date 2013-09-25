@@ -21,7 +21,7 @@ if(!defined("ZG_ROOT"))
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","1.4.33");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.4.34");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
@@ -393,12 +393,13 @@ abstract class baseZg extends \zinux\baseZinux
     {
         ob_start();
         if($once)
-            require_once $file_name;
+            $f = require_once $file_name;
         else
-            require $file_name;
+            $f = require $file_name;
         if($silent)
             ob_end_clean();
         else
             ob_end_flush();
+        return $f;
     }
 }

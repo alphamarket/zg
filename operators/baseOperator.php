@@ -35,4 +35,16 @@ abstract class baseOperator extends \zinux\zg\baseZg
     {
         $this->cout("Zinux Generator(v".ZG_VERSION.") by Dariush Hasanpoor [b.g.dariush@gmail.com] 2013", 0, self::yellow);
     }
+    /**
+     * Normalizes the given name and removes special characters and spaces and replaces them by '_' character. 
+     * @param string $name target name to normalize
+     * @param string $fix the fix part of name that should exists at end of $name 
+     */
+    public function NormalizeName(&$name, $fix = "")
+    {
+        $name = preg_replace (array('/[^\p{L}\p{N}]+/ui', "#^[0-9]+#i", '/^_/u', '/_$/u'), array("_", "", "", ""), $name);
+        $name = preg_replace (array("#^[0-9]+#i", '/^_/u', '/_$/u'), array("", "", ""), $name);
+        if(!strlen($fix)) return;
+        $name = preg_replace("#(\w+)$fix$#i", "$1", $name).ucfirst($fix);
+    }
 }
