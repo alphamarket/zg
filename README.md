@@ -104,7 +104,7 @@ zg -h ($command) (--heads)
 <hr />
 <b>Alias</b><br />
 ```PHP
-zg -h ($command-alias) (--heads)
+zg -h ($command_alias) (--heads)
 ```
 <hr />
 <b>Optionals</b><br />
