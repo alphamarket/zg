@@ -299,7 +299,7 @@ zg -h n c
 <hr />
 
 <b>Notes</b><br />
-> The `Module` and `Controller` postfixes is not needed at end of `$module_name` and `$controller_name` names.
+> The `Module` and `Controller` postfixes are not needed at end of `$module_name` and `$controller_name` names.
 
 <hr />
 <b>Examples</b><br />
@@ -357,7 +357,7 @@ zg -h n a
 
 <hr />
 <b>Notes</b><br />
-> The `Module`,`Controller`,`Action` postfixes is not needed at end of `$module_name`, `$controller_name` and `$action_name` names.
+> The `Module`,`Controller`,`Action` postfixes are not needed at end of `$module_name`, `$controller_name` and `$action_name` names.
 
 <hr />
 <b>Examples</b><br />
