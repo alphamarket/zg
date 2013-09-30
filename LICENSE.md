@@ -1,4 +1,4 @@
-ZG - The Zinux Generator
+ZG - The Zinux Generator<br />
 Copyright (C) 2013  Dariush Hasanpoor
 
 This program is free software: you can redistribute it and/or modify
