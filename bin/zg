@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # find php: pear first, command -v second, straight up php lastly
 if test "@php_bin@" != '@'php_bin'@'; then
@@ -9,4 +9,12 @@ else
     PHP_BIN=php
 fi
 
-$PHP_BIN -d safe_mode=Off -f "../zg.php" -- "$@"
+ZG="`dirname $0`/../zg.php";
+
+if ! [ -e $ZG ]; then
+	echo -e "\e[31mZg handler not found!!!" >&2
+	echo -e "[ Aborting ]\e[m" >&2
+	exit 1
+fi 
+
+$PHP_BIN -d safe_mode=Off -f $ZG -- "$@"
