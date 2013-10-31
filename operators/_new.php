@@ -50,6 +50,11 @@ class _new extends baseOperator
                 "cp ".ZG_TEMPLE_ROOT."/* $pName/ -R",
                 "cp -rf ".Z_CACHE_ROOT." $pName",
                 "cd $pName/zinux && rm -fr test zg",
+                "cd $pName && echo '[submodule \"zinux\"]
+	path = zinux
+	url = https://github.com/dariushha/zinux.git
+	branch = master 
+' >> .gitmodules",
                 "echo '# add this to apache vhost.conf files
 <VirtualHost *:80>
 	ServerAdmin webmaster@localhost
