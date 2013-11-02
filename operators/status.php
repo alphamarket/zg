@@ -42,8 +42,8 @@ class status extends baseOperator
         {
             $matches = array();
             if(preg_match("#Invalid command \'(.*)\' in \'(.*)\'#i", $e->getMessage(), $matches))
-                $this ->cout("No data found in '".self::yellow.$matches[2].self::defColor."'")
-                        ->cout("Parser broked at '".self::yellow.$matches[1].self::defColor."'");
+                $this ->cout("No data found in '".self::getColor(self::yellow).$matches[2].self::getColor(self::defColor)."'")
+                        ->cout("Parser broked at '".self::getColor(self::yellow).$matches[1].self::getColor(self::defColor)."'");
             else
                 throw $e;
         }
@@ -61,7 +61,7 @@ class status extends baseOperator
         if($depth>$max_depth)
         {
             # indicate it
-            $this->cout()->cout("{", $indent)->cout("MAX_DEPTH reached recursive return!", $indent+1, self::hiRed)->cout("}", $indent);
+            $this->cout()->cout("{", $indent)->cout("MAX_DEPTH reached recursive return!", $indent+1, self::getColor(self::hiRed))->cout("}", $indent);
             return;
         }
         # print an json formated output
@@ -73,15 +73,15 @@ class status extends baseOperator
             {
                 if(strtolower($key)=="parent"  && !isset($this->show_parents)) 
                 {
-                    $this ->cout($key, $indent+1, self::yellow, 0)
-                            ->cout(" : ", 0, self::defColor, 0);
-                    $this->cout("{ ", 0,self::defColor, 0)->cout("Due to configurations, parent property skiped!", 0, self::hiRed, 0)->cout(" }");
+                    $this ->cout($key, $indent+1, self::getColor(self::yellow), 0)
+                            ->cout(" : ", 0, self::getColor(self::defColor), 0);
+                    $this->cout("{ ", 0,self::getColor(self::defColor), 0)->cout("Due to configurations, parent property skiped!", 0, self::getColor(self::hiRed), 0)->cout(" }");
                     continue;
                 }
-                $this->cout($key, $indent+1, self::yellow, 0)
-                        ->cout(" : ", 0, self::defColor, 0);
+                $this->cout($key, $indent+1, self::getColor(self::yellow), 0)
+                        ->cout(" : ", 0, self::getColor(self::defColor), 0);
                 if(!$this->is_iterable($value))
-                    $this ->cout($value, 0, self::cyan);
+                    $this ->cout($value, 0, self::getColor(self::cyan));
                 else
                     $this->RecursivePrint($value, $indent+1, $depth+1, $max_depth);
             }

@@ -9,6 +9,7 @@ else
     echo -e "\e[33mPHP\e[31m not found...\n[ Aborting ]\e[m"
     exit 1;
 fi
+
 ZG="`dirname \"$0\"`/../zg.php";
 
 if ! [ -e "$ZG" ]; then

@@ -16,10 +16,10 @@ class createAction extends \zinux\zg\operators\baseOperator
     public function __construct(\zinux\zg\vendors\item $controller, \zinux\zg\vendors\item $action, $project_path = ".")
     {
         $ns = $this->convert_to_relative_path($controller->path, $project_path);
-        $this ->cout("Creating new action '",0.5,  self::defColor, 0)
-                ->cout($action->path, 0, self::yellow, 0)
-                ->cout("' in '",0,self::defColor, 0)
-                ->cout("$ns\\{$controller->name}", 0, self::yellow, 0)
+        $this ->cout("Creating new action '",0.5,  self::getColor(self::defColor), 0)
+                ->cout($action->path, 0, self::getColor(self::yellow), 0)
+                ->cout("' in '",0,self::getColor(self::defColor), 0)
+                ->cout("$ns\\{$controller->name}", 0, self::getColor(self::yellow), 0)
                 ->cout("'.");
         $mbc = "
     /**

@@ -27,7 +27,7 @@ class remover extends \zinux\zg\operators\baseOperator
         # remove the item from file system 
         exec("rm -fr '{$item->path}'");
         # indicate the success
-        $this->cout("- {$item->path}", 0.5, self::red);
+        $this->cout("- {$item->path}", 0.5, self::getColor(self::red));
         # if no rebuid? return
         if(!$rebuild) return;
         # invoke a rebuilder

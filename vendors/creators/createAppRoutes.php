@@ -14,10 +14,10 @@ class createAppRoutes extends \zinux\zg\baseZg
     public function __construct(\zinux\zg\vendors\item $application, \zinux\zg\vendors\item $appRoutes, $project_path = ".")
     {
         $ns = $this->convert_to_relative_path($appRoutes->path, $project_path);
-        $this ->cout("Creating new application routes '", 0.5,  self::defColor, 0)
-                ->cout($appRoutes->name, 0, self::yellow, 0)
-                ->cout("' at '",0,self::defColor, 0)
-                ->cout($ns, 0, self::yellow, 0)
+        $this ->cout("Creating new application routes '", 0.5,  self::getColor(self::defColor), 0)
+                ->cout($appRoutes->name, 0, self::getColor(self::yellow), 0)
+                ->cout("' at '",0,self::getColor(self::defColor), 0)
+                ->cout($ns, 0, self::getColor(self::yellow), 0)
                 ->cout("'.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($appRoutes->path)))
             mkdir(dirname($appRoutes->path), 0775);

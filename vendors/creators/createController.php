@@ -14,10 +14,10 @@ class createController extends \zinux\zg\operators\baseOperator
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $controller, $project_path = ".")
     {
         $ns = $this->convert_to_relative_path($controller->path, $project_path);
-        $this ->cout("Creating new controller '",0.5,  self::defColor, 0)
-                ->cout($controller->name, 0, self::yellow, 0)
-                ->cout("' at '",0,self::defColor, 0)
-                ->cout($ns, 0, self::yellow, 0)
+        $this ->cout("Creating new controller '",0.5,  self::getColor(self::defColor), 0)
+                ->cout($controller->name, 0, self::getColor(self::yellow), 0)
+                ->cout("' at '",0,self::getColor(self::defColor), 0)
+                ->cout($ns, 0, self::getColor(self::yellow), 0)
                 ->cout("'.");
         
         $mbc = "<?php

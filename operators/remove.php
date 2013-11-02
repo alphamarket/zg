@@ -16,8 +16,8 @@ class remove extends baseOperator
         # this opt should absolutely has 1 arg
         $this->restrictArgCount($args, 1, 1);
         # indicating the phase
-        $this ->cout("Removing module '", 0, self::defColor, 0)
-                ->cout("{$args[0]}Module", 0, self::yellow, 0)
+        $this ->cout("Removing module '", 0, self::getColor(self::defColor), 0)
+                ->cout("{$args[0]}Module", 0, self::getColor(self::yellow), 0)
                 ->cout("' ...");
         # normalizing args
         $this->NormalizeName($args[0], "module");

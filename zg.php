@@ -27,6 +27,10 @@ class zg extends \zinux\zg\baseZg
      */
     public static function Execute($argv)
     {
+        # if we are in fucking windows
+        if(!strlen(self::getColor()))
+            die("For technical reasons zinux generator does not support Windows!!\r\nSorry....");
+            
         system('clear');
         ob_start();
         $zg = null;
@@ -41,15 +45,15 @@ class zg extends \zinux\zg\baseZg
         catch(\Exception $e)
         {
             $s = "$1".str_repeat(" ", 4);
-            $zg ->cout("[ Error occured ]",0,self::red)
-                  ->cout(preg_replace(array("#(<br\s*(/)?>)#i", "#(\n)#i"), array($s, $s), $e->getMessage()), 1, self::yellow);
+            $zg ->cout("[ Error occured ]",0,self::getColor(self::red))
+                  ->cout(preg_replace(array("#(<br\s*(/)?>)#i", "#(\n)#i"), array($s, $s), $e->getMessage()), 1, self::getColor(self::yellow));
             if(RUNNING_ENV=="DEVELOPMENT")
             {
                 $zg   ->cout(str_repeat("=", 60))
                         ->cout(preg_replace("/([#]\d+)/i", "$1", $e->getTraceAsString()));
             }
         }
-            $zg->cout()->cout("[ DONE ]", 0, self::defColor, 0);
+            $zg->cout()->cout("[ DONE ]", 0, self::getColor(self::defColor), 0);
             $console_cont = preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""),ob_get_contents()."<br />");
         ob_end_clean();
         echo $console_cont;

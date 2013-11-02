@@ -14,10 +14,10 @@ class createHelper extends \zinux\zg\baseZg
     public function __construct(\zinux\zg\vendors\item $module, \zinux\zg\vendors\item $helper, $project_path = ".")
     {
         $ns = $this->convert_to_relative_path($helper->path, $project_path);;
-        $this ->cout("Creating new helper '", 0.5,  self::defColor, 0)
-                ->cout($helper->name, 0, self::yellow, 0)
-                ->cout("' for '",0,self::defColor, 0)
-                ->cout($ns, 0, self::yellow, 0)
+        $this ->cout("Creating new helper '", 0.5,  self::getColor(self::defColor), 0)
+                ->cout($helper->name, 0, self::getColor(self::yellow), 0)
+                ->cout("' for '",0,self::getColor(self::defColor), 0)
+                ->cout($ns, 0, self::getColor(self::yellow), 0)
                 ->cout("' module.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($helper->path)))
             mkdir(dirname($helper->path), 0775);

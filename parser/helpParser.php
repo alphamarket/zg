@@ -32,7 +32,7 @@ class helpParser extends baseParser
         {
             # fetch parser keywords
             $kw = unserialize(PARSER_KEYWORDS);
-            $this->cout("Valid operation list for '".self::yellow."zg ".implode(" ", $this->args).self::defColor."': ");
+            $this->cout("Valid operation list for '".self::getColor(self::yellow)."zg ".implode(" ", $this->args).self::getColor(self::defColor)."': ");
             $found = 0;
             # foreach item in first elem of stack
             foreach($stack[0][1] as $key=> $value)
@@ -41,14 +41,14 @@ class helpParser extends baseParser
                 if(array_key_exists($key, $kw))continue;
                 $found = 1;
                 # print it
-                $this->cout("> ", 0.5, self::yellow, 0)->cout($key, 0, self::cyan);
+                $this->cout("> ", 0.5, self::getColor(self::yellow), 0)->cout($key, 0, self::getColor(self::cyan));
             }
             # if no headlines found
             if(!$found)
             {
                 # indicate it
-                $this->cout("'".self::yellow."zg ".implode(" ", $this->args).self::defColor."' is a solo operation!", 0.5)
-                        ->cout("No sub-operation found!",1, self::red);
+                $this->cout("'".self::getColor(self::yellow)."zg ".implode(" ", $this->args).self::getColor(self::defColor)."' is a solo operation!", 0.5)
+                        ->cout("No sub-operation found!",1, self::getColor(self::red));
             }
             return;
         }
@@ -97,8 +97,8 @@ class helpParser extends baseParser
             }
         }
         # indicate notes
-        $this->cout()->cout(">    Type 'zg -h \$command' to print more help about that command.", 0,self::hiBlue);
-        $this->cout()->cout(">    Type 'zg -h (\$command) --head' to print headline operations.", 0,self::hiBlue);
+        $this->cout()->cout(">    Type 'zg -h \$command' to print more help about that command.", 0,self::getColor(self::hiBlue));
+        $this->cout()->cout(">    Type 'zg -h (\$command) --head' to print headline operations.", 0,self::getColor(self::hiBlue));
     }
     /**
      * This print help content for passed content
@@ -112,14 +112,14 @@ class helpParser extends baseParser
         /**
          * print general help content
          */
-        $command = preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->command);
+        $command = preg_replace("#(\\\$\w+)#i", self::getColor(self::defColor).self::getColor(self::yellow)."$1".self::getColor(self::hiYellow), $content->help->command);
         $rep_pat = "$1".str_repeat(" ", 3*5);
         $this ->cout()
-                ->cout($content->title, 1, self::cyan)
-                ->cout(self::hiYellow.preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat),  $command), 2, self::defColor);
+                ->cout($content->title, 1, self::getColor(self::cyan))
+                ->cout(self::getColor(self::hiYellow).preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat),  $command), 2, self::getColor(self::defColor));
         # if has an alias print it
         if(isset($content->help->alias))
-            $this->cout("Alias: [ ".self::hiYellow.preg_replace("#(\\\$\w+)#i", self::defColor.self::yellow."$1".self::hiYellow, $content->help->alias).self::defColor." ]", 3, self::defColor);
+            $this->cout("Alias: [ ".self::getColor(self::hiYellow).preg_replace("#(\\\$\w+)#i", self::getColor(self::defColor).self::getColor(self::yellow)."$1".self::getColor(self::hiYellow), $content->help->alias).self::getColor(self::defColor)." ]", 3, self::getColor(self::defColor));
         $this->cout();
         $rep_pat = "$1".str_repeat(" ", 3*5);
         $this ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat),  $content->help->detail), 3);
@@ -128,14 +128,14 @@ class helpParser extends baseParser
          */
         if($render_options && isset($content->options))
         {
-            $this->cout()->cout("Options: ", 2, self::hiYellow);
+            $this->cout()->cout("Options: ", 2, self::getColor(self::hiYellow));
             $rep_pat = "$1".str_repeat(" ", 3*6);
             foreach($content->options as $option => $exp)
             {
                 $this ->cout()
-                        ->cout($option, 3, self::yellow, 0)
-                        ->cout(" : ", 0, self::defColor, 0)
-                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $exp), 0, self::yellow);
+                        ->cout($option, 3, self::getColor(self::yellow), 0)
+                        ->cout(" : ", 0, self::getColor(self::defColor), 0)
+                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $exp), 0, self::getColor(self::yellow));
             }
         }
         /**
@@ -144,13 +144,13 @@ class helpParser extends baseParser
         if(isset($content->defaults))
         {
             # print it
-            $this ->cout()->cout("Default Values:", 2, self::hiYellow)->cout();
+            $this ->cout()->cout("Default Values:", 2, self::getColor(self::hiYellow))->cout();
             $rep_pat = "$1".str_repeat(" ", 3*6);
             foreach($content->defaults as $arg => $value)
             {
-                $this ->cout($arg, 3, self::yellow, 0)
-                        ->cout(" : ", 0, self::defColor, 0)
-                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $value), 0, self::yellow);
+                $this ->cout($arg, 3, self::getColor(self::yellow), 0)
+                        ->cout(" : ", 0, self::getColor(self::defColor), 0)
+                        ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $value), 0, self::getColor(self::yellow));
             }
         }
         /**
@@ -159,13 +159,13 @@ class helpParser extends baseParser
         if($render_options && isset($content->notes))
         {
             # print it
-            $this ->cout()->cout("Notes:", 2, self::hiYellow);
+            $this ->cout()->cout("Notes:", 2, self::getColor(self::hiYellow));
             $rep_pat = "$1".str_repeat(" ", 3*6);
             foreach($content->notes as $index => $note)
             {
                 $index++;
                 $this ->cout()
-                        ->cout("$index ) ", 3, self::yellow, 0)
+                        ->cout("$index ) ", 3, self::getColor(self::yellow), 0)
                         ->cout(preg_replace(array("#(\n)#i", "#(<br\s*(/)?>)#i"), array($rep_pat, $rep_pat), $note))
                         ->cout();
             }

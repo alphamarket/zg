@@ -89,9 +89,9 @@ class build extends \zinux\zg\vendors\builder\baseBuilder
         {
             # indictate it
             $this ->cout()
-                    ->cout("The current directory structure didn't with any standard zinux project", 1, self::yellow)
-                    ->cout("No zinux project has been built!", 1, self::red)
-                    ->cout("[ Aborting ]", 1, self::red);
+                    ->cout("The current directory structure didn't with any standard zinux project", 1, self::getColor(self::yellow))
+                    ->cout("No zinux project has been built!", 1, self::getColor(self::red))
+                    ->cout("[ Aborting ]", 1, self::getColor(self::red));
             # remove the project conf dir
             exec("rm -fr .".PRG_CONF_PATH);
             return;
@@ -101,7 +101,7 @@ class build extends \zinux\zg\vendors\builder\baseBuilder
         # indicate it
         $this ->cout()
                 ->cout()
-                ->cout(self::green."+".self::defColor." The built config file has saved ".self::green."successfully".self::defColor.".", 1);
+                ->cout(self::getColor(self::green)."+".self::getColor(self::defColor)." The built config file has saved ".self::getColor(self::green)."successfully".self::getColor(self::defColor).".", 1);
         # save build log
         $this->saveLogs();
     }
@@ -164,13 +164,13 @@ class build extends \zinux\zg\vendors\builder\baseBuilder
                 if(!isset($all['log']) || !count($all['log']))
                 {
                     # inddicate it
-                    $this ->cout("[X] ", 0.5, self::red, 0);
+                    $this ->cout("[X] ", 0.5, self::getColor(self::red), 0);
                     $this->cout("No event record found ...!");
                     # goto extraction point
                     goto __END_EV;
                 }
                 # otherwise print the logged data
-                $this ->cout("[OK] ", 0.5, self::green, 0);
+                $this ->cout("[OK] ", 0.5, self::getColor(self::green), 0);
                 $this->cout("Build Events :");
                 $this->print_log($all['log']);
 # extraction point
@@ -187,13 +187,13 @@ __END_EV:
                 if(!isset($all['processed']) || !count($all['processed']))
                 {
                     # indicate it
-                    $this ->cout("[X] ", 0.5, self::red, 0);
+                    $this ->cout("[X] ", 0.5, self::getColor(self::red), 0);
                     $this->cout("No processed record found...!");
                     # return
                     return;
                 }
                 # otherwise print the processed data
-                $this ->cout("[OK] ", 0.5, self::green, 0);
+                $this ->cout("[OK] ", 0.5, self::getColor(self::green), 0);
                 $this->cout("Processed items:");
                 $this->print_log($all['processed']);
                 break;
@@ -202,7 +202,7 @@ __END_EV:
                 # delete all cache data
                 $fc->deleteAll();
                 # indicate it
-                $this ->cout("- ", 0.5, self::red, 0)
+                $this ->cout("- ", 0.5, self::getColor(self::red), 0)
                         ->cout("Build log cleared!");
                 break;
             # otherwise this is an invalid arg
@@ -220,7 +220,7 @@ __END_EV:
         foreach($log as $value)
         {
             $c++;
-            $this ->cout("[ {$c} ]", 1, self::yellow,0)
+            $this ->cout("[ {$c} ]", 1, self::getColor(self::yellow),0)
                     ->cout(" : ")
                     ->cout("{", 1);
             if(!isset($value->path) || !strlen($value->path))
@@ -229,11 +229,11 @@ __END_EV:
                 unset($value->name);
             }
             if(isset($value->name))
-                $this ->cout("Title", 2, self::yellow,0)
-                        ->cout(" : ", 0, self::yellow, 0)
+                $this ->cout("Title", 2, self::getColor(self::yellow),0)
+                        ->cout(" : ", 0, self::getColor(self::yellow), 0)
                         ->cout($value->name);
-            $this ->cout("Detail", 2, self::yellow,0)
-                    ->cout(" : ", 0, self::yellow, 0)
+            $this ->cout("Detail", 2, self::getColor(self::yellow),0)
+                    ->cout(" : ", 0, self::getColor(self::yellow), 0)
                     ->cout($value->path);
 
             $this->cout("}", 1);

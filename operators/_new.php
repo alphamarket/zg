@@ -36,8 +36,8 @@ class _new extends baseOperator
          * from this point we only create project items
          */
         # indicate that project has been created
-        $this ->cout("Creating new project '", 0.5, self::defColor, 0)
-                ->cout("$pName", 0, self::yellow, 0)
+        $this ->cout("Creating new project '", 0.5, self::getColor(self::defColor), 0)
+                ->cout("$pName", 0, self::getColor(self::yellow), 0)
                 ->cout("' ...");
         /**
          * Operations in this array:
@@ -116,8 +116,8 @@ class _new extends baseOperator
         # this opt should only have 1 passed arg 
         $this->restrictArgCount($args, 1, 1);
         # indicate the phase
-        $this ->cout("Creating new module '", 0.5, self::defColor, 0)
-                ->cout("{$args[0]}Module", 0, self::yellow, 0)
+        $this ->cout("Creating new module '", 0.5, self::getColor(self::defColor), 0)
+                ->cout("{$args[0]}Module", 0, self::getColor(self::yellow), 0)
                 ->cout("' ...");
         # normalize the arg
         $this->NormalizeName($args[0], "module");

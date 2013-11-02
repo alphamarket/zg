@@ -37,7 +37,7 @@ class parser extends baseParser
         if(!isset($current_parsing->instance->class) || !isset($current_parsing->instance->method))
             # it means no opt exists for passed args
             throw new \zinux\kernel\exceptions\invalideOperationException
-                (self::yellow."No operator found for '".self::cyan.$this->parsed_string.self::yellow."'.");
+                (self::getColor(self::yellow)."No operator found for '".self::getColor(self::cyan).$this->parsed_string.self::getColor(self::yellow)."'.");
         # create the opt's related object
         $c = $current_parsing->instance->class;
         $c = new $c;

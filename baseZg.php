@@ -125,13 +125,23 @@ abstract class baseZg extends \zinux\baseZinux
         ob_start();
             echo str_repeat(" ", $tap_index*4);
 
-             echo $color.$content.self::defColor;
+             echo $this->getColor($color).$content.$this->getColor();
 
              if($content != "<br />" && $auto_break)
                  echo "<br />";
         echo preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""), ob_get_clean());
         ob_flush();
         return $this;
+    }
+    public static function getColor($color = self::defColor)
+    {
+        # check if OS is fucking WINDOWS 
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            # It doesn't support ANSI color standard codes
+            # NO COLOR IN WINDOWS
+            return "";
+        }
+        return $color;
     }
     /**
      * gets status object from status file
@@ -197,9 +207,9 @@ abstract class baseZg extends \zinux\baseZinux
                 throw new \zinux\kernel\exceptions\invalideOperationException("No project have found ...");
             else
             {
-                $this ->cout("No project have found ...", 0, self::yellow)
-                        ->cout("Try to run 'zg build'!", 0, self::green)
-                        ->cout("[ Aborting ]", 0, self::red);
+                $this ->cout("No project have found ...", 0, self::getColor(self::yellow))
+                        ->cout("Try to run 'zg build'!", 0, self::getColor(self::green))
+                        ->cout("[ Aborting ]", 0, self::getColor(self::red));
                 return false;
             }
         }
@@ -378,7 +388,7 @@ abstract class baseZg extends \zinux\baseZinux
             $matches = array();
             if(preg_match_all( "/Errors\s+parsing\s+".preg_quote($file_name, "/")."/i", $output, $matches) && $throw_exception_on_error)    
             {
-                $this->cout("Error parsing '$file_name'",0,self::hiRed);
+                $this->cout("Error parsing '$file_name'",0,self::getColor(self::hiRed));
                 throw new \zinux\kernel\exceptions\invalideOperationException($output);
             }
             return false;

@@ -63,9 +63,9 @@ class config extends baseOperator
         {
             # print it
             if($value->path)
-                $this->cout("+ ", 0.5, self::green, 0);
+                $this->cout("+ ", 0.5, self::getColor(self::green), 0);
             else
-                $this->cout("- ", 0.5, self::red, 0);
+                $this->cout("- ", 0.5, self::getColor(self::red), 0);
             $this->cout($value->name, 0);
         }
     }
