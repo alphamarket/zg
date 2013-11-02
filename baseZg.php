@@ -23,7 +23,7 @@ if(!defined("ZG_ROOT"))
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","1.4.41");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.5.0");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
@@ -132,16 +132,6 @@ abstract class baseZg extends \zinux\baseZinux
         echo preg_replace(array("#<br\s*(/)?>#i", "#<(/)?pre>#i"),array(PHP_EOL, ""), ob_get_clean());
         ob_flush();
         return $this;
-    }
-    public static function getColor($color = self::defColor)
-    {
-        # check if OS is fucking WINDOWS 
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            # It doesn't support ANSI color standard codes
-            # NO COLOR IN WINDOWS
-            return "";
-        }
-        return $color;
     }
     /**
      * gets status object from status file
@@ -413,5 +403,20 @@ abstract class baseZg extends \zinux\baseZinux
         else
             ob_end_flush();
         return $f;
+    }
+    /**
+     * get proper colors string code
+     * @param FLAG $color
+     * @return string color string code or an empty string in Windows OS
+     */
+    public static function getColor($color = self::defColor)
+    {
+        # check if OS is fucking WINDOWS 
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            # It doesn't support ANSI color standard codes
+            # NO COLOR IN WINDOWS
+            return "";
+        }
+        return $color;
     }
 }

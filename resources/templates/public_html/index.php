@@ -1,13 +1,20 @@
-<?php    
-    ini_set('display_errors','On');
-    
-    error_reporting(E_ALL);
-    
+<?php        
     session_start();
 
     defined('RUNNING_ENV') || define('RUNNING_ENV', 'DEVELOPMENT');
-
-    defined('DEMO_ROOT_SITE') || define('DEMO_ROOT_SITE', '/');
+	
+    switch(RUNNING_ENV)
+    {
+        case "TEST":
+        case "DEVELOPMENT":
+            ini_set('display_errors','On');
+            error_reporting(E_ALL);
+            break;
+        default:
+            ini_set('display_errors','off');
+            error_reporting(E_ERROR);
+            break;
+    }
 
     require_once '../zinux/baseZinux.php';
 try

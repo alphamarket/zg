@@ -69,11 +69,12 @@ and save it at anywhere, and run the following command `bash /path/to/your/zinux
 
 Windows Users
 --
-For technical reasons zinux generator does not support Windows!!<br />
+For technical reasons zinux generator does not support Windows!! 
+You just have to clone and use the framework manually.<br />
 We are sorry about this....
  
 > Some advise for PHP developers, you cannot become a professional PHP developer and develop a full
-scale PHP application within windows, you just cannot!! so may be it is time to move your PHP developments 
+scale PHP application within windows, you just cannot!! so maybe it is time to move your PHP developments 
 on linux.
 
 Command Types
