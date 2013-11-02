@@ -6,15 +6,15 @@ if test "@php_bin@" != '@'php_bin'@'; then
 elif command -v php 1>/dev/null 2>/dev/null; then
     PHP_BIN=`command -v php`
 else
-    PHP_BIN=php
+    echo -e "\e[33mPHP\e[31m not found...\n[ Aborting ]\e[m"
+    exit 1;
 fi
+ZG="`dirname \"$0\"`/../zg.php";
 
-ZG="`dirname $0`/../zg.php";
-
-if ! [ -e $ZG ]; then
+if ! [ -e "$ZG" ]; then
 	echo -e "\e[31mZg handler not found!!!" >&2
 	echo -e "[ Aborting ]\e[m" >&2
 	exit 1
 fi 
 
-$PHP_BIN -d safe_mode=Off -f $ZG -- "$@"
+"$PHP_BIN" -d safe_mode=Off -f "$ZG" -- "$@"
