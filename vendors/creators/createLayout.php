@@ -26,11 +26,11 @@ class createLayout extends \zinux\zg\baseZg
 <html>
     <head>
         <meta charset='utf-8'>
-        <?php $this->RenderTitle();?>
-        <?php $this->RenderImports(); ?>
+        <?php \$this->RenderTitle();?>
+        <?php \$this->RenderImports(); ?>
     </head>
     <body>
-        <?php echo $this->content; ?>
+        <?php echo \$this->content; ?>
     </body>
 </html>";
         file_put_contents($layout->path, $mbc);
