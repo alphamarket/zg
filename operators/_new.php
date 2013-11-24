@@ -374,7 +374,7 @@ class _new extends baseOperator
         $c->createAppBootstrap($args[0]);
     }
     /**
-     * zg new application routes  handler
+     * zg new application routes handler
      * @throws \zinux\kernel\exceptions\invalideOperationException in case of target route already exists
      */
     public function app_routes($args)
@@ -395,12 +395,20 @@ class _new extends baseOperator
         # create an application routes
         $c->createAppRoutes($args[0]);
     }
+    /**
+     * zg new scaffold handler
+     */
     public function scaffold($args)
     {
+        # create the controller with given name
         $this->controller($args);
+        # create {new} action in given controller
         $this->action(array_merge(array("new"), $args));
+        # create {edit} action in given controller
         $this->action(array_merge(array("edit"), $args));
+        # create {delete} action in given controller
         $this->action(array_merge(array("delete"), $args));
+        # create {view} action in given controller
         $this->action(array_merge(array("view"), $args));
     }
 }
