@@ -395,4 +395,12 @@ class _new extends baseOperator
         # create an application routes
         $c->createAppRoutes($args[0]);
     }
+    public function scaffold($args)
+    {
+        $this->controller($args);
+        $this->action(array_merge(array("new"), $args));
+        $this->action(array_merge(array("edit"), $args));
+        $this->action(array_merge(array("delete"), $args));
+        $this->action(array_merge(array("view"), $args));
+    }
 }
