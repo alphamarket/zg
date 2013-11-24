@@ -177,6 +177,30 @@
             "In order to have free uses in models there will be NO.<br />naming convention when creating models.<br />i.e the command 'zg new model foo $module_name'.<br />will exactly creates a model named 'foo' in target module."
         ]
     },
+    "scaffold":
+    {
+        "title":"Add new controller with scaffolding mode",
+        "alias":"s",
+        "instance":
+        {
+            "class":"\\zinux\\zg\\operators\\_new",
+            "method":"scaffold"
+        },
+        "help":
+        {
+            "command":"zg new scaffold $controller_name ($module_name)",
+            "alias": "zg n s $controller_name ($module_name)",
+            "detail":"Creates a new controller with scaffolding mode."
+        },
+        "options":
+        {
+            "--no-routing":"Skip setting routings to this controller"
+        },
+        "defaults":
+        {
+            "$module_name" : "default"
+        }
+    },
     "application":
     {
         "alias":"app",
