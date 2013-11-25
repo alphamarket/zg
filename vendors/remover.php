@@ -31,9 +31,11 @@ class remover extends \zinux\zg\operators\baseOperator
         # if no rebuid? return
         if(!$rebuild) return;
         # invoke a rebuilder
-        $b = new \zinux\zg\operators\build(1, 1);
+        $b = new \zinux\zg\operators\build(1, 0);
+        $this ->cout("$ Updating index file.....", 0.5, self::defColor, 0);
         # rebuild the config file
         $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
+        $this->cout(" [ DONE ]", 0, self::green);
     } 
    /**
     * removes an action from its parent
