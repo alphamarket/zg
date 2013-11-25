@@ -1,7 +1,7 @@
 <?php
 namespace zinux\zg;
 
-/** 
+/**
  * Some definitions here
  */
 if(!defined("ZG_ROOT"))
@@ -23,7 +23,7 @@ if(!defined("ZG_ROOT"))
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","1.6.0");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.6.1");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
@@ -71,7 +71,7 @@ require_once dirname(__FILE__)."/../baseZinux.php";
 # defines ZG templates root
 defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
 /**
- * baseZg class 
+ * baseZg class
  *      All ZG classes with inherit from this
  */
 abstract class baseZg extends \zinux\baseZinux
@@ -110,7 +110,7 @@ abstract class baseZg extends \zinux\baseZinux
     const white = "\033[37m";
     const hiWhite = "\033[1;37m";
     const bgWhite = "\033[47m";
-            
+
     public function Initiate(){}
     /**
      * std cout function
@@ -155,7 +155,7 @@ abstract class baseZg extends \zinux\baseZinux
         return $s;
     }
     /**
-     * creates new status file 
+     * creates new status file
      * it also creates project directory if not exists
      * @param string $project_name project name
      */
@@ -165,7 +165,7 @@ abstract class baseZg extends \zinux\baseZinux
             mkdir($project_name, 0775);
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name".PRG_CONF_PATH))
             mkdir("./$project_name".PRG_CONF_PATH);
-        
+
         $s = new \zinux\zg\vendors\status;
         $parent = new vendors\item(basename(realpath(".")), realpath("."));
         $s->project = new vendors\Item("project", realpath("./$project_name/"),$parent);
@@ -218,17 +218,17 @@ abstract class baseZg extends \zinux\baseZinux
             throw new \zinux\kernel\exceptions\invalideArgumentException("Too much argument ...");
         if(!$max) return;
         if(($min<0 && !count($args)) || (!(count($args) >= $min)))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Empty argument passed ...");  
+            throw new \zinux\kernel\exceptions\invalideArgumentException("Empty argument passed ...");
     }
     /**
      * checks if an given item is an iterable instance
      * @param mixed $var target item to check
      * @return boolean TRUE if its is iterable instance otherwise FALSE
      */
-    public function is_iterable($var) 
+    public function is_iterable($var)
     {
         return (is_array($var) || $var instanceof \Traversable || $var instanceof \stdClass);
-    }  
+    }
     /**
      * removed an value from an iterable item
      * @param mixed $args target item to search into
@@ -255,7 +255,7 @@ abstract class baseZg extends \zinux\baseZinux
     }
     /**
      * checks if an value exists in an iterable item
-     * @param mixed $args target item 
+     * @param mixed $args target item
      * @param string $value target value string
      * @return boolean TRUE if $args has the $value otherwise FALSE
      */
@@ -263,13 +263,13 @@ abstract class baseZg extends \zinux\baseZinux
     {
         if(!$this->is_iterable($args))
             return false;
-        
+
         foreach($args as $_value)
         {
             if(strtolower($_value) == strtolower($value))
                 return true;
         }
-        
+
         return false;
     }
     /**
@@ -306,7 +306,7 @@ abstract class baseZg extends \zinux\baseZinux
     /**
      * inverse the preg_quote()'s effects in a string
      * @param string $str target string
-     * @param string $delimiter the delimiter user in string 
+     * @param string $delimiter the delimiter user in string
      * @return string inversed string
      */
     public function inverse_preg_quote($str, $delimiter = NULL)
@@ -338,9 +338,9 @@ abstract class baseZg extends \zinux\baseZinux
         return strtr($str, $ar);
     }
     /**
-     * create a relative directory based namespace string 
+     * create a relative directory based namespace string
      * from a given path and in perspective of a project directory
-     * @return string 
+     * @return string
      */
     public function convert_to_relative_path($path, $project_dir = ".", \zinux\zg\vendors\status $s = null)
     {
@@ -352,7 +352,7 @@ abstract class baseZg extends \zinux\baseZinux
             $path = dirname($path);
         $path = preg_replace(
             array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i","#[.]\w+$#i"),
-            array("", "$1\\", ""), 
+            array("", "$1\\", ""),
             str_replace($s->project->path, "", dirname($path))
         );
         return $path;
@@ -366,7 +366,7 @@ abstract class baseZg extends \zinux\baseZinux
     public function check_php_syntax($file_name, $throw_exception_on_error = 1)
     {
         $_file_name = $file_name;
-        if(!strlen($file_name) || 
+        if(!strlen($file_name) ||
             !($file_name = \zinux\kernel\utilities\fileSystem::resolve_path($file_name, 1)))
             throw new \zinux\kernel\exceptions\notFoundException("'$_file_name' not found...");
         $ret = 0;
@@ -376,7 +376,7 @@ abstract class baseZg extends \zinux\baseZinux
         if( $ret !== 0 )
         {
             $matches = array();
-            if(preg_match_all( "/Errors\s+parsing\s+".preg_quote($file_name, "/")."/i", $output, $matches) && $throw_exception_on_error)    
+            if(preg_match_all( "/Errors\s+parsing\s+".preg_quote($file_name, "/")."/i", $output, $matches) && $throw_exception_on_error)
             {
                 $this->cout("Error parsing '$file_name'",0,self::getColor(self::hiRed));
                 throw new \zinux\kernel\exceptions\invalideOperationException($output);
@@ -411,7 +411,7 @@ abstract class baseZg extends \zinux\baseZinux
      */
     public static function getColor($color = self::defColor)
     {
-        # check if OS is fucking WINDOWS 
+        # check if OS is fucking WINDOWS
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             # It doesn't support ANSI color standard codes
             # NO COLOR IN WINDOWS
