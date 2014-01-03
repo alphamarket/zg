@@ -20,7 +20,7 @@ class createLayout extends \zinux\zg\baseZg
                 ->cout($ns, 0, self::getColor(self::yellow), 0)
                 ->cout("' module.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($layout->path)))
-            mkdir(dirname($layout->path), 0775);
+            mkdir(dirname($layout->path), 0775,1);
         
         $mbc = "<!doctype html>
 <html>

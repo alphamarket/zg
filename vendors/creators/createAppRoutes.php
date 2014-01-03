@@ -20,7 +20,7 @@ class createAppRoutes extends \zinux\zg\baseZg
                 ->cout($ns, 0, self::getColor(self::yellow), 0)
                 ->cout("'.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($appRoutes->path)))
-            mkdir(dirname($appRoutes->path), 0775);
+            mkdir(dirname($appRoutes->path), 0775,1);
         
         $mbc ="<?php
 namespace $ns;

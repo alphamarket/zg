@@ -20,7 +20,7 @@ class createHelper extends \zinux\zg\baseZg
                 ->cout($ns, 0, self::getColor(self::yellow), 0)
                 ->cout("' module.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($helper->path)))
-            mkdir(dirname($helper->path), 0775);
+            mkdir(dirname($helper->path), 0775,1);
         
         $mbc = "<?php
 namespace $ns;

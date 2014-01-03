@@ -40,10 +40,10 @@ class ".preg_replace("#controller$#i","", $controller->name)."Controller extends
 ";
         
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/views/view/"))
-            mkdir("{$module->path}/views/view/", 0775);
+            mkdir("{$module->path}/views/view/", 0775,1);
         
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("{$module->path}/views/view/".preg_replace("#controller$#i","", $controller->name)))
-            mkdir("{$module->path}/views/view/".preg_replace("#controller$#i","", $controller->name), 0775);
+            mkdir("{$module->path}/views/view/".preg_replace("#controller$#i","", $controller->name), 0775,1);
         
         file_put_contents($controller->path, $mbc);
         

@@ -28,7 +28,7 @@ class creator extends \zinux\zg\operators\baseOperator
         $s = $this->GetStatus($project_path);
         # check if module folder does not exist
         if(!file_exists($s->modules->meta->path))
-            mkdir($s->modules->meta->path, 0775);
+            mkdir($s->modules->meta->path, 0775,1);
         # normalizing the args
         $this->NormalizeName($name, "module");
         $bs_name = preg_replace("#(\w+)module$#i","$1", $name)."Bootstrap";

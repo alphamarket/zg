@@ -13,7 +13,7 @@ class security extends baseOperator
         parent::__construct($suppress_header_text);
         $crypt_cache_path = ".".PRG_CONF_PATH."/.last_crypts/";
         if(!file_exists($crypt_cache_path))
-            mkdir($crypt_cache_path, 0755);
+            mkdir($crypt_cache_path, 0755,1);
         $s = $this->GetStatus();
         if(!isset($s->project->cryption->meta ))
             $s->project->cryption->meta = new \zinux\zg\vendors\item("cryption", realpath($crypt_cache_path)."/", $s->project);

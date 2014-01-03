@@ -21,7 +21,7 @@ class createView extends \zinux\zg\baseZg
                 ->cout($ns, 0, self::getColor(self::yellow), 0)
                 ->cout("' controller.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($view->path)))
-            mkdir(dirname($view->path), 0775);
+            mkdir(dirname($view->path), 0775,1);
         $view->action = preg_replace("#(.*)(view)$#i", "$1Action", $view->name);
         $view->extention = preg_replace("#(.*)\.(.*)$#i","$2",$view->path);
         $mbc = "<!--

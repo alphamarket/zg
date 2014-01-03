@@ -20,7 +20,7 @@ class createModel extends \zinux\zg\baseZg
                 ->cout($ns, 0, self::getColor(self::yellow), 0)
                 ->cout("' module.");
         if(!\zinux\kernel\utilities\fileSystem::resolve_path(dirname($model->path)))
-            mkdir(dirname($model->path), 0775);
+            mkdir(dirname($model->path), 0775,1);
         
         $mbc = "<?php
 namespace $ns;
