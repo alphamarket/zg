@@ -23,7 +23,7 @@ if(!defined("ZG_ROOT"))
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/resources/commands');
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","1.6.6");
+    defined("ZG_VERSION") || define("ZG_VERSION","1.6.7");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
@@ -351,7 +351,7 @@ abstract class baseZg extends \zinux\baseZinux
         if(is_file($path) && false)
             $path = dirname($path);
         $path = preg_replace(
-            array("#^".DIRECTORY_SEPARATOR."#i","#(\w+)(".DIRECTORY_SEPARATOR.")#i","#[.]\w+$#i"),
+            array("#^(".DIRECTORY_SEPARATOR.")*#i","#(\w+)(".DIRECTORY_SEPARATOR.")+#i","#[.]\w+$#i"),
             array("", "$1\\", ""),
             str_replace($s->project->path, "", dirname($path))
         );
