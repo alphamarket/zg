@@ -56,7 +56,7 @@ class build extends \zinux\zg\vendors\builder\baseBuilder
         if(!($this->root = \zinux\kernel\utilities\fileSystem::resolve_path($_root)))
             throw new \zinux\kernel\exceptions\notFoundException("'$_root' does not exist...");
         # if app route passed and not exists ( a project can have no app folder)
-        if(isset($this->app_pased) && !($this->app = \zinux\kernel\utilities\fileSystem::resolve_path($_root.DIRECTORY_SEPARATOR.$this->app)))
+        if(isset($this->app_pased) && !($this->app = \zinux\kernel\utilities\fileSystem::resolve_path($_root.DIRECTORY_SEPARATOR.$_app)))
             throw new \zinux\kernel\exceptions\notFoundException("'".$_root.DIRECTORY_SEPARATOR.$_app."' does not exist...");
         # if no module dir exists
         if(!($this->modules = \zinux\kernel\utilities\fileSystem::resolve_path($_root.DIRECTORY_SEPARATOR.$_module)))
