@@ -113,7 +113,7 @@ class creator extends \zinux\zg\operators\baseOperator
         # normalizing the arg
         $this->NormalizeName($name, "bootstrap");
         # create the bs object
-        $appbs = new \zinux\zg\vendors\Item($name, $s->project->path."/application/{$name}.php");
+        $appbs = new \zinux\zg\vendors\Item($name, (@$s->project->meta->app_path?@$s->project->meta->app_path:\realpath($s->project->path)."/application/")."/{$name}.php");
         # create the bs
         new \zinux\zg\vendors\creators\createAppBootstrap($s->project, $appbs, $project_path);
         # return the created bs
@@ -134,7 +134,7 @@ class creator extends \zinux\zg\operators\baseOperator
         # normalizing the arg
         $this->NormalizeName($name, "routes");
         # create routes object
-        $appr = new \zinux\zg\vendors\Item($name, $s->project->path."/application/{$name}.php");
+        $appr = new \zinux\zg\vendors\Item($name, (@$s->project->meta->app_path?@$s->project->meta->app_path:\realpath($s->project->path)."/application")."/{$name}.php");
         # create the routes
         new \zinux\zg\vendors\creators\createAppRoutes($s->project, $appr, $project_path);
         # return the created routes

@@ -49,6 +49,7 @@ class {$appBootstrap->name} extends \\zinux\\kernel\\application\\applicationBoo
         
         $s = $this->GetStatus($project_path);
         $appBootstrap->parent = $application;
+        $s->project->meta->app_path = \trim(\str_replace($application->path, "", dirname($appBootstrap->path)),"/");
         $s->project->bootstrap[strtolower($appBootstrap->name)]  = $appBootstrap;
         $this->SaveStatus($s);
     }

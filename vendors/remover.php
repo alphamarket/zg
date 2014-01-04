@@ -34,7 +34,7 @@ class remover extends \zinux\zg\operators\baseOperator
         $b = new \zinux\zg\operators\build(1, 0);
         $this ->cout("$ Updating index file.....", 0.5, self::defColor, 0);
         # rebuild the config file
-        $b->build(array('-p', $s->project->path, "-m", $s->modules->meta->name));
+        $b->build(array('-p', $s->project->path, "-m", \str_replace($s->project->path, "", $s->modules->meta->path), "-a", @$s->project->meta->app_path ? $s->project->meta->app_path : "application"));
         $this->cout(" [ DONE ]", 0, self::green);
     } 
    /**

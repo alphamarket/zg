@@ -89,6 +89,8 @@ abstract class baseBuilder extends \zinux\zg\operators\baseOperator
             # indicate a step
             $this->step_show();
         }
+        # store the app path
+        $this->s->project->meta->app_path = \trim(\str_replace(\trim($this->s->project->path, "/"), "", $this->app), "/");
         # indicate a step
         $this->step_show();
     }
