@@ -216,7 +216,8 @@ class Repository
      */
     public function checkIsValidGitRepo()
     {
-        if(!file_exists($this->dir.'/.git/HEAD')) {
+        # ignore checking for submodules
+        if(!\is_file($this->dir.'/.git') && !file_exists($this->dir.'/.git/HEAD')) {
             throw new InvalidGitRepositoryDirectoryException($this->dir.' is not a valid Git repository');
         }
     }
