@@ -1,0 +1,36 @@
+{
+        "title":"Configure zinux generator for current project", 
+        "alias":"c",
+        "instance":
+        {
+            "class":"\\zg\\operators\\config",
+            "method":"config"
+        },
+        "help":
+        {
+            "command":"zg config $options",
+            "alias": "zg c $options",
+            "detail":"Config the project with given options"
+        }, 
+        "options":
+        {
+                "-show-parents":"Skip parent property in 'zg status' command",
+                "+show-parents":"Do not skip parent property in 'zg status' command"
+        },
+        "show":
+        {
+                "title":"Show configurations for current project", 
+                "alias":"s",
+                "instance":
+                {
+                    "class":"\\zg\\operators\\config",
+                    "method":"show"
+                },
+                "help":
+                {
+                    "command":"zg config show",
+                    "alias": "zg c s",
+                    "detail":"Output configurations for current project"
+                }
+        }
+}

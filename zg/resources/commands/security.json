@@ -1,0 +1,84 @@
+{
+    "encrypt":
+    {
+        "title":"Encrypt project",
+        "instance":
+        {
+            "class":"\\zg\\operators\\security",
+            "method":"encrypt"
+        },
+        "help":
+        {
+            "command":"zg security encrypt $encryption_key (-i #) ",
+            "detail":"Encrypt your project content."
+        },
+        "options":
+        {
+            "-i":"Number of encryption iteration. and must be greater than 0."
+        },
+        "defaults":
+        {
+            "-i":"1"
+        },
+        "notes":
+        [
+            "When you encrypt your project, you cannot lost your '.zg' folder and its content.<br />The project without its '.zg' will be too risky to encrypt!",
+            "Be careful with command if you make mistake it is possible to blow up your project.",
+            "This command will encrypt your entire project except the 'zinux' folder.<br />Which obviously is a public project!",
+            "If you ever forger your $encryption_key, your project will be lost for good.<br />So make sure you pass a easy to remember but hard to guess crypt key.",
+            "If your $encryption_key is a multiline key put it between quotation marks!"
+        ]
+    },
+    "decrypt":
+    {
+        "title":"Decrypt project",
+        "instance":
+        {
+            "class":"\\zg\\operators\\security",
+            "method":"decrypt"
+        },
+        "help":
+        {
+            "command":"zg security decrypt $decryption_key (-i #)",
+            "detail":"Decrypt your project content."
+        },
+        "options":
+        {
+            "-i":"Number of encryption iteration. and must be greater than 0."
+        },
+        "defaults":
+        {
+            "-i":"1"
+        },
+        "notes":
+        [
+            "Be careful with command if you make mistake it is possible to blow up your project.",
+            "In case of fail safe, this command will store encrypted files into its cache directory.<br />So if you make a mistake it possible to get back things!",
+            "This command will decrypt your entire project which encrypted by 'zg security encrypt' command!!",
+            "If your $decryption_key is a multiline key put it between quotation marks!"
+        ]
+    },
+    "cache":
+    {
+        "title":"Cryption cache operator",
+        "instance":
+        {
+            "class":"\\zg\\operators\\security",
+            "method":"cache"
+        },
+        "help":
+        {
+            "command":"zg security cache (--clear|--reset)",
+            "detail":"Provides operations on cryption cache."
+        },
+        "options":
+        {
+            "--clear":"Clears up cryption cached data.",
+            "--reset":"Reset files to before previous DEcryption operation.<br />With this option zg will undo LAST 'zg security decryption' command's effects!"
+        },
+        "notes":
+        [
+            "Be careful with command if you make mistake it is possible to blow up your project."
+        ]
+    }
+}

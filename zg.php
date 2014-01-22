@@ -1,6 +1,5 @@
-<?php
-namespace zinux\zg;    
-require_once 'baseZg.php';
+<?php    
+require_once dirname(__FILE__).'/zg/baseZg.php';
 
 # a fail safe for old versions
 if(!defined("ZINUX_BUILD_VERSION"))
@@ -14,7 +13,7 @@ if(version_compare(ZINUX_BUILD_VERSION, ZG_BUILD_ZINUX_VERSION, "<"))
 /**
  * The Zinux Generator Main-Gate
  */
-class zg extends \zinux\zg\baseZg
+class zg extends \zg\baseZg
 {
     /**
      * provided arguments
@@ -75,7 +74,7 @@ class zg extends \zinux\zg\baseZg
     public function  Run()
     {
         # create a parser instance
-        $parser = new \zinux\zg\parser\parser($this->args, new \zinux\zg\command\commandGenerator());
+        $parser = new \zg\parser\parser($this->args, new \zg\command\commandGenerator());
         # run the parser instance
         $parser->Run();
     }

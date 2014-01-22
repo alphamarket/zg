@@ -1,0 +1,3 @@
+[submodule "zinux"]
+	path = zinux
+	url = git@github.com:dariushha/zinux.git

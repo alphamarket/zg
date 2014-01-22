@@ -1,0 +1,180 @@
+{
+    "alias":"r",
+    "module":
+    {
+        "title":"Remove module", 
+        "instance":
+        {
+            "class":"\\zg\\operators\\remove",
+            "method":"module"
+        },
+        "help":
+        {
+            "command":"zg remove module $module_name",
+            "alias": "zg r module $module_name",
+            "detail":"Remove a module in project"
+        }
+    },
+    "controller":
+    {
+        "title":"Remove controller", 
+        "alias":"c",
+        "instance":
+        {
+            "class":"\\zg\\operators\\remove",
+            "method":"controller"
+        },
+        "help":
+        {
+            "command":"zg remove controller $controller_name ($module_name)",
+            "alias": "zg r c $controller_name ($module_name)",
+            "detail":"Removes a controller in a module."
+        },
+        "defaults":
+        {
+            "$module_name" : "default"
+        }
+    },
+    "action":
+    {
+        "title":"Remove action", 
+        "alias":"a",
+        "instance":
+        {
+            "class":"\\zg\\operators\\remove",
+            "method":"action"
+        },
+        "help":
+        {
+            "command":"zg remove action $action_name ($controller_name) ($module_name)",
+            "alias": "zg r a $action_name ($controller_name) ($module_name)",
+            "detail":"Removes a action in a controller, in a module."
+        },
+        "defaults":
+        {
+            "$controller_name" : "index",
+            "$module_name" : "default"
+        }
+    },
+    "view":
+    {
+        "title":"Remove view", 
+        "alias":"v",
+        "instance":
+        {
+            "class":"\\zg\\operators\\remove",
+            "method":"view"
+        },
+        "help":
+        {
+            "command":"zg remove view $view_name ($controller_name) ($module_name)",
+            "alias": "zg r v $view_name ($controller_name) ($module_name)",
+            "detail":"Removes a view in a controller, in a module."
+        },
+        "defaults":
+        {
+            "$controller_name" : "index",
+            "$module_name" : "default"
+        }
+    },
+    "layout":
+    {
+        "title":"Remove layout", 
+        "alias":"l",
+        "instance":
+        {
+            "class":"\\zg\\operators\\remove",
+            "method":"layout"
+        },
+        "help":
+        {
+            "command":"zg remove layout $layout_name ($module_name)",
+            "alias": "zg r l $layout_name ($module_name)",
+            "detail":"Removes a layout in a module."
+        },
+        "defaults":
+        {
+            "$module_name" : "default"
+        }
+    },
+    "model":
+    {
+        "title":"Remove model", 
+        "alias":"m",
+        "instance":
+        {
+            "class":"\\zg\\operators\\remove",
+            "method":"model"
+        },
+        "help":
+        {
+            "command":"zg remove model $model_name ($module_name)",
+            "alias": "zg r m $model_name ($module_name)",
+            "detail":"Removes a model in a module."
+        },
+        "defaults":
+        {
+            "$module_name" : "default"
+        }
+    },
+    "helper":
+    {
+        "title":"Remove helper", 
+        "alias":"h",
+        "instance":
+        {
+            "class":"\\zg\\operators\\remove",
+            "method":"helper"
+        },
+        "help":
+        {
+            "command":"zg remove helper $helper_name ($module_name)",
+            "alias": "zg r h $layout_name ($module_name)",
+            "detail":"Removes a helper in a module."
+        },
+        "defaults":
+        {
+            "$module_name" : "default"
+        },
+        "notes":
+        [
+            "In order to have free uses in models there will be NO.<br />naming convention when creating models.<br />i.e the command 'zg remove model foo $module_name'.<br />will exactly removes a model named 'foo' in target module."
+        ]
+    },
+    "application":
+    {
+        "alias":"app",
+        "bootstrap":
+        {
+            "title":"Removes bootstrap", 
+            "alias":"b",
+            "instance":
+            {
+                "class":"\\zg\\operators\\remove",
+                "method":"app_bootstrap"
+            },
+            "help":
+            {
+                "command":"zg remove application boostrap $bootstrap_name",
+                "alias": "zg r app b $bootstrap_name",
+                "detail":"Removes a bootstrap file for project with given name"
+            }
+        },
+        "routes":
+        {
+            "title":"Removes routes", 
+            "alias":"r",
+            "instance":
+            {
+                "class":"\\zg\\operators\\remove",
+                "method":"app_routes"
+            },
+            "help":
+            {
+                "command":"zg remove application routes $routes_name",
+                "alias": "zg r app r $routes_name",
+                "detail":"Removes a routes file for project with given name"
+            }
+        }
+    }
+}

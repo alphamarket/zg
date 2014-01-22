@@ -1,0 +1,13 @@
+{
+        "title":"Show zg's version", 
+        "instance":
+        {
+            "class":"\\zg\\operators\\status",
+            "method":"version"
+        },
+        "help":
+        {
+            "command":"zg --version",
+            "detail":"Shows the zinux generator's version."
+        }
+}
