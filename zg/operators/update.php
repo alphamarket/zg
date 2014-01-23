@@ -4,7 +4,7 @@ namespace zg\operators;
  * zg update handler
  */
 class update extends baseOperator
-{    
+{
     /**
      * zg update update handler
      * @throws \zinux\kernel\exceptions\invalideArgumentException in case of invalid arg supplied
@@ -56,12 +56,12 @@ class update extends baseOperator
             $this->branch_name = array("master");
         $this->cout("Updating zinux framework from its online repo.");
         $this->cout("Checking Git application.... ",0 ,self::getColor(self::defColor), 0);
-        # check if git exists 
+        # check if git exists
         if(!exec('git 2>/dev/null | wc -l'))
             throw new \zinux\kernel\exceptions\notFoundException("'git' not found in system!<br />To install git http://git-scm.com/downloads");
         $this->cout("[ OK ]", 0, self::getColor(self::green));
         $this->cout("Testing your internet connection, please wait.... ", 0, self::getColor(self::defColor), 0);
-        # check network 
+        # check network
         if(!isset($this->simulate) && !$this->is_connected())
         {
             $this->cout('[ FAILED ]',0, self::getColor(self::red));
@@ -95,7 +95,7 @@ class update extends baseOperator
     {
         # init vars
         $indent+= 0.5;
-        $debug_git = 0; 
+        $debug_git = 0;
         $repo_man = "$repo_path/manifest.json";
         $man_failed = 0;
         try
@@ -145,7 +145,7 @@ class update extends baseOperator
             # skip the pull part
             goto __SKIP_PULL;
         }
-        # the zinux project and its submodules 
+        # the zinux project and its submodules
         # should always has master branch
         # if no master branch exists
         if(!$this->has_arg($repo->getBranches(), "master"))
@@ -155,12 +155,12 @@ class update extends baseOperator
         if(isset($this->all_branches))
             # fetch all branches
             $this->branch_name = preg_replace(array("#origin\/(\w+)#i", "#(\w+->\w+)#i"), array("$1", ""), $repo->getBranches("-r"));
-        # normalize the branches 
+        # normalize the branches
         \zinux\kernel\utilities\_array::array_normalize($this->branch_name);
         # foreach branch
         foreach($this->branch_name as $branch)
         {
-            # if not simulating 
+            # if not simulating
             if(!isset($this->simulate))
             {
                 # stash the changes
@@ -191,6 +191,8 @@ class update extends baseOperator
         # skip pull phase
 __SKIP_PULL:
         $repo->git("checkout master");
+	# skip fetching tags, it already done with pull!!
+	goto __SKIP_FETCH;
         $this->cout("Fetching '".self::getColor(self::yellow).$repo_path.self::getColor(self::defColor)."' repo's tags. ", $indent-0.5, self::getColor(self::defColor), 0);
         # if not simulating
         if(!isset($this->simulate))
@@ -206,6 +208,7 @@ __SKIP_PULL:
             }
         # indicate the success
         $this->cout("[ OK ]", 0, self::getColor(self::green));
+__SKIP_FETCH:
         # if manifest failed no need to proceed
         if($man_failed) return;
         # fetch manifest's data stored in json format
