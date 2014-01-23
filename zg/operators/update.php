@@ -77,7 +77,7 @@ class update extends baseOperator
         if(isset($this->cache_update))
         {
             # update zg repo recursively
-            $this->update_repo("zg", ZG_ROOT);
+            $this->update_repo("zg", ZG_ROOT, 0, "https://github.com/dariushha/zg");
         }
         $this->cout("Now the ".self::getColor(self::yellow)."zinux framework".self::getColor(self::defColor)." is updated ...");
     }
@@ -91,7 +91,7 @@ class update extends baseOperator
      * @throws \zinux\kernel\exceptions\invalideOperationException in case of master branch does not exist
      * @throws \zg\operators\Exception general failure on updating repo
      */
-    protected function update_repo($name, $repo_path, $indent = 0, $clone_uri = "https://github.com/dariushha/zinux")
+    protected function update_repo($name, $repo_path, $indent = 0, $max_depth = -1, $clone_uri = "https://github.com/dariushha/zinux", $depth = 0)
     {
         # init vars
         $indent+= 0.5;
@@ -223,8 +223,9 @@ __SKIP_PULL:
         # foreach defined sub-modules in manifest
         foreach($manifest->modules as $value)
         {
+            if($max_depth>=0 && $depth>=$max_depth) break;
             # recursively updating the modules
-            $this->update_repo($value->name, $repo_path.DIRECTORY_SEPARATOR.$value->path, $indent+0.5, $value->repo);
+            $this->update_repo($value->name, $repo_path.DIRECTORY_SEPARATOR.$value->path, $indent+0.5, $max_depth, $value->repo, $depth+1);
         }
         if(isset($this->verbose))
             $this->cout("Updating '".self::getColor(self::yellow).$name.self::getColor(self::defColor)."'s module repositories is done.", $indent);
