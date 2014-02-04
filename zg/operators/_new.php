@@ -60,6 +60,12 @@ class _new extends baseOperator
 	ServerAdmin webmaster@localhost
 	ServerName $pName.local
 	DocumentRoot \"/var/www/$pName/public_html\"
+	<Directory \"/var/www/$pName/public_html\">
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+	</Directory>
 </VirtualHost>
 
 # add this to /etc/hosts
