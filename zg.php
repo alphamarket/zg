@@ -34,10 +34,10 @@ class zg extends \zg\baseZg
         ob_start();
         $zg = null;
         try
-        {            
-            \zinux\kernel\caching\fileCache::RegisterCachePath(PRG_CACHE_PATH);
-            
+        {           
             $zg = new zg($argv);
+
+            \zinux\kernel\caching\fileCache::RegisterCachePath(PRG_CACHE_PATH);
             
             $zg->Run();
         }
