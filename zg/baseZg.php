@@ -23,7 +23,7 @@ if(!defined("ZG_ROOT"))
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/zg/resources/commands');
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","2.1.0");
+    defined("ZG_VERSION") || define("ZG_VERSION","2.1.1");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
@@ -163,6 +163,12 @@ abstract class baseZg extends \zinux\baseZinux
      */
     public function CreateStatusFile($project_name)
     {
+        # validate current directory
+        foreach(array("readable" => "\\is_readable", "writable" => "\\is_writable") as $label => $function)
+        {
+            if(!@$function("."))
+                throw new \zinux\kernel\exceptions\invalideOperationException("Current directory is not $label!");
+        }
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name"))
             mkdir($project_name, 0775,1);
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name".PRG_CONF_PATH))
