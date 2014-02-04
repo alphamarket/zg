@@ -125,10 +125,5 @@ class status extends baseOperator
     {
         # no args excepted
         $this->restrictArgCount($args,0,0);
-        # print the zg && zinux version
-        $this->cout();
-        $this->cout("Zinux Version: ".ZINUX_BUILD_VERSION);
-        $this->cout();
-        $this->cout("Zinux Generator version: ".ZG_VERSION);
     }
 }
