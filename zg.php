@@ -37,7 +37,7 @@ class zg extends \zg\baseZg
         {           
             $zg = new zg($argv);
 
-            \zinux\kernel\caching\fileCache::RegisterCachePath(PRG_CACHE_PATH);
+            \zinux\kernel\caching\fileCache::RegisterCachePath(PRG_CACHE_PATH, 0/* :~ DO NOT VALIDATE THE PATH NOW */);
             
             $zg->Run();
         }

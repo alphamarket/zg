@@ -23,7 +23,7 @@ if(!defined("ZG_ROOT"))
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/zg/resources/commands');
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","2.0.4");
+    defined("ZG_VERSION") || define("ZG_VERSION","2.1.0");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
@@ -68,6 +68,8 @@ __ZG:
     defined("PRG_CACHE_PATH") || define("PRG_CACHE_PATH", WORK_ROOT.PRG_CONF_PATH."cache");
 }
 require_once ZG_ROOT."/zinux/baseZinux.php";
+# suppress zinux autoloading caching system [ REQUIRED ]
+\zinux\suppress_zinux_autoloader_caching();
 # defines ZG templates root
 defined("ZG_TEMPLE_ROOT") ||  define("ZG_TEMPLE_ROOT", \zinux\kernel\utilities\fileSystem::resolve_path(ZG_ROOT."/resources/templates"));
 /**
