@@ -23,7 +23,7 @@ if(!defined("ZG_ROOT"))
     # defines default command files' root
     defined("COMMANDS_ROOT") || define("COMMANDS_ROOT", ZG_ROOT.'/zg/resources/commands');
     # defines ZG's version
-    defined("ZG_VERSION") || define("ZG_VERSION","2.1.3");
+    defined("ZG_VERSION") || define("ZG_VERSION","2.1.4");
     # defines running environment
     defined("RUNNING_ENV") || define("RUNNING_ENV","PRODUCTION");
     # an other alternative running environment definition
@@ -147,7 +147,7 @@ abstract class baseZg extends \zinux\baseZinux
     {
         $s = NULL;
         if(file_exists("$project_path".PRG_CONF_PATH.PRG_CONF_NAME))
-            $s =  unserialize(file_get_contents("$project_path".PRG_CONF_PATH.PRG_CONF_NAME));
+            $s = unserialize(\gzuncompress(file_get_contents("$project_path".PRG_CONF_PATH.PRG_CONF_NAME)));
         if(!$s)
             return $s;
         if(!isset($s->hs))
@@ -181,7 +181,7 @@ abstract class baseZg extends \zinux\baseZinux
         $parent = new vendors\item(basename(realpath(".")), realpath("."));
         $s->project = new vendors\Item("project", realpath("./$project_name/"),$parent);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
-        file_put_contents("./$project_name".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
+        file_put_contents("./$project_name".PRG_CONF_PATH.PRG_CONF_NAME, \gzcompress(serialize($s), 9), LOCK_EX);
     }
     /**
      * saves status object into config file
@@ -191,7 +191,7 @@ abstract class baseZg extends \zinux\baseZinux
     {
         unset($s->hs);
         $s->hs = \zinux\kernel\security\hash::Generate(serialize($s),1,1);
-        file_put_contents("{$s->project->path}/".PRG_CONF_PATH.PRG_CONF_NAME, serialize($s), LOCK_EX);
+        file_put_contents("{$s->project->path}/".PRG_CONF_PATH.PRG_CONF_NAME, \gzcompress(serialize($s), 9), LOCK_EX);
     }
     /**
      * checks if zg config file exists in given project path
