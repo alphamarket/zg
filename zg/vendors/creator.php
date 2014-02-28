@@ -112,8 +112,19 @@ class creator extends \zg\operators\baseOperator
         $s = $this->GetStatus($project_path);
         # normalizing the arg
         $this->NormalizeName($name, "bootstrap");
+        # validate the app path
+        if(!isset($s->project->meta->app_path))
+        {
+            # validate the project's meta
+            if(!isset($s->project->meta))
+                $s->project->meta = new \stdClass();
+            # define  the project's app path
+            $s->project->meta->app_path = \realpath($s->project->path)."/application/";
+            # save changes
+            $this->SaveStatus($s);
+        }
         # create the bs object
-        $appbs = new \zg\vendors\Item($name, (@$s->project->meta->app_path?@$s->project->meta->app_path:\realpath($s->project->path)."/application/")."/{$name}.php");
+        $appbs = new \zg\vendors\Item($name, $s->project->meta->app_path."/{$name}.php");
         # create the bs
         new \zg\vendors\creators\createAppBootstrap($s->project, $appbs, $project_path);
         # return the created bs
@@ -133,8 +144,19 @@ class creator extends \zg\operators\baseOperator
         $s = $this->GetStatus($project_path);
         # normalizing the arg
         $this->NormalizeName($name, "routes");
+        # validate the app path
+        if(!isset($s->project->meta->app_path))
+        {
+            # validate the project's meta
+            if(!isset($s->project->meta))
+                $s->project->meta = new \stdClass();
+            # define  the project's app path
+            $s->project->meta->app_path = \realpath($s->project->path)."/application/";
+            # save changes
+            $this->SaveStatus($s);
+        }
         # create routes object
-        $appr = new \zg\vendors\Item($name, (@$s->project->meta->app_path?@$s->project->meta->app_path:\realpath($s->project->path)."/application")."/{$name}.php");
+        $appr = new \zg\vendors\Item($name, $s->project->meta->app_path."/{$name}.php");
         # create the routes
         new \zg\vendors\creators\createAppRoutes($s->project, $appr, $project_path);
         # return the created routes
