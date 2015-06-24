@@ -25,7 +25,7 @@
             break;
     }
 
-    require_once PUBLIC_HTML.'/../zinux/baseZinux.php';
+    require_once PUBLIC_HTML.'/../zinux/zinux.php';
 try
 {
     # create an application with given module directory
