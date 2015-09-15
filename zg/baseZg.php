@@ -69,7 +69,7 @@ __ZG:
     # defined client APP cache dir
     defined("PRG_CACHE_PATH") || define("PRG_CACHE_PATH", WORK_ROOT.PRG_CONF_PATH."cache");
 }
-require_once ZG_ROOT."/zinux/baseZinux.php";
+require_once ZG_ROOT."/zinux/zinux.php";
 # suppress zinux autoloading caching system [ REQUIRED ]
 \zinux\suppress_zinux_autoloader_caching();
 # defines ZG templates root
