@@ -10,7 +10,7 @@ class removeAction extends \zg\operators\baseOperator
      * @param \zg\vendors\item $action target action to remove
      * @param string $project_path project directory
      * @throws \zinux\kernel\exceptions\notFoundException if action's parent controller/class not found
-     * @throws \zinux\kernel\exceptions\invalideOperationException if target controller is not subclass of baseController or target method not found
+     * @throws \zinux\kernel\exceptions\invalidOperationException if target controller is not subclass of baseController or target method not found
      */
     public function __construct(\zg\vendors\item $action, $project_path = ".")
     {
@@ -48,9 +48,9 @@ class removeAction extends \zg\operators\baseOperator
         $rf = new \ReflectionClass($class);
         
         if(!$rf->isSubclassOf('\zinux\kernel\controller\baseController'))
-            throw new \zinux\kernel\exceptions\invalideOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
+            throw new \zinux\kernel\exceptions\invalidOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
         if(!method_exists(new $class, $action->path))
-           throw new \zinux\kernel\exceptions\invalideOperationException("'$class' does not contain method '{$action->path}'...");
+           throw new \zinux\kernel\exceptions\invalidOperationException("'$class' does not contain method '{$action->path}'...");
         
         $cr = new \zg\vendors\reflections\ReflectionClass($class);
         $cr->RemoveMethod(new \zg\vendors\reflections\ReflectionMethod($class, $action->name));

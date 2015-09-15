@@ -141,7 +141,7 @@ abstract class baseZg extends \zinux\baseZinux
      * gets status object from status file
      * @param string $project_path project directory
      * @return vendors\status target saved status object
-     * @throws \zinux\kernel\exceptions\invalideArgumentException if status object's hash-sum mis-matched
+     * @throws \zinux\kernel\exceptions\invalidArgumentException if status object's hash-sum mis-matched
      */
     public function GetStatus($project_path = ".")
     {
@@ -151,11 +151,11 @@ abstract class baseZg extends \zinux\baseZinux
         if(!$s)
             return $s;
         if(!isset($s->hs))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Hash-sum attrib is missing ....");
+            throw new \zinux\kernel\exceptions\invalidArgumentException("Hash-sum attrib is missing ....");
         $hs = $s->hs;
         unset($s->hs);
         if($hs != \zinux\kernel\security\hash::Generate(serialize($s),1,1))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Hash-sum mis-matched ....");
+            throw new \zinux\kernel\exceptions\invalidArgumentException("Hash-sum mis-matched ....");
         return $s;
     }
     /**
@@ -171,7 +171,7 @@ abstract class baseZg extends \zinux\baseZinux
         foreach(array("readable" => "\\is_readable", "writable" => "\\is_writable") as $label => $function)
         {
             if(!@$function($current_dir))
-                throw new \zinux\kernel\exceptions\invalideOperationException("Current directory is not $label!");
+                throw new \zinux\kernel\exceptions\invalidOperationException("Current directory is not $label!");
         }
         if(!\zinux\kernel\utilities\fileSystem::resolve_path("./$project_name"))
             mkdir($project_name, 0775,1);
@@ -198,14 +198,14 @@ abstract class baseZg extends \zinux\baseZinux
      * @param string $project_path target project directory
      * @param boolean $throw_exception in case of non-existance config file, should it throw an exception or return a FALSE
      * @return boolean TRUE if config file exists otherwise FALSE
-     * @throws \zinux\kernel\exceptions\invalideOperationException if $throw_exception enabled and config file does not exist
+     * @throws \zinux\kernel\exceptions\invalidOperationException if $throw_exception enabled and config file does not exist
      */
     public function CheckZG($project_path = ".", $throw_exception = 0)
     {
         if(!$this->GetStatus($project_path))
         {
             if($throw_exception)
-                throw new \zinux\kernel\exceptions\invalideOperationException("No project have found ...");
+                throw new \zinux\kernel\exceptions\invalidOperationException("No project have found ...");
             else
             {
                 $this ->cout("No project have found ...", 0, self::getColor(self::yellow))
@@ -221,15 +221,15 @@ abstract class baseZg extends \zinux\baseZinux
      * @param array $args the target array
      * @param int $max maximun count of array's items
      * @param int $min minimum count of array's items
-     * @throws \zinux\kernel\exceptions\invalideArgumentException if restriction not satisfied throws an exception
+     * @throws \zinux\kernel\exceptions\invalidArgumentException if restriction not satisfied throws an exception
      */
     public function restrictArgCount($args, $max = 100000, $min = -1)
     {
         if(count($args) > $max)
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Too much argument ...");
+            throw new \zinux\kernel\exceptions\invalidArgumentException("Too much argument ...");
         if(!$max) return;
         if(($min<0 && !count($args)) || (!(count($args) >= $min)))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Empty argument passed ...");
+            throw new \zinux\kernel\exceptions\invalidArgumentException("Empty argument passed ...");
     }
     /**
      * checks if an given item is an iterable instance
@@ -390,7 +390,7 @@ abstract class baseZg extends \zinux\baseZinux
             if(preg_match_all( "/Errors\s+parsing\s+".preg_quote($file_name, "/")."/i", $output, $matches) && $throw_exception_on_error)
             {
                 $this->cout("Error parsing '$file_name'",0,self::getColor(self::hiRed));
-                throw new \zinux\kernel\exceptions\invalideOperationException($output);
+                throw new \zinux\kernel\exceptions\invalidOperationException($output);
             }
             return false;
         }

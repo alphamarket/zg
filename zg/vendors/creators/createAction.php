@@ -11,7 +11,7 @@ class createAction extends \zg\operators\baseOperator
      * @param \zg\vendors\item $action target action item
      * @param string $project_path project directory
      * @throws \zinux\kernel\exceptions\notFoundException if controller not found or class does not exist
-     * @throws \zinux\kernel\exceptions\invalideOperationException if controller is not sub class of baseController
+     * @throws \zinux\kernel\exceptions\invalidOperationException if controller is not sub class of baseController
      */
     public function __construct(\zg\vendors\item $controller, \zg\vendors\item $action, $project_path = ".")
     {
@@ -51,7 +51,7 @@ class createAction extends \zg\operators\baseOperator
         $rf = new \ReflectionClass($class);
         
         if(!$rf->isSubclassOf('\zinux\kernel\controller\baseController'))
-            throw new \zinux\kernel\exceptions\invalideOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
+            throw new \zinux\kernel\exceptions\invalidOperationException("'$class' should be a sub class of '\zinux\kernel\controller\baseController'");
         if(!method_exists(new $class, $action->path))
         {
             $n = new \zg\vendors\reflections\ReflectionClass($class);

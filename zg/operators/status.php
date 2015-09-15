@@ -7,7 +7,7 @@ class status extends baseOperator
 {
     /**
      * zg status show handler
-     * @throws \zinux\kernel\exceptions\invalideArgumentException in case of provided depth is invalid
+     * @throws \zinux\kernel\exceptions\invalidArgumentException in case of provided depth is invalid
      * @throws \zg\operators\Exception
      */
     public function show($args)
@@ -30,7 +30,7 @@ class status extends baseOperator
             $max_depth = 5;
         # the depth should be numeric
         if(!is_numeric($max_depth))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid depth # '$max_depth'.");
+            throw new \zinux\kernel\exceptions\invalidArgumentException("Invalid depth # '$max_depth'.");
         # invoke a parser
         $p = new \zg\parser\parser($args, new \zg\command\commandGenerator());
         try
@@ -92,7 +92,7 @@ class status extends baseOperator
      * Recursively walks through an status instance
      * @param \stdClass $status current status object to process
      * @param function $callBack a callback function, which get will invoked in recursion 
-     * @throws \zinux\kernel\exceptions\invalideArgumentException if $callback is not callable
+     * @throws \zinux\kernel\exceptions\invalidArgumentException if $callback is not callable
      */
     public function RecursiveWalk($status, $callBack, $depth = 0, $max_depth = 5)
     {
@@ -101,7 +101,7 @@ class status extends baseOperator
         # if callback function is not callable
         if(!is_callable($callBack)) 
             # flag it
-            throw new \zinux\kernel\exceptions\invalideArgumentException("The argument is not callable!");
+            throw new \zinux\kernel\exceptions\invalidArgumentException("The argument is not callable!");
         # if current status is iterable
         if($this->is_iterable($status))
             # foreach sub-items in status object

@@ -68,7 +68,7 @@ class remove extends baseOperator
     }
     /**
      * zg remove action handler
-     * @throws \zinux\kernel\exceptions\invalideOperationException in case of client trying to remove index action
+     * @throws \zinux\kernel\exceptions\invalidOperationException in case of client trying to remove index action
      * @throws \zinux\kernel\exceptions\notFoundException if one of either module, controller or action does not exist
      */
     public function action($args)
@@ -91,7 +91,7 @@ class remove extends baseOperator
         $this->NormalizeName($args[2], "module");
         # if client tries to remove index action 
         if(preg_match("#indexaction#i", $args[0]))
-            throw new \zinux\kernel\exceptions\invalideOperationException("By zinux architecture structure, you cannot remove 'IndexAction'!");
+            throw new \zinux\kernel\exceptions\invalidOperationException("By zinux architecture structure, you cannot remove 'IndexAction'!");
         # get status object
         $s = $this->GetStatus();
         # if module does not exist

@@ -116,7 +116,7 @@ class build extends \zg\vendors\builder\baseBuilder
     }
     /**
      * zg build log handler
-     * @throws \zinux\kernel\exceptions\invalideOperationException if invalid arg supplied
+     * @throws \zinux\kernel\exceptions\invalidOperationException if invalid arg supplied
      */
     public function log($args)
     {
@@ -145,7 +145,7 @@ class build extends \zg\vendors\builder\baseBuilder
             }
             if(!$found)
             {
-                throw new \zinux\kernel\exceptions\invalideOperationException("Invalid argument '{$args[0]}'!");
+                throw new \zinux\kernel\exceptions\invalidOperationException("Invalid argument '{$args[0]}'!");
             }
         }
         # invoke the cache file handler
@@ -207,7 +207,7 @@ __END_EV:
                 break;
             # otherwise this is an invalid arg
             default:
-                throw new \zinux\kernel\exceptions\invalideOperationException("Invalid opteration #$op!");
+                throw new \zinux\kernel\exceptions\invalidOperationException("Invalid opteration #$op!");
         }
     }
     /**

@@ -23,7 +23,7 @@ class security extends baseOperator
      * A generat operations for cryption security method
      * @param type $args
      * @return array() An array of ($iteration#, $iteration_hash_sum, $crypt_key, $crypt_key_hash_sum)
-     * @throws \zinux\kernel\exceptions\invalideArgumentException in case of invalid arg supplied
+     * @throws \zinux\kernel\exceptions\invalidArgumentException in case of invalid arg supplied
      */
     protected function enc_head_op($args)
     {
@@ -33,7 +33,7 @@ class security extends baseOperator
         $this->restrictArgCount($args, 3,1);
         # if there is more that 1 arg it should be -i and its pair value
         if(count($args)>1 && !$this->has_arg($args, "-i"))
-            throw new \zinux\kernel\exceptions\invalideArgumentException;
+            throw new \zinux\kernel\exceptions\invalidArgumentException;
         # set default iter# to 1
         $iter = 1;
         # if iter# manually specified 
@@ -42,7 +42,7 @@ class security extends baseOperator
             $iter = $this->get_pair_arg_value($args, "-i", 1);
         # the iter# should be a numeric
         if($iter<1 || !is_numeric($iter))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("The iteration amount should be greater that 1.");
+            throw new \zinux\kernel\exceptions\invalidArgumentException("The iteration amount should be greater that 1.");
         # generate a $key based on client key
         $key = md5($args[0].sha1($args[0]));
         # return the cryption collection
@@ -125,7 +125,7 @@ class security extends baseOperator
     }
     /**
      * zg security decrypt handler
-     * @throws \zinux\kernel\exceptions\invalideOperationException in case client key does not match with encryption's key's hash sum
+     * @throws \zinux\kernel\exceptions\invalidOperationException in case client key does not match with encryption's key's hash sum
      */
     public function decrypt($args)
     {
@@ -163,7 +163,7 @@ class security extends baseOperator
             # check client provided key with previously stored encryption key hash sum
             if(!isset($s->project->cryption->meta->key_check_sum) || $s->project->cryption->meta->key_check_sum != $hash_sum)
                 # if no match with key hash sum, throw exception
-                throw new \zinux\kernel\exceptions\invalideOperationException("The '".self::getColor(self::cyan)."encryption key".self::getColor(self::yellow)."' doesn't match with encrypted key!");
+                throw new \zinux\kernel\exceptions\invalidOperationException("The '".self::getColor(self::cyan)."encryption key".self::getColor(self::yellow)."' doesn't match with encrypted key!");
         # get cryption cache folder's path 
         $crypt_cache_path = $s->project->cryption->meta->path;
         # if no collection file did generated 
@@ -240,9 +240,9 @@ class security extends baseOperator
     }
     /**
      * zg security cache handler
-     * @throws \zinux\kernel\exceptions\invalideOperationException in case of user trying to clear the cache 
+     * @throws \zinux\kernel\exceptions\invalidOperationException in case of user trying to clear the cache 
      * data while the project is flaged as encrypted or cryption data are miss-configured
-     * @throws \zinux\kernel\exceptions\invalideArgumentException in case of invalid arg supplied
+     * @throws \zinux\kernel\exceptions\invalidArgumentException in case of invalid arg supplied
      */
     public function cache($args)
     {
@@ -254,7 +254,7 @@ class security extends baseOperator
         $s = $this->GetStatus();
         #some fail safe
         if(!isset($s->project->cryption) || !isset($s->project->cryption->meta))
-            throw new \zinux\kernel\exceptions\invalideOperationException("No cryption data found!");
+            throw new \zinux\kernel\exceptions\invalidOperationException("No cryption data found!");
         # matching args
         switch(true)
         {
@@ -264,11 +264,11 @@ class security extends baseOperator
                 if(isset($s->project->cryption->meta->is_encrypted))
                     # it is not possible
                     throw new 
-                        \zinux\kernel\exceptions\invalideOperationException
+                        \zinux\kernel\exceptions\invalidOperationException
                             ("The project is already encrypted!<br />You cannot clear cryption cache while the project is encrypted!<br />Decrypt the project first!");
                 # some fail safe
                 if(!isset($s->project->cryption->meta->path))
-                    throw new \zinux\kernel\exceptions\invalideOperationException("No metadata found on cryption data!");
+                    throw new \zinux\kernel\exceptions\invalidOperationException("No metadata found on cryption data!");
                 # remove the cryption cache files
                 exec("rm -rf '{$s->project->cryption->meta->path}'");
                 $this ->cout("Cryption cached data cleared ", 0 ,self::getColor(self::defColor), 0)
@@ -281,7 +281,7 @@ class security extends baseOperator
                 # if no cache data exists
                 if(!isset($s->project->cryption->cache))
                     # no proceed needed
-                    throw new \zinux\kernel\exceptions\invalideOperationException("No cache data found!");
+                    throw new \zinux\kernel\exceptions\invalidOperationException("No cache data found!");
                 # foreach cached file
                 foreach($s->project->cryption->cache as $item)
                 {
@@ -315,7 +315,7 @@ class security extends baseOperator
                 break;
             # if arg does not match with any above cases
             default:
-                throw new \zinux\kernel\exceptions\invalideArgumentException;
+                throw new \zinux\kernel\exceptions\invalidArgumentException;
         }
         # save the status object
         $this->SaveStatus($s);

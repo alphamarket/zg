@@ -23,7 +23,7 @@ class parser extends baseParser
 {    
     /**
      * Parser runner
-     * @throws \zinux\kernel\exceptions\invalideOperationException in case of data miss-configured
+     * @throws \zinux\kernel\exceptions\invalidOperationException in case of data miss-configured
      */
     public function Run()
     {
@@ -36,7 +36,7 @@ class parser extends baseParser
         # if it does not match with standard operator data structure
         if(!isset($current_parsing->instance->class) || !isset($current_parsing->instance->method))
             # it means no opt exists for passed args
-            throw new \zinux\kernel\exceptions\invalideOperationException
+            throw new \zinux\kernel\exceptions\invalidOperationException
                 (self::getColor(self::yellow)."No operator found for '".self::getColor(self::cyan).$this->parsed_string.self::getColor(self::yellow)."'.");
         # create the opt's related object
         $c = $current_parsing->instance->class;
@@ -44,11 +44,11 @@ class parser extends baseParser
         $rf = new \ReflectionClass($c);
         # all opt should inherit from baseOperator
         if(!$rf ->isSubclassOf("\\zg\\operators\\baseOperator"))
-            throw new \zinux\kernel\exceptions\invalideOperationException
+            throw new \zinux\kernel\exceptions\invalidOperationException
                 ("Target class {$rf->getName()} is not subclass of '\\zinux\\zg\\resources\\operator\\baseOperator'");
         # validate opt's opt method 
         if(!method_exists($c, $current_parsing->instance->method) || !is_callable(array($c, $current_parsing->instance->method)))
-            throw new \zinux\kernel\exceptions\invalideOperationException
+            throw new \zinux\kernel\exceptions\invalidOperationException
                 ("Method '{$current_parsing->instance->method}' does not exist or not accessible in '{$current_parsing->instance->class}'");
         # execute the target operation's action
         $c->{$current_parsing->instance->method}($this->args);
@@ -58,7 +58,7 @@ class parser extends baseParser
      * @param \stdClass $collection the start point to search
      * @param boolean $explore_arraies check if it should explore arraies too
      * @return \stdClass || null
-     * @throws \zinux\kernel\exceptions\invalideArgumentException if no opt found or $collection is not iterable
+     * @throws \zinux\kernel\exceptions\invalidArgumentException if no opt found or $collection is not iterable
      */
     public function getOperator($collection = NULL, $explore_arraies = 0)
     {
@@ -68,7 +68,7 @@ class parser extends baseParser
             $collection = $this->command_generator->Generate();
         # the collection should be an iterable instance
         if(!$this->is_iterable($collection))
-            throw new \zinux\kernel\exceptions\invalideArgumentException("Produced argument is not iterable!");
+            throw new \zinux\kernel\exceptions\invalidArgumentException("Produced argument is not iterable!");
         # a fail safe for keywords used command files
         $pre_key_words = array(
                 '#\btitle\b#i' => "@title",
@@ -159,7 +159,7 @@ __ERROR:
         # normalize the possible converted keywords
         $this->args = str_replace(array_keys($post_key_words), array_values($post_key_words), $this->args);
         # throw an exception indicates that invalid command parsed
-        throw new \zinux\kernel\exceptions\invalideArgumentException("Invalid command '{$this->parsed_string} {$this->args[0]}' in '".implode(" ", $args)."'<br />    Try zg -h.");
+        throw new \zinux\kernel\exceptions\invalidArgumentException("Invalid command '{$this->parsed_string} {$this->args[0]}' in '".implode(" ", $args)."'<br />    Try zg -h.");
         # command process success operations
 __EXECUTE:
         # normalize the possible converted keywords

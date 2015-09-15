@@ -18,7 +18,7 @@ class creator extends \zg\operators\baseOperator
      * @param string $name the module's name
      * @param string $project_path project directory to create
      * @return \zg\vendors\item the created module
-     * @throws \zinux\kernel\exceptions\invalideOperationException in case of module's folder already exists
+     * @throws \zinux\kernel\exceptions\invalidOperationException in case of module's folder already exists
      */
     public function createModule($name ,$project_path = ".")
     {
@@ -34,7 +34,7 @@ class creator extends \zg\operators\baseOperator
         $bs_name = preg_replace("#(\w+)module$#i","$1", $name)."Bootstrap";
         # in case of module folder already exist
         if(\zinux\kernel\utilities\fileSystem::resolve_path("{$s->modules->meta->path}/{$name}"))
-            throw new \zinux\kernel\exceptions\invalideOperationException("Module '{$name}' already exists ...");
+            throw new \zinux\kernel\exceptions\invalidOperationException("Module '{$name}' already exists ...");
         # create a module item
         $module = new \zg\vendors\item("{$name}", "{$s->modules->meta->path}/{$name}", $s->modules->meta);
         # add the module to modules collections

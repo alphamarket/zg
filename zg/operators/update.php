@@ -7,9 +7,9 @@ class update extends baseOperator
 {
     /**
      * zg update update handler
-     * @throws \zinux\kernel\exceptions\invalideArgumentException in case of invalid arg supplied
+     * @throws \zinux\kernel\exceptions\invalidArgumentException in case of invalid arg supplied
      * @throws \zinux\kernel\exceptions\notFoundException in case of 'Git' has not installed in system
-     * @throws \zinux\kernel\exceptions\invalideOperationException in case that internet connection has not established
+     * @throws \zinux\kernel\exceptions\invalidOperationException in case that internet connection has not established
      */
     public function update($args)
     {
@@ -41,13 +41,13 @@ class update extends baseOperator
                 # in case of all branch arg supplied
                 case "--all":
                     if(isset($this->branch_name))
-                        throw new \zinux\kernel\exceptions\invalideArgumentException("In-compatible argument, '\$branch_name'  is in-compatible with '--all'.");
+                        throw new \zinux\kernel\exceptions\invalidArgumentException("In-compatible argument, '\$branch_name'  is in-compatible with '--all'.");
                     $this->all_branches = 1;
                     break;
                 # fetch a desire branch
                 default:
                     if(isset($this->all_branches))
-                        throw new \zinux\kernel\exceptions\invalideArgumentException("In-compatible argument, '\$branch_name'  is in-compatible with '--all'.");
+                        throw new \zinux\kernel\exceptions\invalidArgumentException("In-compatible argument, '\$branch_name'  is in-compatible with '--all'.");
                     $this->branch_name = array($arg);
             }
         }
@@ -65,7 +65,7 @@ class update extends baseOperator
         if(!isset($this->simulate) && !$this->is_connected())
         {
             $this->cout('[ FAILED ]',0, self::getColor(self::red));
-            throw new \zinux\kernel\exceptions\invalideOperationException
+            throw new \zinux\kernel\exceptions\invalidOperationException
                 (self::getColor(self::defColor)."You need to have ".self::getColor(self::yellow)."internet connection".self::getColor(self::defColor)." to do this operation!<br />".self::getColor(self::red)."[ Aborting ]");
         }
         $this->cout("[ OK ]",0, self::getColor(self::green));
@@ -88,7 +88,7 @@ class update extends baseOperator
      * @param int $indent UI print indention
      * @param string $clone_uri target repo clone URI
      * @throws \zinux\kernel\exceptions\notFoundException in case of $repo_path not found
-     * @throws \zinux\kernel\exceptions\invalideOperationException in case of master branch does not exist
+     * @throws \zinux\kernel\exceptions\invalidOperationException in case of master branch does not exist
      * @throws \zg\operators\Exception general failure on updating repo
      */
     protected function update_repo($name, $repo_path, $indent = 0, $max_depth = -1, $clone_uri = "https://github.com/dariushha/zinux", $depth = 0)
@@ -150,7 +150,7 @@ class update extends baseOperator
         # if no master branch exists
         if(!$this->has_arg($repo->getBranches(), "master"))
             # well that is not an standard of zinux project
-            throw new \zinux\kernel\exceptions\invalideOperationException("The 'master' branch does not exist!!<br />".self::getColor(self::red)."[ Aborting ]");
+            throw new \zinux\kernel\exceptions\invalidOperationException("The 'master' branch does not exist!!<br />".self::getColor(self::red)."[ Aborting ]");
         # if we are going with all branches
         if(isset($this->all_branches))
             # fetch all branches

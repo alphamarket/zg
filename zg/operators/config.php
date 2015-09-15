@@ -23,7 +23,7 @@ class config extends baseOperator
     /**
      * zg config handler
      * @param type $args
-     * @throws \zinux\kernel\exceptions\invalideArgumentException if case of invalid argument supplied
+     * @throws \zinux\kernel\exceptions\invalidArgumentException if case of invalid argument supplied
      */
     public function config($args)
     {
@@ -53,7 +53,7 @@ class config extends baseOperator
                     break;
                 # if no case this is an invalid arg
                 default:
-                    throw new \zinux\kernel\exceptions\invalideArgumentException("Undefined config '$value' passed ...");
+                    throw new \zinux\kernel\exceptions\invalidArgumentException("Undefined config '$value' passed ...");
             }
         }
         # save the status object to file

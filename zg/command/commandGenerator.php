@@ -11,7 +11,7 @@ class commandGenerator extends baseCommandGenerator
     /**
      * Fetch commands object from command path
      * @return \stdClass the fetched commands
-     * @throws \zinux\kernel\exceptions\invalideOperationException in case of no command object generated
+     * @throws \zinux\kernel\exceptions\invalidOperationException in case of no command object generated
      */
     public function Generate()
     {
@@ -37,7 +37,7 @@ class commandGenerator extends baseCommandGenerator
         # if no json object created 
         if(!$json)
             # throw an indicator exception, seems files' contents are buggy!
-            throw new \zinux\kernel\exceptions\invalideOperationException("Json decoded value is empty");
+            throw new \zinux\kernel\exceptions\invalidOperationException("Json decoded value is empty");
         # return the json object
         return $json;
     }

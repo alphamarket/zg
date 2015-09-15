@@ -20,12 +20,12 @@ class ReflectionClass extends \ReflectionClass
     /**
      * adds a method to class files's content
      * @param string $mehod method's string
-     * @throws \zinux\kernel\exceptions\invalideArgumentException if method is not an string or not setted
+     * @throws \zinux\kernel\exceptions\invalidArgumentException if method is not an string or not setted
      */
     public function AddMethod($mehod)
     {
         if(!isset($mehod) || !is_string($mehod))
-            throw new \zinux\kernel\exceptions\invalideArgumentException;
+            throw new \zinux\kernel\exceptions\invalidArgumentException;
         $file_cont = file_get_contents($this->getFileName());
         $fl = explode(PHP_EOL, $file_cont);
         $head_cont  = "";
